@@ -357,7 +357,7 @@ public class ExamWebController {
 				}else {
 					manulStr.append(answerStr.get(i)+"~_~");
 				}
-				//(选择题)客观题评分
+				//(选择题) 客观题评分
 				if(question.getType() <= 1 && question.getAnswer().equals(answerStr.get(i))) {
 					autoResult += question.getScore();
 				}

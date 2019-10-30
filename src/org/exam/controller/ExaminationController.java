@@ -59,7 +59,7 @@ public class ExaminationController {
 		User user = (User)SecurityUtils.getSubject().getPrincipal();
 		List<String> roleList = userService.selectRoleByUserId(user.getUserId());
 		if(!roleList.contains("超级管理员")) {//当前非管理员，管理员返回所有
-			if(roleList.contains("老师")) {//当前是老师，根据昵称返回
+			if(roleList.contains("老师")) {//当前是老师，会根据昵称返回
 				vo.setAuthor(user.getNickname());
 			}else {
 				vo.setClassId(user.getClassId());//如果是其他，根据班级返回
