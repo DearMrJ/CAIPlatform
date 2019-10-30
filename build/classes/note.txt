@@ -1,0 +1,12 @@
+
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+查看当前需要签到的课程：
+select distinct u.`name`,a.`id`,a.`subject_id`,a.`create_time`,a.`end_time` 
+	from `attendance_sheet_inf` ash
+	inner join `attendance_inf` a  on a.`id`= ash.`attendance_id` 
+		and a.`status` = 1 and a.`create_time` <= now() and a.`end_time` > now()
+	inner join `user_inf` u on ash.`user_id`=u.`user_id` and u.`user_id`='1001'
+    order by a.`end_time` and a.`subject_id` desc; -- 结束时间早的在前面
+    
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    

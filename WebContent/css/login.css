@@ -1,0 +1,121 @@
+*{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+body{
+	background-image: url(/img/two_kid.jpg);
+	background-position:center center;
+	background-repeat: no-repeat;
+	background-size: auto;
+	background-attachment:fixed;/*当页面的其余部分滚动时，背景图像不会移动,默认scroll*/
+	-webkit-background-size: cover;/* 兼容Webkit内核浏览器如Chrome和Safari */
+    -o-background-size: cover;/* 兼容Opera */
+}
+.head-imgline{
+	align-content: center;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: 180px;
+	margin-top: -250px;
+	width: 360px;
+	height: 50px;
+	border-radius: 10px;
+	background: rgba(222,222,222,.0);
+	z-index: 2;
+}
+.head-imgbox{
+	/*四个参数时：分别是上、右、下、左，顺时针*/
+	/*两个参数时：第一个参数是上下，第二个是左右*/
+	margin: auto auto;
+	margin-bottom: 0px;
+	width: 80px;
+	height: 60px;
+}
+.head-imgbox img{
+	width: auto;
+	height: auto;
+	max-width: 100%;/*max-width和max-height结合使用，使图片不能比容器大*/
+	max-height: 100%;
+}
+.login-box{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: 180px;
+	margin-top: -200px;
+	width: 360px;
+	height: 360px;
+	border-radius: 10px;
+	background: rgba(222,222,222,.5);
+	z-index: 1;
+}
+.login-content{
+	width: 360px;
+	height: 300px;
+}
+h2{
+	text-align: center;
+	color: #fff;
+}
+.login-content p{
+	overflow: hidden;
+	margin-top: 30px;
+}
+input[type='text']{
+	 float: right;
+	 margin-right: 35px;
+	 width: 210px;
+	 height: 30px;
+	 outline: none;
+}
+input[type='password']{
+	 float: right;
+	 margin-right: 35px;
+	 width: 210px;
+	 height: 30px;
+	 outline: none;
+}
+input[type='button']{
+	 margin-right: 45px;
+	 float: right;
+	 width: 270px;
+	 height: 35px;
+	 background-color: #48D1CC;
+	 border: 0px;
+}
+.footer{
+	margin-top: 0px;
+}
+a{
+	text-decoration: none;
+	color: #FFFFFF;
+}
+/**输入框图标**/
+.uname{
+	background-image: url(/icon/user.ico);/*设置小图标*/
+	background-size: 18px 18px;/*小图标的大小*/
+	background-position: 5px 4px;/*小图标在input的位置*/
+	background-repeat: no-repeat;/*背景小图标不重复*/
+	border:1px solid #ddd;
+	padding-left: 30px;
+}
+
+.pwd{
+	background-image: url(/icon/pwd2.ico);/*设置小图标*/
+	background-size: 18px 18px;/*小图标的大小*/
+	background-position: 5px 4px;/*小图标在input的位置*/
+	background-repeat: no-repeat;/*背景小图标不重复*/
+	border:1px solid #ddd;
+	padding-left: 30px;
+}
+
+.safebtn{
+	background-image: url(/icon/safe1.ico);/*设置小图标*/
+	background-size: 18px 18px;/*小图标的大小*/
+	background-position: 88px 9px;/*小图标在input的位置*/
+	background-repeat: no-repeat;/*背景小图标不重复*/
+	border:1px solid #ddd;
+}

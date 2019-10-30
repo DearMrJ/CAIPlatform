@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.exam.mapper.QuestionMapper" >
+    <resultMap id="BaseResultMap" type="org.exam.entity.Question" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="LONGVARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="option_a" property="optionA" jdbcType="VARCHAR" />
+        <result column="option_b" property="optionB" jdbcType="VARCHAR" />
+        <result column="option_c" property="optionC" jdbcType="VARCHAR" />
+        <result column="option_d" property="optionD" jdbcType="VARCHAR" />
+        <result column="answer" property="answer" jdbcType="LONGVARCHAR" />
+        <result column="parse" property="parse" jdbcType="LONGVARCHAR" />
+        <result column="score" property="score" jdbcType="INTEGER" />
+        <result column="difficulty" property="difficulty" jdbcType="INTEGER" />
+        <result column="subject_id" property="subjectId" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <association property="subject" javaType="org.exam.entity.Subject">
+			<result property="id" jdbcType="INTEGER" column="s_subject_id"/>
+			<result property="name" jdbcType="VARCHAR" column="s_subject_name"/>
+			<result property="description" jdbcType="VARCHAR" column="s_subject_description"/>
+		</association>
+    </resultMap>
+    <resultMap id="VlidateResultMap" type="org.exam.entity.Question" >
+        <id column="num" property="counts" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id,title,content,type,option_a,option_b,option_c,option_d,answer,parse,
+        score,difficulty,subject_id,exam_id,create_time,update_time,status
+    </sql>
+    
+    <select id="findByCondition" parameterType="org.exam.vo.QuestionConditionVo" resultMap="BaseResultMap">
+    	SELECT
+    	q.*,
+    	s.id AS s_subject_id,
+    	s.`name` AS s_subject_name,
+    	s.description AS s_subject_description
+    	FROM
+    	question_inf q
+    	INNER JOIN subject_inf s ON q.subject_id = s.id
+    	WHERE 1 = 1
+    	<if test="subjectId != null">
+    		AND q.subject_id = #{subjectId}
+    	</if>
+    	<if test="type != null">
+    		AND q.type = #{type}
+    	</if>
+    	<if test="status != null">
+    		AND q.status = #{status}
+    	</if>
+    	<if test="keywords != null and keywords != ''">
+    		AND
+    		q.title LIKE CONCAT('%',#{keywords , jdbcType=VARCHAR},'%')
+    	</if>
+    	GROUP BY q.id
+    	<if test="orderBy != null and orderBy != ''">
+    		ORDER BY ${orderBy} ASC
+    	</if>
+    </select>
+    
+    <select id="selectById" parameterType="int" resultMap="BaseResultMap">
+    	SELECT
+    	q.*,
+    	s.id AS s_subject_id,
+    	s.`name` AS s_subject_name,
+    	s.description AS s_subject_description
+    	FROM
+    	question_inf q
+    	INNER JOIN subject_inf s ON q.subject_id = s.id
+    	WHERE
+    	q.id = #{id}
+    </select>
+    
+    <insert id="batchInsert" parameterType="java.util.List">
+    	<selectKey resultType ="java.lang.Integer" keyProperty= "id" order= "AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey >
+    	INSERT INTO question (title,content,type,option_a,option_b,option_c,option_d,
+        answer,parse,score,difficulty,subject_id,status)
+    	VALUES
+    	<foreach collection="list" item="item" index="index" separator=",">
+    		(#{item.title},#{item.content},#{item.type},#{item.optionA},#{item.optionB},#{item.optionC},#{item.optionD},#{item.answer},
+    		#{item.parse},#{item.score},#{item.difficulty},#{item.subjectId},#{item.status})
+    	</foreach>
+    </insert>
+    
+	<select id="validateBySubjectIds" parameterType="map" resultMap="VlidateResultMap">
+		SELECT
+		COUNT(question.id) AS num
+		FROM
+		question_inf
+		WHERE
+		question.subject_id in
+		<foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		
+	</select>    
+    <delete id="deleteBatch" parameterType="map">
+    	DELETE FROM
+    	question_inf
+    	WHERE
+    	id in
+    	<foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+
+</mapper>

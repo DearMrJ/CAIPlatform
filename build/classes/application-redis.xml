@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:stat="http://www.alibaba.com/schema/stat"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.alibaba.com/schema/stat http://www.alibaba.com/schema/stat.xsd">
+	
+	<context:annotation-config />
+    
+    <cache:annotation-driven />
+    
+    <context:property-placeholder
+        location="classpath:redis.properties" />
+        
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <!-- jedis 配置 -->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="${redis.maxIdle}" />
+        <property name="maxWaitMillis" value="${redis.maxWait}" />
+        <property name="maxTotal" value="${redis.maxTotal}" />
+        <property name="testOnBorrow" value="${redis.testOnBorrow}" />
+    </bean>
+    
+    <!-- redis服务器中心 -->
+    <bean id="redisConnectionFactory"
+        class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="poolConfig" ref="poolConfig" />
+        <property name="port" value="${redis.port}" />
+        <property name="hostName" value="${redis.hostName}" />
+        <property name="password" value="${redis.password}" />
+        <property name="timeout" value="${redis.timeout}"></property>
+    </bean>
+    
+    <bean id="redisTemplate" name="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="redisConnectionFactory" />
+        <property name="keySerializer" ref="stringRedisSerializer" />
+        <property name="valueSerializer" ref="stringRedisSerializer" />
+        <property name="hashKeySerializer" ref="stringRedisSerializer" />
+        <property name="hashValueSerializer" ref="jackson2JsonRedisSerializer" />
+        <!-- 开启事务 -->
+        <property name="enableTransactionSupport" value="true"/>
+    </bean>
+    
+    <bean id="jdkredisTemplate" name="jdkredisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="redisConnectionFactory" />
+        <property name="keySerializer" ref="jdkSerializationRedisSerializer" />
+        <property name="valueSerializer" ref="jdkSerializationRedisSerializer" />
+        <property name="hashKeySerializer" ref="stringRedisSerializer" />
+        <property name="hashValueSerializer" ref="jackson2JsonRedisSerializer" />
+    </bean>
+    
+    <bean id="jacksonredisTemplate" name="jacksonredisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="redisConnectionFactory" />
+        <property name="keySerializer" ref="jackson2JsonRedisSerializer" />
+        <property name="valueSerializer" ref="jackson2JsonRedisSerializer" />
+        <property name="hashKeySerializer" ref="stringRedisSerializer" />
+        <property name="hashValueSerializer" ref="jackson2JsonRedisSerializer" />
+    </bean>
+    
+    <bean id="stringRedisSerializer"
+        class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+    <bean id="jackson2JsonRedisSerializer"
+        class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer" />
+    <bean id="jdkSerializationRedisSerializer"
+        class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
+    
+    <!--初始化redis 操作类-->
+    <bean id="redisCacheWriter" class="org.springframework.data.redis.cache.DefaultRedisCacheWriter">
+        <constructor-arg name="connectionFactory" ref="redisConnectionFactory"/>
+    </bean>
+     <!--默认的cache配置-->
+    <bean id="defaultRedisCacheConfiguration" class="org.springframework.data.redis.cache.RedisCacheConfiguration"
+          factory-method="defaultCacheConfig"/>
+    
+    <!-- 配置缓存 -->
+    <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+        <constructor-arg name="redisOperations" ref="redisTemplate" />
+        <constructor-arg name="cacheWriter" ref="redisCacheWriter" />
+        <constructor-arg name="defaultCacheConfiguration" ref="defaultRedisCacheConfiguration" />
+        <property name="transactionAware" value="true"></property>
+    </bean>
+    
+    
+    <bean id="topicContainer" class="org.springframework.data.redis.listener.RedisMessageListenerContainer" destroy-method="destroy">  
+        <property name="connectionFactory" ref="redisConnectionFactory"/>  
+        <property name="messageListeners">  
+            <map>  
+                <entry key-ref="sub">  
+                    <bean class="org.springframework.data.redis.listener.ChannelTopic">  
+                        <constructor-arg value="dddchannel"/>  
+                    </bean>  
+                </entry>
+                <entry key-ref="sub2">  
+                    <bean class="org.springframework.data.redis.listener.ChannelTopic">  
+                        <constructor-arg value="dddchannel"/>  
+                    </bean>  
+                </entry>
+                <entry key-ref="sub3">  
+                    <bean class="org.springframework.data.redis.listener.ChannelTopic">  
+                        <constructor-arg value="cccchannel"/>  
+                    </bean>  
+                </entry>  
+            </map>  
+        </property>  
+    </bean>
+	
+</beans>

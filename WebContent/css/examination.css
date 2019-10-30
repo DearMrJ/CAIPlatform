@@ -1,0 +1,88 @@
+.line_height {
+    line-height: 40px;
+}
+
+.mb10{
+	margin-bottom:10px;
+}
+
+#export_word {
+    width: 100%;
+    margin: auto;
+}
+.exam-title {
+    font-size: xx-large;
+    text-align: center;
+}
+
+.question_title{
+	font-weight:600;
+}
+
+.exam-info{
+	padding:10px;
+}
+
+.user-info input{
+	background-color:#fff;
+    border-left-width:0px;
+    border-top-width:0px;
+    border-right-width:0px;
+    border-bottom-color:black;
+    text-align: center;
+}
+
+.score-info{
+	padding-left:15px;
+	padding-right:15px;
+}
+
+.border-black{
+	border: 2px solid red
+}
+
+.pack p {
+    margin: 0;
+    padding: 0;
+    background-color: #cccccc;
+    height: 40px;
+}
+
+.RadioSelection {
+    border: #ccc solid 1px;
+}
+
+#RadioSelectionTitle {
+    margin: 0;
+    padding: 0;
+    background-color: #cccccc;
+    height: 40px;
+}
+
+.CheckboxSelection {
+    border: #ccc solid 1px;
+}
+
+#CheckboxSelectionTitle {
+    margin: 0;
+    padding: 0;
+    background-color: #cccccc;
+    height: 40px;
+}
+
+
+.ShortAnswer {
+    border: #ccc solid 1px;
+}
+
+#ShortAnswerTitle {
+    margin: 0;
+    padding: 0;
+    background-color: #cccccc;
+    height: 40px;
+}
+
+#textbox {
+    width: 90%;
+    height: 90px;
+}

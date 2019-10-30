@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.exam.mapper.ExamQuestionMapper">
+	<resultMap id="BaseResultMap" type="org.exam.entity.ExamQuestion">
+		<result property="id" jdbcType="INTEGER" column="id"/>
+		<result property="examId" jdbcType="INTEGER" column="exam_id"/>
+		<result property="questionId" jdbcType="INTEGER" column="question_id"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,
+		exam_id,
+		question_id,
+	</sql>
+	
+	<select id="selectByExamId" parameterType="int"  resultMap="BaseResultMap">
+		SELECT
+		eq.*
+		FROM
+		exam_question_inf eq
+		WHERE eq.exam_id = #{examId}
+	</select>
+	
+	<delete id="deleteBatch" parameterType="map">
+    	DELETE
+    	FROM
+    	exam_question_inf
+    	WHERE
+    	exam_id in
+    	<foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.exam.mapper.CommentMapper">
+	<resultMap id="BaseResultMap" type="org.exam.entity.Comment">
+		<result property="id" jdbcType="INTEGER" column="id"/>
+		<result property="sid" jdbcType="INTEGER" column="sid"/>
+		<result property="userId" jdbcType="VARCHAR" column="user_id"/>
+		<result property="pid" jdbcType="INTEGER" column="pid"/>
+		<result property="username" jdbcType="VARCHAR" column="username"/>
+		<result property="nickname" jdbcType="VARCHAR" column="nickname"/>
+		<result property="avatar" jdbcType="VARCHAR" column="avatar"/>
+		<result property="email" jdbcType="VARCHAR" column="email"/>
+		<result property="url" jdbcType="VARCHAR" column="url"/>
+		<result property="status" jdbcType="INTEGER" column="status"/>
+		<result property="ip" jdbcType="VARCHAR" column="ip"/>
+		<result property="lng" jdbcType="VARCHAR" column="lng"/>
+		<result property="lat" jdbcType="VARCHAR" column="lat"/>
+		<result property="address" jdbcType="VARCHAR" column="address"/>
+		<result property="os" jdbcType="VARCHAR" column="os"/>
+		<result property="osShortName" jdbcType="VARCHAR" column="os_short_name"/>
+		<result property="browser" jdbcType="VARCHAR" column="browser"/>
+		<result property="browserShortName" jdbcType="VARCHAR" column="browser_short_name"/>
+		<result property="content" jdbcType="VARCHAR" column="content"/>
+		<result property="remark" jdbcType="VARCHAR" column="remark"/>
+		<result property="support" jdbcType="INTEGER" column="support"/>
+		<result property="oppose" jdbcType="INTEGER" column="oppose"/>
+		<result property="createTime" jdbcType="TIMESTAMP" column="create_time"/>
+		<result property="updateTime" jdbcType="TIMESTAMP" column="update_time"/>
+		<result property="loveCount" jdbcType="INTEGER" column="love_count"/>
+		<association property="parent" javaType="org.exam.entity.Comment">
+			<result property="id" jdbcType="INTEGER" column="parent_id"/>
+			<result property="nickname" jdbcType="VARCHAR" column="parent_nickname"/>
+			<result property="content" jdbcType="VARCHAR" column="parent_content"/>
+		</association>
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,
+		sid,
+		user_id,
+		pid,
+		username,
+		nickname,
+		avatar,
+		email,
+		url,
+		status,
+		ip,
+		lng,
+		lat,
+		address,
+		os,
+		os_short_name,
+		browser,
+		browser_short_name,
+		content,
+		remark,
+		support,
+		oppose,
+		create_time,
+		update_time
+	</sql>
+	<select id="selectComments" parameterType="org.exam.vo.CommentConditionVo" resultMap="BaseResultMap">
+		SELECT
+		t.*,
+		f.id AS parent_id,
+		f.nickname AS parent_nickname,
+		f.content AS parent_content,
+		IFNULL(love.love_count,0) AS love_count
+		FROM
+		comment t
+		LEFT JOIN comment f ON t.pid = f.id
+		LEFT JOIN (
+		SELECT
+		l.sup_id,
+		count(1) AS love_count
+		FROM
+		love l
+		WHERE l.love_type=2
+		GROUP BY
+		l.sup_id
+		) love ON t.id = love.sup_id
+		WHERE
+		1 = 1
+		<if test="userId != null">
+			AND t.user_id = #{userId}
+		</if>
+		<if test="sid != null">
+			AND t.sid = #{sid}
+		</if>
+		<if test="pid != null">
+			AND t.pid = #{pid}
+		</if>
+		<if test="username != null">
+			AND t.username = #{username}
+		</if>
+		<if test="status != null">
+			AND t.status = #{status}
+		</if>
+		ORDER BY
+		t.create_time DESC
+	</select>
+	
+	<select id="noReadMessage" resultType="HashMap">
+		SELECT
+		c.nickname,
+		c.avatar,
+		c.content,
+		c.create_time
+		FROM comment c
+		WHERE c.status = 0
+		order by c.create_time desc
+	</select>
+
+	<delete id="deleteBatch" parameterType="map">
+		DELETE FROM
+		comment
+		where
+		id in
+		<foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		or pid in
+		<foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+</mapper>
+

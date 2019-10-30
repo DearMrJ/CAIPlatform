@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.exam.mapper.ExaminationMapper">
+    <resultMap id="BaseResultMap" type="org.exam.entity.Examination" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="author" property="author" jdbcType="VARCHAR" />
+        <result column="grade" property="grade" jdbcType="VARCHAR" />
+        <result column="total_score" property="totalScore" jdbcType="INTEGER" />
+        <result column="class_id" property="classId" jdbcType="INTEGER" />
+        <result column="subject_id" property="subjectId" jdbcType="INTEGER" />
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <association property="faculty" javaType="org.exam.entity.Faculty" >
+        	<result property="id" jdbcType="INTEGER" column="faculty_id"/>
+			<result property="name" jdbcType="VARCHAR" column="faculty_name"/>
+			<result property="description" jdbcType="VARCHAR" column="faculty_description"/>	
+        </association>
+        <association property="classes" javaType="org.exam.entity.Classes" >
+        	<result property="id" jdbcType="INTEGER" column="class_id"/>
+			<result property="name" jdbcType="VARCHAR" column="class_name"/>
+			<result property="description" jdbcType="VARCHAR" column="class_description"/>	
+        </association>
+        <association property="subject" javaType="org.exam.entity.Subject" >
+        	<result property="id" jdbcType="INTEGER" column="s_subject_id"/>
+			<result property="name" jdbcType="VARCHAR" column="s_subject_name"/>
+			<result property="description" jdbcType="VARCHAR" column="s_subject_description"/>	
+        </association>
+        <collection property="questions" column="question_id" javaType="ArrayList" ofType="org.exam.entity.Question">
+			<result column="question_id" property="id" jdbcType="INTEGER" />
+	        <result column="question_title" property="title" jdbcType="VARCHAR" />
+	        <result column="question_content" property="content" jdbcType="LONGVARCHAR" />
+	        <result column="q_question_type" property="type" jdbcType="INTEGER" />
+	        <result column="question_option_a" property="optionA" jdbcType="VARCHAR" />
+	        <result column="question_option_b" property="optionB" jdbcType="VARCHAR" />
+	        <result column="question_option_c" property="optionC" jdbcType="VARCHAR" />
+	        <result column="question_option_d" property="optionD" jdbcType="VARCHAR" />
+	        <result column="question_option_e" property="optionE" jdbcType="VARCHAR" />
+	        <result column="question_option_f" property="optionF" jdbcType="VARCHAR" />
+	        <result column="question_answer" property="answer" jdbcType="LONGVARCHAR" />
+	        <result column="question_parse" property="parse" jdbcType="LONGVARCHAR" />
+	        <result column="question_score" property="score" jdbcType="INTEGER" />
+	        <result column="question_difficulty" property="difficulty" jdbcType="INTEGER" />
+	        <result column="question_subject_id" property="subjectId" jdbcType="INTEGER" />
+	        <result column="question_create_time" property="createTime" jdbcType="TIMESTAMP" />
+	        <result column="question_update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	        <result column="question_status" property="status" jdbcType="INTEGER" />
+		</collection>
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        id,title,user_id,author,total_score,subject_id,start_time,end_time,create_time,update_time,status
+    </sql>
+    
+    <select id="findByCondition" parameterType="org.exam.vo.ExaminationConditionVo" resultMap="BaseResultMap">
+    	SELECT
+    	e.*,
+    	f.id AS faculty_id,
+    	f.name as faculty_name,
+    	f.description AS faculty_description,
+    	c.id AS class_id,
+    	c.name AS class_name,
+    	c.description AS class_description,
+    	s.id AS s_subject_id,
+    	s.`name` AS s_subject_name,
+    	s.description AS s_subject_description
+    	FROM
+    	examination_inf e
+    	INNER JOIN class_inf c ON e.class_id = c.id
+    	INNER JOIN faculty_inf f ON c.faculty_id = f.id
+    	INNER JOIN subject_inf s ON e.subject_id = s.id
+    	WHERE 1 = 1
+    	<if test="grade != null and grade != ''">
+			AND	e.grade = #{grade}
+		</if>
+		<if test="author != null and author != ''">
+			AND	e.author = #{author}
+		</if>
+    	<if test="insId !=null">
+            AND c.faculty = #{insId}
+        </if>
+        <if test="classId !=null">
+            AND e.class_id = #{classId}
+        </if>
+    	<if test="subjectId != null">
+    		AND e.subject_id = #{subjectId}
+    	</if>
+    	<if test="status != null">
+			AND	e.status = #{status}
+		</if>
+		<if test="keywords != null and keywords != '' ">
+			AND
+			e.title LIKE CONCAT('%',#{keywords , jdbcType=VARCHAR},'%')
+		</if>
+		order by e.id desc
+    </select>
+    
+    <select id="listQuestionsByExamId" parameterType="int" resultMap="BaseResultMap">
+    	SELECT
+    	e.*,
+    	q.id AS question_id,
+    	q.title AS question_title,
+    	q.content AS question_content,
+    	q.type AS q_question_type,
+    	q.option_a AS question_option_a,
+    	q.option_b AS question_option_b,
+    	q.option_c AS question_option_c,
+    	q.option_d AS question_option_d,
+    	q.answer AS question_answer,
+    	q.parse AS question_parse,
+    	q.score AS question_score,
+    	q.difficulty AS question_difficulty,
+    	q.subject_id AS question_subject_id,
+    	q.create_time AS question_create_time,
+    	q.update_time AS question_update_time,
+    	q.status AS question_status
+    	FROM
+    	examination_inf e
+    	INNER JOIN exam_question_inf eq ON e.id = eq.exam_id
+    	INNER JOIN question_inf q ON eq.question_id = q.id
+    	WHERE
+    	e.id IN (
+    	<foreach collection="list" item="id" separator=",">
+    		#{id}
+    	</foreach>
+    	)
+    </select>
+    
+    <select id="ExaminationById" parameterType="int" resultMap="BaseResultMap">
+    	SELECT
+    	e.*,
+    	s.id AS s_subject_id,
+    	s.`name` AS s_subject_name,
+    	q.id AS question_id,
+    	q.title AS question_title,
+    	q.content AS question_content,
+    	q.type AS q_question_type,
+    	q.option_a AS question_option_a,
+    	q.option_b AS question_option_b,
+    	q.option_c AS question_option_c,
+    	q.option_d AS question_option_d,
+    	q.answer AS question_answer,
+    	q.parse AS question_parse,
+    	q.score AS question_score,
+    	q.difficulty AS question_difficulty,
+    	q.subject_id AS question_subject_id,
+    	q.create_time AS question_create_time,
+    	q.update_time AS question_update_time,
+    	q.status AS question_status
+    	FROM
+    	examination_inf e
+    	INNER JOIN exam_question_inf eq ON e.id = eq.exam_id
+    	INNER JOIN subject_inf s ON e.subject_id = s.id
+    	INNER JOIN question_inf q ON eq.question_id = q.id
+    	WHERE
+    	e.id = #{id}
+    </select>
+    
+    <select id="selectById" parameterType="int" resultMap="BaseResultMap">
+    	SELECT
+    	e.*,
+    	s.id AS s_subject_id,
+    	s.`name` AS s_subject_name,
+    	s.description AS s_subject_description
+    	FROM
+    	examination_inf e
+    	INNER JOIN subject_inf ON e.subject_id = s.id
+    	WHERE
+    	e.id = #{id}
+    </select>
+    
+    <select id="selectAllByStatus" parameterType="int" resultMap="BaseResultMap">
+    	SELECT
+    	e.*
+    	FROM
+    	examination_inf e
+    	INNER JOIN grade_inf g ON e.id = g.exam_id 
+    	WHERE
+    	g.status != #{status}
+    	group by e.title
+    </select>
+    
+    <select id="recAddExamSta" resultType="HashMap">
+    	select 
+		e.title,
+		e.status,
+		e.create_time,
+		u.nickname,
+		u.img
+		from examination_inf e
+		INNER JOIN user_inf u ON e.user_id = u.user_id
+		order by e.create_time desc limit 4
+    </select>
+    
+    <update id="updateExamToStart">
+        UPDATE examination_inf
+        SET
+          status = 1
+        WHERE
+        status <![CDATA[ = ]]> 0 AND start_time <![CDATA[ <= ]]> #{currentTime} AND end_time <![CDATA[ > ]]> #{currentTime}
+    </update>
+
+    <update id="updateExamToEnd">
+        UPDATE examination_inf
+        SET
+          status = 2
+        WHERE
+        status <![CDATA[ <= ]]> 2 AND end_time <![CDATA[ <= ]]> #{currentTime}
+    </update>
+    
+    <delete id="deleteBatch" parameterType="map">
+    	DELETE
+    	FROM
+    	examination_inf
+    	WHERE
+    	id in
+    	<foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+    
+</mapper>

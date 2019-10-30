@@ -1,0 +1,25 @@
+.menu1{
+	position:relative;
+	transition: all .25s;
+}
+.menu2{
+	position:absolute;
+	display:none;
+	list-style:none;
+	padding:0;
+	background-color:#FFF;
+}
+.menu2 li{
+	width:100px;
+	text-align:center;
+	line-height:1.5;
+}
+.menu1:hover{
+	cursor:pointer;
+}
+.menu1:hover .menu2{
+	display:block;
+}
+.san{
+	border:1px solid #2196f3;
+}
