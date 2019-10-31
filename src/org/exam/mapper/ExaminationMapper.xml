@@ -60,6 +60,7 @@
         <result column="tel" property="tel" jdbcType="VARCHAR" />
         <result column="subject_id" property="subjectId" jdbcType="INTEGER" />
         <result column="subject_name" property="subjectName" jdbcType="VARCHAR" />
+        <result column="author_id" property="authorId" jdbcType="VARCHAR" />
         <result column="author" property="author" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
@@ -233,10 +234,11 @@
     	</foreach>
     </delete>
     
-    <select id="mailNotifyTarget">
-    	SELECT u.user_id,u.username,u.nickname,u.email,u.tel
-    	FROM 
-    	user_inf u
+    <select id="mailNotifyTarget" parameterType="org.exam.vo.SendEmailVo" resultMap="SendEmailMap">
+    	select u.user_id,u.username,u.nickname,u.email,u.tel,e.author,e.title from user_inf u 
+		left join user_subject_inf us on u.user_id = us.user_id
+		left join examination_inf e on e.subject_id = us.subject_id 
+		where e.user_id=#{authorId} and us.subject_id = #{subjectId} and e.status <![CDATA[ <= ]]> 1; 
     </select>
     
 </mapper>

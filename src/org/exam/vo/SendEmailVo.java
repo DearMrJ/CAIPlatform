@@ -8,6 +8,7 @@ public class SendEmailVo {
 	private String tel;			//电话
 	private Integer subjectId;	//
 	private String subjectName;	//科目名称
+	private String authorId;		//出卷人
 	private String author;		//出卷人
 	private String title;		//考试
 	
@@ -61,6 +62,12 @@ public class SendEmailVo {
 	}
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
+	}
+	public String getAuthorId() {
+		return authorId;
+	}
+	public void setAuthorId(String authorId) {
+		this.authorId = authorId;
 	}
 	public String getAuthor() {
 		return author;
