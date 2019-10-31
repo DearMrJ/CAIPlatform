@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.exam.entity.Examination;
 import org.exam.util.MapperUtil;
 import org.exam.vo.ExaminationConditionVo;
+import org.exam.vo.SendEmailVo;
 
 public interface ExaminationMapper extends MapperUtil<Examination> {
 	
@@ -43,5 +44,11 @@ public interface ExaminationMapper extends MapperUtil<Examination> {
 	List<Examination> selectAllByStatus(Integer status);
 	
 	List<HashMap<String, Object>> recAddExamSta();
+	
+	/**
+	 * 邮件通知对象+其他信息
+	 * @return
+	 */
+	List<SendEmailVo> mailNotifyTarget();
 
 }

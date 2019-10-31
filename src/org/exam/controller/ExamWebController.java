@@ -68,7 +68,6 @@ public class ExamWebController {
     private ClassesService classesService;
 	@Autowired
     private ShiroRealm shiroRealm;
-	
 
 	/**
 	 * 考试界面

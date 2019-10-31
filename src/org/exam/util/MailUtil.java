@@ -19,6 +19,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import org.exam.entity.User;
+import org.exam.vo.SendEmailVo;
 
 /**
  * JavaMail包中用于处理电子邮件的核心类是：Session，Message，Address，Authenticator，Store，Transport， Folder等。
@@ -31,25 +32,29 @@ public class MailUtil {
 	 * 团体email(List<String>)(true带图片，false只包含文字)(无附件)
 	 * @param emails
 	 */
-	public static void sendEmailsWithoutAttachment(List<String> emails,boolean withPicture) {
+	public static void sendEmailsWithoutAttachment(List<SendEmailVo> vo,boolean withPicture) {
 		try {
 			Session ssession = Session.getInstance(createProperty());//
 			ssession.setDebug(true);// 开启日志，打印程序详细执行过程
 			Transport transport = ssession.getTransport();// 建立连接对象
 			// 创建邮件,并且发送给当前有考试任务的用户
-			for (int i = 0; i < emails.size(); i++) {
-				try {
-					MimeMessage message = createMimeMessage(ssession, "285692983@qq.com",null, emails.get(i),withPicture);
-					/**当QQ被冻结过，或者其他什么异常，要重新获得授权码。 QAQ西湖的水 我的泪***/
-					transport.connect("285692983@qq.com", "pgjszvjgktddbgdd");//建立连接，其中密码以“授权码”的形式体现
-					transport.sendMessage(message, message.getAllRecipients());
-					transport.close();
-				} catch (MessagingException e) {
-					System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
-					System.out.println("  [温馨提示]:沙雕，你邮件输错了 ！"+emails.get(i));
-					System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
-					continue;
-				} 
+			for (int i = 0; i < vo.size(); i++) {
+				if (vo.get(i).getEmail()!=null && !vo.get(i).getEmail().equals("")) {
+					try {
+						MimeMessage message = createMimeMessage(ssession, "285692983@qq.com",vo.get(i).getUsername(), vo.get(i).getEmail(),withPicture);
+						/**当QQ被冻结过，或者其他什么异常，要重新获得授权码。 QAQ西湖的水 我的泪***/
+						transport.connect("285692983@qq.com", "lesrgwukagvrcafe");//建立连接，其中密码以“授权码”的形式体现
+						transport.sendMessage(message, message.getAllRecipients());
+						transport.close();
+					} catch (MessagingException e) {
+						System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+						System.out.println("  [温馨提示]:邮件出大问题了！");
+						System.out.println("  常见缘由如下：↓↓↓↓↓↓↓↓↓↓↓↓↓↓");
+						System.out.println("  1)各种缘由导致授权码过期;");
+						System.out.println("  2)邮件格式错了沙雕！ ["+vo.get(i).getEmail()+"==>"+vo.get(i).getEmail()+"]");
+						System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+					} 
+				}
 			}
 		}catch (Exception e) {
 			System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*");
@@ -182,7 +187,7 @@ public class MailUtil {
 				//2.创建文本节点（图片的显示在HTML的body需要用到 语句 和 编码）
 				MimeBodyPart textPart = new MimeBodyPart();
 				//邮件主体内容
-				textPart.setContent("亲爱的"+username+"你好，近期有您的考试安排，请登录xx系统查看详情。<br/><img src='cid:cool'/>", "text/html;charset=utf-8");
+				textPart.setContent("亲爱的"+username+"你好，近期有您的新的考试安排，请登录45辅教系统查看详情。<a href=\"localhost:8888\">上车，考试去</a><br/><img src='cid:cool'/>", "text/html;charset=utf-8");
 				
 				//3.用复合结点将 文本节点、 图片结点 封装结合
 				MimeMultipart text_image = new MimeMultipart();
@@ -205,7 +210,7 @@ public class MailUtil {
 				/**************************************************************/
 			}else {
 				//邮件主体内容
-				message.setContent("亲爱的"+username+"你好，近期有您的考试安排，请登录xx系统查看详情。", "text/html;charset=utf-8");
+				message.setContent("亲爱的"+username+"你好，近期有您的新的考试安排，请登录45辅教系统查看详情。<a href=\"localhost:8888\">上车，考试去</a>", "text/html;charset=utf-8");
 			}
 			
 			// 收件人类型： 普通收件人TO、抄送CC、密送BCC
@@ -286,7 +291,7 @@ public class MailUtil {
 				/**************************************************************/
 			}else {
 				//邮件主体内容
-				message.setContent("亲爱的"+username+"你好，近期有您的考试安排，请登录xx系统查看详情。", "text/html;charset=utf-8");
+				message.setContent("亲爱的"+username+"你好，近期有关于您的新的考试安排，请登录45辅教系统查看详情。<a href='localhost:8888'>上车，考试去</a>", "text/html;charset=utf-8");
 			}
 			
 			// 收件人类型： 普通收件人TO、抄送CC、密送BCC
