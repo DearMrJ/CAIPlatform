@@ -5,6 +5,8 @@ import javax.mail.internet.MimeMessage;
 
 public class CoreConst {
 	
+	public static final String SITE_DONAME = "localhost:8888";
+	
 	/******************************数据库表************************************/
 	public static final String FACULTY_TABLE = "faculty_inf";
 	public static final String CLASSES_TABLE = "class_inf";

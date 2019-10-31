@@ -47,12 +47,13 @@ public class MailUtil {
 						transport.sendMessage(message, message.getAllRecipients());
 						transport.close();
 					} catch (MessagingException e) {
-						System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+						System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
 						System.out.println("  [温馨提示]:邮件出大问题了！");
 						System.out.println("  常见缘由如下：↓↓↓↓↓↓↓↓↓↓↓↓↓↓");
-						System.out.println("  1)各种缘由导致授权码过期;");
-						System.out.println("  2)邮件格式错了沙雕！ ["+vo.get(i).getEmail()+"==>"+vo.get(i).getEmail()+"]");
-						System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+						System.out.println("  1)你网断了炸了上天了;");
+						System.out.println("  2)各种缘由导致授权码过期;");
+						System.out.println("  3)邮件格式错了沙雕！ ["+vo.get(i).getUsername()+"==>"+vo.get(i).getEmail()+"]");
+						System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
 					} 
 				}
 			}
@@ -187,7 +188,7 @@ public class MailUtil {
 				//2.创建文本节点（图片的显示在HTML的body需要用到 语句 和 编码）
 				MimeBodyPart textPart = new MimeBodyPart();
 				//邮件主体内容
-				textPart.setContent("亲爱的"+username+"你好，近期有您的新的考试安排，请登录45辅教系统查看详情。<a href=\"localhost:8888\">上车，考试去</a><br/><img src='cid:cool'/>", "text/html;charset=utf-8");
+				textPart.setContent("亲爱的"+username+"你好，近期有您的新的考试安排，请登录45辅教系统查看详情。<a href='"+CoreConst.SITE_DONAME+"'>【上车，考试去】</a><br/><img src='cid:cool'/>", "text/html;charset=utf-8");
 				
 				//3.用复合结点将 文本节点、 图片结点 封装结合
 				MimeMultipart text_image = new MimeMultipart();
@@ -210,7 +211,7 @@ public class MailUtil {
 				/**************************************************************/
 			}else {
 				//邮件主体内容
-				message.setContent("亲爱的"+username+"你好，近期有您的新的考试安排，请登录45辅教系统查看详情。<a href=\"localhost:8888\">上车，考试去</a>", "text/html;charset=utf-8");
+				message.setContent("亲爱的"+username+"你好，近期有您的新的考试安排，请登录45辅教系统查看详情。<br/><a href='"+CoreConst.SITE_DONAME+"'>【快上车，考试去】</a>", "text/html;charset=utf-8");
 			}
 			
 			// 收件人类型： 普通收件人TO、抄送CC、密送BCC

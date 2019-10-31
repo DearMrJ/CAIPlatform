@@ -2,8 +2,11 @@ package org.exam.service;
 
 import java.util.List;
 
-public interface BaseService<T> {
 
+public interface BaseService<T> {
+	static String ll() {
+		return "";
+	};
     T selectByPrimaryKey(Object key);
 
     int insert(T entity);
