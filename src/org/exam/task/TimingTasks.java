@@ -17,9 +17,10 @@ public class TimingTasks {
 	/**
 	 * 每五秒更新一次试卷状态
 	 */
-	@Scheduled(cron="0/5 * * * * ? ")
-	public void updateExamStatus() {
-		examService.updateExamToStart();
-		examService.updateExamToEnd();
-	}
+//	@Scheduled(cron="0/5 * * * * ? ")
+//	public void updateExamStatus() {
+//		examService.updateExamToStart();
+//		examService.updateExamToEnd();
+//	}
+	 
 }

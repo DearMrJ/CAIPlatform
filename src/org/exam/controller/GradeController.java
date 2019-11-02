@@ -84,10 +84,10 @@ public class GradeController {
 	
 	@PostMapping("/mark")
 	@ResponseBody
-	public ResponseVo mark(Grade grade) {
+	public ResponseVo mark(Grade grade) {//id + manulResult
 		try {
 			Grade obj = gradeService.selectById(grade.getId());
-			grade.setResult(obj.getAutoResult()+grade.getManulResult());
+			grade.setResult(obj.getAutoResult()+grade.getManulResult());//自动阅卷+手工阅卷
 			if(grade.getResult() == 0) {
 				grade.setStatus(CoreConst.EXAM_END);
 			}

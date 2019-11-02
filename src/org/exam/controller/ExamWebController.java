@@ -301,7 +301,6 @@ public class ExamWebController {
 	 * @return
 	 */
 	@GetMapping("/exam/startexam")
-//	@ResponseBody
 	public String startToExam(Model model, Integer id) {
 		User user = (User)SecurityUtils.getSubject().getPrincipal();
 		Examination examination = examService.queryByExamId(id);
@@ -314,6 +313,13 @@ public class ExamWebController {
 		System.out.println(jsonString);
 		return "index/detail";
 	}
+//	@GetMapping("/exam/startexam")
+//	@ResponseBody
+//	public Examination startToExam(Model model, Integer id) {
+//		User user = (User)SecurityUtils.getSubject().getPrincipal();
+//		Examination examination = examService.queryByExamId(id);
+//		return examination;
+//	}
 	
 	/**
 	 * 验证该用户是否已经参加过考试

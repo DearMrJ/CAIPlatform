@@ -139,7 +139,7 @@ body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,
 		 			<li><a data-track="true" data-track-location="header" href="/exam/examination">考试</a></li>
 		 			<li><a data-track="true" data-track-location="header" href="#">查成绩</a></li>
 		 			<li><a data-track="true" data-track-location="header" href="#">学习资料</a></li>
-		 			<li><a data-track="true" data-track-location="header" href="#">Community</a></li>
+		 			<li><a data-track="true" data-track-location="header" href="/">改分</a></li>
 		 			<li><a data-track="true" data-track-location="header" href="#">Pricing</a></li>
 		 			<li class="dropdown "><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">Help <span class="caret"></span></a>
 		 				<ul class="dropdown-menu">
