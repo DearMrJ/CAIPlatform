@@ -3,7 +3,11 @@ package org.exam.entity;
 import java.io.Serializable;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+import org.exam.util.CoreConst;
+
+@Table(name = CoreConst.ROLE_PERMISSION_TABLE)//整合通用mapper，实体类名与数据库表名不一致时候使用 @Table
 @SuppressWarnings("serial")
 public class RolePermission implements Serializable {
     @Id

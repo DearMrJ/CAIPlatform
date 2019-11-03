@@ -4,7 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+import org.exam.util.CoreConst;
+
+@Table(name = CoreConst.STUDENT_EVALUATION_TABLE)//整合通用mapper，实体类名与数据库表名不一致时候使用 @Table
 @SuppressWarnings("serial")
 public class StudentEvaluation implements Serializable{
 	@Id

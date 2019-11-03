@@ -82,14 +82,44 @@ var examDetailPage = {
                 '      </div>\n' +
                 '    </div>';
             $('#currentQuestionAnswer').html(selectOptionStr);
-        } else {
+        } else if(examDetailPage.data.exam.questions[0].type == 2){
+        	$('#currentQuetionTitle').html('( 填空题 )&nbsp;&nbsp;'+examDetailPage.data.exam.questions[0].title+'('+examDetailPage.data.exam.questions[0].score+'分)');
+            var selectOptionStr = '<div class="article-body markdown-body editor-preview-active-side" style="margin-top:10px;">'+examDetailPage.data.exam.questions[0].content+'</div>\n' +
+            	'   <div class="form-group">\n' +
+                '         <input id="questionAnswer" class="form-control" rows="3"/>\n' +
+                '    </div>';
+            $('#currentQuestionAnswer').html(selectOptionStr);
+        } else if(examDetailPage.data.exam.questions[0].type == 3){
             $('#currentQuetionTitle').html('( 主观问答题 )&nbsp;&nbsp;'+examDetailPage.data.exam.questions[0].title+'('+examDetailPage.data.exam.questions[0].score+'分)');
             var selectOptionStr = '<div class="article-body markdown-body editor-preview-active-side" style="margin-top:10px;">'+examDetailPage.data.exam.questions[0].content+'</div>\n' +
             	'   <div class="form-group">\n' +
                 '         <textarea id="questionAnswer" class="form-control" rows="3"></textarea>\n' +
                 '    </div>';
             $('#currentQuestionAnswer').html(selectOptionStr);
-        }
+        }else if (examDetailPage.data.exam.questions[0].type == 4) {
+            $('#currentQuetionTitle').html('( 判断题 )&nbsp;&nbsp;'+examDetailPage.data.exam.questions[0].title+'('+examDetailPage.data.exam.questions[0].score+'分)');
+            var selectOptionStr = '<div class="article-body markdown-body editor-preview-active-side" style="margin-top:10px;">'+examDetailPage.data.exam.questions[0].content+'</div>\n' +
+            	'    <div class="field" style="padding-top:5px;">\n' +
+                '      <div class="ui radio checkbox">\n' +
+	            '          <input type="radio" name="questionAnswer" value="A"/>\n' +
+	            '          <label>A.&nbsp;&nbsp;'+examDetailPage.data.exam.questions[0].optionA+'</label>\n' +
+                '      </div>\n' +
+                '    </div>\n' +
+                '    <div class="field">\n' +
+                '      <div class="ui radio checkbox">\n' +
+                '          <input type="radio" name="questionAnswer" value="B"/>\n' +
+                '          <label>B.&nbsp;&nbsp;'+examDetailPage.data.exam.questions[0].optionB+'</label>\n' +
+                '      </div>\n' +
+                '    </div>';
+            $('#currentQuestionAnswer').html(selectOptionStr);
+        } else {
+			$('#currentQuetionTitle').html('( 编程题 )&nbsp;&nbsp;'+examDetailPage.data.exam.questions[0].title+'('+examDetailPage.data.exam.questions[0].score+'分)');
+			var selectOptionStr = '<div class="article-body markdown-body editor-preview-active-side" style="margin-top:10px;">'+examDetailPage.data.exam.questions[0].content+'</div>\n' +
+			'   <div class="form-group">\n' +
+			'         <textarea id="questionAnswer" class="form-control" rows="10"></textarea>\n' +
+			'    </div>';
+			$('#currentQuestionAnswer').html(selectOptionStr);
+		}
 		$('.ui.checkbox').checkbox();   //使得单选框可以被选中
 		var currentQuestionButtonStr = '';
         for (var i = 0; i < examDetailPage.data.exam.questions.length; i++) {
@@ -134,7 +164,12 @@ var examDetailPage = {
             $.each($("input[name='questionAnswer']:checked"),function(){
             	examDetailPage.data.exam.questions[preIndex].stuAnswer += $(this).val();
             });
-        } else {
+        } else if (examDetailPage.data.exam.questions[preIndex].type == 4) {
+        	examDetailPage.data.exam.questions[preIndex].stuAnswer = '';
+            $.each($("input[name='questionAnswer']:checked"),function(){
+            	examDetailPage.data.exam.questions[preIndex].stuAnswer += $(this).val();
+            });
+        }else {
         	examDetailPage.data.exam.questions[preIndex].stuAnswer = $("#questionAnswer").val();
         }
         
@@ -212,14 +247,53 @@ var examDetailPage = {
                     }
                 });
             }
-        } else {
+        } else if(examDetailPage.data.exam.questions[index].type == 4) {
+            $('#currentQuetionTitle').html('( 判断题 )&nbsp;&nbsp;'+examDetailPage.data.exam.questions[index].title+'('+examDetailPage.data.exam.questions[index].score+'分)');
+            var selectOptionStr = '<div class="article-body markdown-body editor-preview-active-side" style="margin-top:10px;">'+examDetailPage.data.exam.questions[index].content+'</div>\n' +
+            	'    <div class="field" style="padding-top:5px;">\n' +
+                '      <div class="ui radio checkbox">\n' +
+	            '          <input type="radio" name="questionAnswer" value="A"/>\n' +
+	            '          <label>A.&nbsp;&nbsp;'+examDetailPage.data.exam.questions[index].optionA+'</label>\n' +
+                '      </div>\n' +
+                '    </div>\n' +
+                '    <div class="field">\n' +
+                '      <div class="ui radio checkbox">\n' +
+                '          <input type="radio" name="questionAnswer" value="B"/>\n' +
+                '          <label>B.&nbsp;&nbsp;'+examDetailPage.data.exam.questions[index].optionB+'</label>\n' +
+                '      </div>\n' +
+                '    </div>';
+            $('#currentQuestionAnswer').html(selectOptionStr);
+            
+            //显示之前作答区的答案
+            if (examDetailPage.data.exam.questions[index].stuAnswer != null && examDetailPage.data.exam.questions[index].stuAnswer != '') {
+                $.each($("input[name='questionAnswer']"),function(){
+                    if (examDetailPage.data.exam.questions[index].stuAnswer.indexOf($(this).val()) != -1) {
+                        $(this).attr("checked", "checked");
+                    }
+                });
+            }
+        } else if(examDetailPage.data.exam.questions[index].type == 2){
+        	$('#currentQuetionTitle').html('( 填空题 )&nbsp;&nbsp;'+examDetailPage.data.exam.questions[index].title+'('+examDetailPage.data.exam.questions[index].score+'分)');
+        	var selectOptionStr = '<div class="article-body markdown-body editor-preview-active-side" style="margin-top:10px;">'+examDetailPage.data.exam.questions[index].content+'</div>\n' +
+        	'	 <div class="form-group" style="margin-top:10px">\n' +
+        	'    	<input id="questionAnswer" class="form-control" rows="3"></input>\n' +
+        	'    </div>';
+        	$('#currentQuestionAnswer').html(selectOptionStr);
+        } else if(examDetailPage.data.exam.questions[index].type == 3){
             $('#currentQuetionTitle').html('( 主观问答题 )&nbsp;&nbsp;'+examDetailPage.data.exam.questions[index].title+'('+examDetailPage.data.exam.questions[index].score+'分)');
             var selectOptionStr = '<div class="article-body markdown-body editor-preview-active-side" style="margin-top:10px;">'+examDetailPage.data.exam.questions[index].content+'</div>\n' +
             	'	 <div class="form-group" style="margin-top:10px">\n' +
                 '    	<textarea id="questionAnswer" class="form-control" rows="10"></textarea>\n' +
                 '    </div>';
             $('#currentQuestionAnswer').html(selectOptionStr);
-        }
+        } else {
+			$('#currentQuetionTitle').html('( 编程题 )&nbsp;&nbsp;'+examDetailPage.data.exam.questions[index].title+'('+examDetailPage.data.exam.questions[index].score+'分)');
+			var selectOptionStr = '<div class="article-body markdown-body editor-preview-active-side" style="margin-top:10px;">'+examDetailPage.data.exam.questions[index].content+'</div>\n' +
+			'	 <div class="form-group" style="margin-top:10px">\n' +
+			'    	<textarea id="questionAnswer" class="form-control" rows="20"></textarea>\n' +
+			'    </div>';
+			$('#currentQuestionAnswer').html(selectOptionStr);
+		}
         
 		$('.ui.checkbox').checkbox();   //使得单选框可以被选中
 		
@@ -257,7 +331,13 @@ var examDetailPage = {
         	$.each($("input[name='questionAnswer']:checked"), function(){
         		examDetailPage.data.exam.questions[index].stuAnswer += $(this).val;
         	});
-        }else{
+        }else if(examDetailPage.data.exam.questions[index].type == 4){
+        	examDetailPage.data.exam.questions[index].stuAnswer = '';
+        	$.each($("input[name='questionAnswer']:checked"), function(){
+        		examDetailPage.data.exam.questions[index].stuAnswer += $(this).val;
+        	});
+        }
+        else{//2,3,5
         	examDetailPage.data.exam.questions[index].stuAnswer = $("#questionAnswer").val();
         }
         //交卷

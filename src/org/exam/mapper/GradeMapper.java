@@ -17,7 +17,6 @@ public interface GradeMapper extends MapperUtil<Grade> {
 	 * @param vo
 	 * @return
 	 */
-
 	List<Grade> findByCondition(GradeConditionVo vo);
 
 	Grade selectById(Integer id);

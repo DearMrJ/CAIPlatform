@@ -4,8 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.exam.util.CoreConst;
+
+@Table(name = CoreConst.USER_TABLE)//整合通用mapper，实体类名与数据库表名不一致时候使用 @Table
 @SuppressWarnings("serial")
 public class User implements Serializable{
 	@Id

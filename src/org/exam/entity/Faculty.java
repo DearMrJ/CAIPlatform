@@ -4,7 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+import org.exam.util.CoreConst;
+
+@Table(name=CoreConst.FACULTY_TABLE)
 @SuppressWarnings("serial")
 public class Faculty implements Serializable{
 	@Id

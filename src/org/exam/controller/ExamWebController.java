@@ -348,7 +348,9 @@ public class ExamWebController {
 	public ResponseVo submitExam(@RequestBody Grade grade) {
 		try {
 			User user = (User)SecurityUtils.getSubject().getPrincipal();
+			System.out.println(grade.getAnswerJson());
 			List<String> answerStr = Arrays.asList(grade.getAnswerJson().split("~_~"));
+			System.out.println(answerStr);
 			int autoResult = 0;
 			StringBuffer autoStr = new StringBuffer();
 			StringBuffer manulStr = new StringBuffer();
@@ -357,7 +359,7 @@ public class ExamWebController {
 			for(int i = 0; i < questions.size(); i++) {
 				Question question = questions.get(i);
 				//分别拼接 客观题 和 主观题 的答案
-				if(question.getType() <= 1) {
+				if(question.getType() <= 1 || question.getType() == 4) {//单选多选判断
 					autoStr.append(answerStr.get(i)+"~_~");
 				}else {
 					manulStr.append(answerStr.get(i)+"~_~");
@@ -382,6 +384,7 @@ public class ExamWebController {
 			gradeService.insertSelective(grade);
 			return ResultUtil.success("提交考试成功！");
 		} catch (Exception e) {
+			System.out.println(e);
 			return ResultUtil.error("提交考试失败！请联系管理员处理");
 		}
 	}

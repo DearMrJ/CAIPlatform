@@ -4,8 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.exam.util.CoreConst;
+
+@Table(name=CoreConst.COMMENT_TABLE)
 @SuppressWarnings("serial")
 public class Comment implements Serializable{
 	@Id

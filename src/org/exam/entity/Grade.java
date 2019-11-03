@@ -4,8 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.exam.util.CoreConst;
+
+@Table(name = CoreConst.GRADE_TABLE)//整合通用mapper，实体类名与数据库表名不一致时候使用 @Table
 @SuppressWarnings("serial")
 public class Grade implements Serializable{
 	@Id

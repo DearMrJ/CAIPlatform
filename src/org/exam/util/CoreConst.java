@@ -31,6 +31,8 @@ public class CoreConst {
 	public static final String STUDENT_EVALUATION_TABLE = "student_evaluation_inf";
 	public static final String TEACHER_EVALUATION_TABLE = "teacher_attendance_inf";
 	public static final String EVALUATION_ITEM_TABLE = "evaluation_item_inf";//关联评价项表 evaluation = n(item)
+	
+	public static final String COMMENT_TABLE = "comment_inf";//评论表、留言表
 	/**********************************************************************/
 
 	

@@ -5,9 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.exam.util.CoreConst;
 
+@Table(name=CoreConst.EXAMINATION_TABLE)
 @SuppressWarnings("serial")
 public class Examination implements Serializable{
 	@Id

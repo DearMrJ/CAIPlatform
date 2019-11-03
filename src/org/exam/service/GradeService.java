@@ -3,12 +3,15 @@ package org.exam.service;
 import java.util.List;
 
 import org.exam.entity.Grade;
+import org.exam.mapper.GradeMapper;
+import org.exam.util.MapperUtil;
 import org.exam.vo.GradeConditionVo;
 import org.exam.vo.StatisticConditionVo;
 import org.springframework.stereotype.Service;
 
 
 public interface GradeService extends BaseService<Grade> {
+	
 	
 	/**
 	 * 分页查询

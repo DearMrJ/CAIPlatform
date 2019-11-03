@@ -3,7 +3,11 @@ package org.exam.entity;
 import java.io.Serializable;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+import org.exam.util.CoreConst;
+
+@Table(name=CoreConst.EXAM_QUESTION_TABLE)
 @SuppressWarnings("serial")
 public class ExamQuestion implements Serializable{
 	@Id

@@ -67,7 +67,7 @@ public class GradeController {
 	public String mark(Model model, Integer id) {
 		Grade grade = gradeService.selectById(id);
 		List<String> answerStr = Arrays.asList(grade.getAnswerJson().split("~_~"));
-		Examination examination = examService.queryByExamId(grade.getExamId());
+		Examination examination = examService.queryByExamId(grade.getExamId());//获取目标试卷+题集+答案
 		long examTime = (examination.getEndTime().getTime()-examination.getStartTime().getTime())/(1000*60);
 		examination.setExamTime(examTime);
 		List<Question> questions = examination.getQuestions();

@@ -5,8 +5,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.exam.util.CoreConst;
+@Table(name=CoreConst.CLASSES_TABLE)
 @SuppressWarnings("serial")//去除序列号警告
 public class Classes implements Serializable{
 	@Id//orm中的主键@Id、其余@Column

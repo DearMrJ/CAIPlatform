@@ -38,9 +38,10 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
 	    p:dataSource-ref="dataSource"/>
 	    
-	<bean id="mappers" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	<bean id="mappers" class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 		<property name="basePackage" value="org.exam.mapper"></property>
+		<property name="markerInterface" value="org.exam.util.MapperUtil"></property>
 	</bean>
 	
 	<!-- JDBC事务管理器 -->

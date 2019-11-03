@@ -16,11 +16,11 @@ public class SpringExceptionHandler {
      * 异常的情况下返回500 
      * @return 
      */  
-    @ExceptionHandler(value = {RuntimeException.class})  
-    public ModelAndView handleRuntimeExceptions() {  
-    	ModelAndView mv = new ModelAndView();
-    	mv.setViewName("error/500");
-    	return mv;
-    }  
+//    @ExceptionHandler(value = {RuntimeException.class})  
+//    public ModelAndView handleRuntimeExceptions() {  
+//    	ModelAndView mv = new ModelAndView();
+//    	mv.setViewName("error/500");
+//    	return mv;
+//    }  
     
 }
