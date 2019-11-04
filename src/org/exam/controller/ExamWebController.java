@@ -359,13 +359,13 @@ public class ExamWebController {
 			for(int i = 0; i < questions.size(); i++) {
 				Question question = questions.get(i);
 				//分别拼接 客观题 和 主观题 的答案
-				if(question.getType() <= 1 || question.getType() == 4) {//单选多选判断
+				if(question.getType() <= 1 || question.getType() == 4) {//单选多选判断,有必要将判断题的type改为2
 					autoStr.append(answerStr.get(i)+"~_~");
 				}else {
 					manulStr.append(answerStr.get(i)+"~_~");
 				}
-				//(选择题) 客观题评分
-				if(question.getType() <= 1 && question.getAnswer().equals(answerStr.get(i))) {
+				//(选择题) 客观题评分	
+				if((question.getType() <= 1 || question.getType() == 4) && question.getAnswer().equals(answerStr.get(i))) {
 					autoResult += question.getScore();
 				}
 			}

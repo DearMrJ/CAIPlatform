@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>辅助教学平台（学生端）</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>45辅助教学平台</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -20,31 +20,19 @@
     crossorigin="anonymous"></script>
 
 
-  <style>
-    .top {
-      border-style: solid;
-      border-width: 1px;
-      border-radius: 5px 5px 0px 0px;
-      padding: 30px;
-      font-size: 15px;
-    }
-
-    .body {
-      border-style: solid;
-      border-width: 0px 1px 1px;
-      padding: 30px;
-    }
-
-    .foot {
-      border-style: solid;
-      border-width: 0px 1px 1px;
-      border-radius: 0px 0px 5px 5px;
-      padding: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="./js/semantic-ui/semantic.min.css" />
+  <link rel="stylesheet" href="./css/exam-common.css" />
+  <link rel="stylesheet" href="./css/web-common.css" />
+  <link rel="stylesheet" href="css/easy.css">
+  <script src="./js/jquery/jquery.min.js"></script>
+  <script src="./js/jquery/jquery.countdown.min.js"></script>
+  <script src="./js/semantic-ui/semantic.min.js"></script>
+  <script src="./js/layer/layer.js"></script>
+  <script src="./js/core.js"></script>
+  <script src="./js/detail.js"></script>
 </head>
 
-<body style="background-color:#F6F8F9;">
+<body>
   <nav class="navbar navbar-default" style="height: 85px;">
     <div class="container-fluid" style="height: 85px;">
 
@@ -52,10 +40,10 @@
       <div class="navbar-header" style="height: 85px;width: 40%;">
         <a class="navbar-brand" href="#">
           <img alt="Brand" style="margin-left: 90px;margin-top: 10px;"
-            src="/icon/book.png">
+            src="C:\Users\Mr.Xiao\Desktop\辅助教学平台\images\1.png">
 
         </a>
-        <h2 style="font-weight: 300; margin-top: 30px;margin-left:50px;">辅助教学平台（学生端）</h2>
+        <h2 style="font-weight: 300; margin-top: 30px;margin-left:50px;">45辅教平台</h2>
       </div>
 
       <div class="nav navbar-nav" style="width: 60%; padding-left: 40%;">
@@ -84,214 +72,79 @@
       <li class="active" style="color: black;">开始测试</li>
     </ol>
   </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="top">
-          <h2>计算机概论第一章测试</h2>
-          <span style="display: block;margin-bottom: 5px;">测试简介XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</span>
-          <span>考试时间：2019/09/29 20:46 至 2019/10/10 20:46</span>
-        </div>
-        <div class="body">
-          <form action="" method="POST" style="padding-left:20px; font-size: 20px;" id="test">
-            <p>单选题</p>
-            <!-- <div class="question">
-              <p id="1">1: “长风破浪会有时, 直挂云帆济沧海。” 出自下列哪一首诗？</p>
-              <label><input type="radio" name="answer1" value="A" />《行路难》</label>
-              <br />
-              <label><input type="radio" name="answer1" value="B" />《蜀道难》</label>
-              <br />
-              <label><input type="radio" name="answer1" value="C" />《长恨歌》</label>
-            </div> -->
 
-	
-        </form>
-			<button type="button"
-            style="width: 100px; margin-left:38%;margin-top:20px; margin-bottom:20px;" id="btn">提交</button>
-          <button type="reset" style="width: 100px;">重置</button></div>
+  <div class="ui problemDetail container">
+    <div class="ui grid">
+      <div class="ten wide column">
+        <div class="row" style="padding-left: 2.5em">
+          <div class="ui stacked segment">
+            <h4 class="ui horizontal divider header"><i class="help circle icon"></i>题目描述</h4>
+            <label id="currentQuetionTitle"></label>
+            <div class="grouped fields" id="currentQuestionAnswer"></div>
+          </div>
+          <div id="preAndNextButton"></div>
         </div>
-        <div class="foot">
+      </div>
 
+      <div class="five wide column" style="margin-left:2em">
+        <div class="row">
+          <table class="ui table">
+            <tbody>
+              <tr>
+                <td><span style="font-weight: bolder;">考生学号:</span></td>
+                <td><span>${user.username}</span></td>
+              </tr>
+              <tr>
+                <td><span style="font-weight: bolder;">当前考生:</span></td>
+                <td><span>${user.nickname}</span></td>
+              </tr>
+              <tr>
+                <td><span style="font-weight: bolder;">剩余时间:</span></td>
+                <td><span style="font-weight: bolder;color:red;" id="examTimeCountdown"></span></td>
+              </tr>
+              <tr>
+                <td><span style="font-weight: bolder;">开始时间:</span></td>
+                <td><span>
+                    <fmt:formatDate value="${data.exam.startTime}" type="date" pattern="yyyy-MM-dd HH:mm" /></span>
+                </td>
+              </tr>
+              <tr>
+                <td><span style="font-weight: bolder;">结束时间:</span></td>
+                <td><span>
+                    <fmt:formatDate value="${data.exam.endTime}" type="date" pattern="yyyy-MM-dd HH:mm" /></span></td>
+              </tr>
+              <tr>
+                <td><span style="font-weight: bolder;">总分:</span></td>
+                <td><span>${data.exam.totalScore}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row" style="margin-top: 1em;">
+          <div class="ui segment">
+            <div class="title">答题卡</div>
+            <div class="content ui segment" id="currentQuestionButton">
+            </div>
+            <div class="extra content">
+              <button type="button" onclick="examDetailPage.finishExamAction()" class="ui positive button">交卷</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+  </div>
+  <div class="return_top"><a class="fa fa-arrow-up"></a></div>
+  <script type="text/javascript">
+    var headerMain = document.getElementById('headerMain');
+    //headerMain.setAttribute("style","background:#4F94CD");
+    var exam = { "author": "师者", "classId": 1, "classes": { "id": 1 }, "createTime": 1572762141000, "endTime": 1572848541000, "examTime": 0, "grade": "2016", "id": 3, "questions": [{ "answer": "B", "content": "", "createTime": 1572761895000, "difficulty": 3, "id": 2, "optionA": "变量由字母、下划线、数字、$符号随意组成；", "optionB": "变量不能以数字作为开头；", "optionC": "A和a在java中是同一个变量；", "optionD": "不同类型的变量，可以起相同的名字；", "parse": "2解析B", "score": 5, "status": 0, "subjectId": 1, "title": "变量命名规范说法正确的是（）。", "type": 0, "updateTime": 1572761895000 }, { "answer": "China", "content": "", "createTime": 1572761895000, "difficulty": 1, "id": 4, "optionA": "", "optionB": "", "optionC": "", "optionD": "", "parse": "首字母大写", "score": 5, "status": 0, "subjectId": 1, "title": "中国的英文是___。", "type": 2, "updateTime": 1572761895000 }, { "answer": "", "content": "", "createTime": 1572761895000, "difficulty": 3, "id": 5, "optionA": "", "optionB": "", "optionC": "", "optionD": "", "parse": "i18n（其来源是英文单词 internationalization的首末字符i和n，18为中间的字符数）", "score": 5, "status": 0, "subjectId": 1, "title": "i18n是指___。", "type": 2, "updateTime": 1572761895000 }, { "answer": "", "content": "", "createTime": 1572761895000, "difficulty": 3, "id": 6, "optionA": "", "optionB": "", "optionC": "", "optionD": "", "parse": "HashMap:实现了Map接口，实现了将唯一键隐射到特定值上。允许一个NULL键和多个NULL值。非线程安全。\tHashTable: 类似于HashMap，但是不允许NULL键和NULL值，比HashMap慢，因为它是同步的。HashTable是一个线程安全的类，它使用synchronized来锁住整张Hash表来实现线程安全，即每次锁住整张表让线程独占。\tConcurrentHashMap允许多个修改操作并发进行，其关键在于使用了锁分离技术。它使用了多个锁来控制对hash表的不同部分进行的修改。ConcurrentHashMap内部使用段(Segment)来表示这些不同的部分，每个段其实就是一个小的Hashtable，它们有自己的锁。只要多个修改操作发生在不同的段上，它们就可以并发进行。", "score": 5, "status": 0, "subjectId": 1, "title": "HashTable,HashMap,ConcurrentHashMap的区别？", "type": 3, "updateTime": 1572761895000 }, { "answer": "A,C", "content": "", "createTime": 1572761895000, "difficulty": 4, "id": 7, "optionA": "String", "optionB": "char", "optionC": "用户自定义的Student类类型", "optionD": "int", "parse": "引用数据类型是对象类型/抽象类型，非基本类型", "score": 5, "status": 0, "subjectId": 1, "title": "下列（）属于引用数据类型。", "type": 1, "updateTime": 1572761895000 }, { "answer": "B", "content": "", "createTime": 1572761895000, "difficulty": 2, "id": 8, "optionA": "正确", "optionB": "错误", "optionC": "", "optionD": "", "parse": "单继承", "score": 5, "status": 0, "subjectId": 1, "title": "JAVA中可以多继承。", "type": 4, "updateTime": 1572761895000 }, { "answer": "略", "content": "", "createTime": 1572761895000, "difficulty": 2, "id": 9, "optionA": "", "optionB": "", "optionC": "", "optionD": "", "parse": "略", "score": 5, "status": 0, "subjectId": 1, "title": "JAVA输出helloworld。", "type": 5, "updateTime": 1572761895000 }], "startTime": 1572762141000, "status": 0, "subject": { "id": 1, "name": "1号课程" }, "subjectId": 1, "title": "3标题", "totalScore": 35, "updateTime": 1572762141000, "userId": "Young" };
+    console.log(exam.title);
 
-
-
+    $(function () {
+      examDetailPage.init(exam);
+    });
+  </script>
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-<script>
-  /* $(document).ready(function () {
-    $.ajax({
-      async: true,
-      url: "/exam/startexam",
-      type: 'post',
-      success: function (data) {
-        var questions = data.questions;
-        questions.forEach((i, index) => {
-          var $question = `
-                  <div class="question">
-                    <p id="1" style="margin-top: 50px;">${index + 1}.${i.content}</p>
-                    <label><input type="radio" name="${i.id}" value="A" />${i.optionA}</label>
-                    <br />
-                    <label><input type="radio" name="${i.id}" value="B" />${i.optionB}</label>
-                    <br />
-                    <label><input type="radio" name="${i.id}" value="C" />${i.optionC}</label>
-                    <br />
-                  </div>`;
-          $('#test').append($question);
-        });
-      },
-      error: function () {
-        console.log('error');
-      },
-      dataType: 'json',
-    })
-  }) */
-  
-  var exam = ${data.examJson};
-  
-  //console.log(exam);
-  // var json = {
-  //   "id": 2,
-  //   "title": "1标题",
-  //   "userId": "Young",
-  //   "author": "师者",
-  //   "classId": 1,
-  //   "subjectId": 1,
-  //   "grade": "2016",
-  //   "status": 1,
-  //   "totalScore": 10,
-  //   "createTime": 1572272288000,
-  //   "updateTime": 1572272292000,
-  //   "startTime": 1572272288000,
-  //   "endTime": 1572358688000,
-  //   "examTime": 0,
-  //   "questions": [
-  //     { "answer": "2答案", "content": "2内容", "createTime": 1572239923000, "difficulty": 3, "id": 2, "optionA": "选项A", "optionB": "选项B", "optionC": "选项C", "optionD": "选项D", "parse": "2解析", "score": 5, "status": 0, "subjectId": 1, "title": "2号题目", "type": 0, "updateTime": 1572239923000 },
-  //     { "answer": "2答案", "content": "3内容", "createTime": 1572273176000, "difficulty": 4, "id": 3, "optionA": "选项A", "optionB": "选项B", "optionC": "选项C", "optionD": "选项D", "parse": "3解析", "score": 5, "status": 0, "subjectId": 1, "title": "3号题目", "type": 0, "updateTime": 1572273176000 }
-  //   ],
-  //   "classes": { "id": 1 },
-  //   "subject": { "id": 1, "name": "1号课程" ,
-  // };
-  
-  	function success(data) {
-	    //data = JSON.parse(data);
-  		var questions = data.questions;
-	     questions.forEach((val, index) => {
-	    	//console.log(val);
-	    	if(val.type==0){//单选
-		        var $question = `
-		             <div class="question">
-		               <p  style="margin-top: 50px;">${"${index + 1}"}.${"${val.content}"}</p>
-		               <label><input type="radio" name="${'${val.id}'}" value="A" />${"${val.optionA}"}</label>
-		               <br />
-		               <label><input type="radio" name="${'${val.id}'}" value="B" />${"${val.optionB}"}</label>
-		               <br />
-		               <label><input type="radio" name="${'${val.id}'}" value="C" />${"${val.optionC}"}</label>
-		               <br />
-		               <label><input type="radio" name="${'${val.id}'}" value="D" />${"${val.optionD}"}</label>
-		               <br />
-		             </div>`;
-		             //var $question = `<div>${index}</div>`;
-		         //var $question = "<div>"+val.content+"</div>"
-	    	}else if(val.type==1){//多选
-	    		 var $checkbox = `
-		             <div class="question">
-		               <p  style="margin-top: 50px;">${"${index + 1}"}.${"${val.content}"}</p>
-		               <label><input type="checkbox" name="${'${val.id}'}" value="A" />${"${val.optionA}"}</label>
-		               <br />
-		               <label><input type="checkbox" name="${'${val.id}'}" value="B" />${"${val.optionB}"}</label>
-		               <br />
-		               <label><input type="checkbox" name="${'${val.id}'}" value="C" />${"${val.optionC}"}</label>
-		               <br />
-		               <label><input type="checkbox" name="${'${val.id}'}" value="D" />${"${val.optionD}"}</label>
-		               <br />
-		             </div>`;
-	    		 $('#test').append($checkbox);
-	    	}else if(val.type==2){//填空
-	    		 var $tiankong = `
-		             <div class="question">
-		               <p  style="margin-top: 50px;">${"${index + 1}"}.${"${val.content}"}</p>
-		               <input type='text' />
-		             </div>`;
-	    		 $('#test').append($tiankong);
-	    	}else if(val.type==3){//简答
-	    		 var $jianda = `
-		             <div class="question">
-		               <p  style="margin-top: 50px;">${"${index + 1}"}.${"${val.content}"}</p>
-		               <textarea cols="100" rows="10"></textarea>
-		               <br />
-		             </div>`;
-	    		 $('#test').append($jianda);
-	    	}else if(val.type==4){//判断题（使用A,B选项存储）
-	    		 var $panduan = `
-		             <div class="question">
-		               <p  style="margin-top: 50px;">${"${index + 1}"}.${"${val.content}"}</p>
-		               <label><input type="radio" name="${'${val.id}'}" value="A" />${"${val.optionA}"}</label>
-		               <br />
-		               <label><input type="radio" name="${'${val.id}'}" value="B" />${"${val.optionB}"}</label>
-		              
-		             </div>`;
-	    		 $('#test').append($panduan);
-	    	}else if(val.type==5){//编程题
-	    		 var $biancheng = `
-		             <div class="question">
-		               <p  style="margin-top: 50px;">${"${index + 1}"}.${"${val.content}"}</p>
-		              	
-		             </div>`;
-	    		 $('#test').append($biancheng);
-	    	}
-	       $('#test').append($question);
-	    });
-	}
-  	success(exam);
-    $('#btn').click(function(){
-    	var answer = '';
-    	var $radio = $('.radio-question :checked');//所有单选
-    	var radio=radio($radio);
-    	console.log(radio);
-    })
-    function radio(val){
-    	var str = '';
-    	for(var i=0;i<val.length;i++){
-    		str = val[i]+str;
-    	}
-    	return str;
-    }
-  // var $question = `
-  //           <div class="question">
-  //             <p id="1" style="margin-top: 50px;">${n}.${i.content}</p>
-  //             <label><input type="radio" name="${i.id}" value="A" />${i.optionA}</label>
-  //             <br />
-  //             <label><input type="radio" name="${i.id}" value="B" />${i.optionB}</label>
-  //             <br />
-  //             <label><input type="radio" name="${i.id}" value="C" />${i.optionC}</label>
-  //             <br />
-  //           </div>`;
-  //     $('#test').append($question);
-  //     n++;
-  // var exam = ${ exam.examJson };
-  
-  // var btn = document.querySelector('#btn');
-  // var question = document.querySelectorAll('.question');
-  // console.log(question);
-  // var answerJson = '';
-  // btn.addEventListener('click', function () {
-  //   for (var i = 0; i < question.length; i++) {
-  //     var answer = document.getElementsByName("answer" + (i + 1));
-  //     for (var j = 0; j < answer.length; j++) {
-  //       if (answer[j].checked) {
-  //         answerJson = answerJson + '~_~' + answer[j].value;
-  //       }
-  //     }
-
-
-  //   }
-  //   answerJson = answerJson.substr(3);
-  //   console.log(answerJson);
-  // })
-
-</script>
 
 </html>

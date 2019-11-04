@@ -34,6 +34,9 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 无重复角色集合
+     */
     @Override
     public Set<String> findRoleByUserId(String userId) {
         return roleMapper.findRoleByUserId(userId);

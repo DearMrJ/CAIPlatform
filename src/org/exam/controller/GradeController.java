@@ -21,11 +21,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -39,6 +42,23 @@ public class GradeController {
 	private ExaminationService examService;
 	@Autowired
 	private UserService userService;
+	
+	@GetMapping("list")
+	public String listOfGrade(Model model,GradeConditionVo gradeConditionVo) {
+		User user = (User)SecurityUtils.getSubject().getPrincipal();
+		List<String> roleList = userService.selectRoleByUserId(user.getUserId());
+		if(!roleList.contains("超级管理员")) {
+			if(roleList.contains("老师")) {
+				gradeConditionVo.setAuthor(user.getNickname());
+			}else {
+				gradeConditionVo.setUserId(user.getUserId());
+			}
+		}
+		List<Grade> gradeList = gradeService.findByCondition(gradeConditionVo);
+		PageInfo<Grade> pages = new PageInfo<>(gradeList);
+		model.addAttribute("table",ResultUtil.table(gradeList, pages.getTotal(), pages));
+		return "grade/list";
+	}
 	
 	@PostMapping("list")
 	@ResponseBody
@@ -79,13 +99,17 @@ public class GradeController {
 		grade.setExamination(examination);
 		grade.setUser(user);
 		model.addAttribute("grade", grade);
+		System.out.println(grade.getId());
+		model.addAttribute("gradeJson", JSON.toJSONString(grade));
 		return "grade/mark";
 	}
 	
 	@PostMapping("/mark")
 	@ResponseBody
-	public ResponseVo mark(Grade grade) {//id + manulResult
+	public ResponseVo mark(@RequestBody Grade grade) {//id + manulResult
 		try {
+			System.err.println(grade.getId());
+			System.err.println(grade.getManulResult());
 			Grade obj = gradeService.selectById(grade.getId());
 			grade.setResult(obj.getAutoResult()+grade.getManulResult());//自动阅卷+手工阅卷
 			if(grade.getResult() == 0) {
@@ -106,6 +130,7 @@ public class GradeController {
 			gradeService.updateNotNull(grade);
 			return ResultUtil.success("批阅成功");
 		} catch (Exception e) {
+			System.err.println(e);
 			return ResultUtil.success("批阅失败");
 		}
 	}
@@ -116,7 +141,6 @@ public class GradeController {
 	 * @param id
 	 * @return
 	 */
-	
 	@GetMapping("/detail")
 	public String detail(Model model, Integer id) {
 		Grade grade = gradeService.selectById(id);

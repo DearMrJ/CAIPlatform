@@ -54,10 +54,10 @@
     	FROM
     	grade_inf g
     	INNER JOIN user_inf u ON g.user_id = u.user_id
-    	INNER JOIN classes_inf c ON u.class_id = c.id
+    	INNER JOIN class_inf c ON u.class_id = c.id
     	INNER JOIN faculty_inf f ON c.faculty_id = f.id
     	INNER JOIN examination_inf e ON g.exam_id = e.id
-    	INNER JOIN subject_inf ON e.subject_id = s.id
+    	INNER JOIN subject_inf s ON e.subject_id = s.id
     	WHERE 1 = 1
     	<if test="name != null and name != ''">
     		AND u.nickname = #{name}

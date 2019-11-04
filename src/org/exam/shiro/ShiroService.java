@@ -25,6 +25,7 @@ public class ShiroService {
      */
     public Map<String, String> loadFilterChainDefinitions() {
         //权限控制map.从数据库获取
+    	//anon，authcBasic，auchc，user是认证过滤器
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/api/**", "anon");
@@ -41,11 +42,14 @@ public class ShiroService {
         filterChainDefinitionMap.put("/verificationCode", "anon");
         filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/**", "authc");
+        //perms，roles，ssl，rest，port是授权过滤器
         List<Permission> permissionList = permissionService.selectAll(CoreConst.STATUS_VALID);
         for(Permission permission : permissionList){
             if (StringUtils.isNotBlank(permission.getUrl()) && StringUtils.isNotBlank(permission.getPerms())) {
-                String perm = "perms[" + permission.getPerms()+ "]";
+                String perm = "perms[" + permission.getPerms()+ "]";//perms[xxx]、roles[xxx],perms[]粒度小
+                //导入   【所有】   非空权限信息（url+权限标识）
                 filterChainDefinitionMap.put(permission.getUrl(),perm+",kickout");
+                //在shiroRealm中授权方法doGetAuthorizationInfo()中为AuthorizationInfo info设置个体的 角色 和 权限标识
             }
         }
         filterChainDefinitionMap.put("/**", "user,kickout");

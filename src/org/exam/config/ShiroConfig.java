@@ -71,7 +71,7 @@ public class ShiroConfig {
         // 登录成功后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/");
         //未授权界面;
-        shiroFilterFactoryBean.setUnauthorizedUrl("/");
+        shiroFilterFactoryBean.setUnauthorizedUrl("error/403");
         System.out.println("Loading shiroFilter");
         /****************************踢出用户过滤器********************************/
         //自定义拦截器
