@@ -3,12 +3,49 @@
 <mapper namespace="org.exam.mapper.AttendanceMapper">
 	<resultMap type="org.exam.entity.Attendance" id="BaseResultMap">
 		<id property="id" column="id" jdbcType="INTEGER"/>
-		
-		
+		<result property="courseTotal" column="course_total" jdbcType="INTEGER"/>
+		<result property="presentTotal" column="present_total" jdbcType="INTEGER"/>
+		<result property="presentTotal" column="present_total" jdbcType="INTEGER"/>
+		<result column="class_id" property="classId" jdbcType="INTEGER" />
+        <result column="subject_id" property="subjectId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="author" property="author" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <association property="subject" javaType="org.exam.entity.Subject">
+        	
+        </association>
+        <collection property="users" column="u_user_id" javaType="ArrayList" ofType="org.exam.entity.User">
+        
+        </collection>
+        <collection property="classes" column="c_class_id" javaType="ArrayList" ofType="org.exam.entity.Classes">
+        
+        </collection>
 	</resultMap>
 	
 	<select id="findByCondition" parameterType="org.exam.vo.AttendanceConditionVo" resultMap="BaseResultMap">
-		select * from attendance
+		select a.*,count(us.user_id) AS course_total,count(ash.user_id) AS present_total
+		from attendance_inf a 
+		left join user_inf u on a.user_id = u.user_id 
+		left join user_subject_inf us on a.subject_id = us.subject_id 
+		left join attendance_sheet_inf ash on a.id = ash.attendance_id and us.user_id = ash.user_id and ash.status =1 
+		where 1=1
+		<if test="teacherUsername != null and teacherUsername != ''">
+			AND u.username = #{teacherUsername}
+		</if>
+		<if test="year != null">
+			AND a.year = #{year}
+		</if>
+		<if test="term != null">
+			AND a.term = #{term}
+		</if>
+		<if test="subjectId != null">
+			AND a.subject_id = #{subjectId}
+		</if>
+		order by a.end_time desc; 
 	</select>
 	
 </mapper>

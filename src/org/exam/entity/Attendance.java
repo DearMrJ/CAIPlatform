@@ -21,8 +21,15 @@ public class Attendance implements Serializable{
 	private String author;		//发布人名字
 	private Integer status;		//1有效，0失效(过时)
 	private Date createTime;	//签到创建时间
+	private Date updateTime;	//更新时间
+	private Date startTime;		//开始时间
 	private Date endTime;		//签到截至时间
 	
+	
+	@Transient
+	private Integer courseTotal;//课程总人数
+	@Transient
+	private Integer presentTotal;//出席总人数
 	@Transient
 	private List<User> users;
 	@Transient
@@ -73,6 +80,19 @@ public class Attendance implements Serializable{
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+	
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+	public Date getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
 	public Date getEndTime() {
 		return endTime;
 	}
@@ -82,6 +102,19 @@ public class Attendance implements Serializable{
 	
 	
 	
+	
+	public Integer getCourseTotal() {
+		return courseTotal;
+	}
+	public void setCourseTotal(Integer courseTotal) {
+		this.courseTotal = courseTotal;
+	}
+	public Integer getPresentTotal() {
+		return presentTotal;
+	}
+	public void setPresentTotal(Integer presentTotal) {
+		this.presentTotal = presentTotal;
+	}
 	public List<User> getUsers() {
 		return users;
 	}

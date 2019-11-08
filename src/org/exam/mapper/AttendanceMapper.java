@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.exam.entity.Attendance;
 import org.exam.util.MapperUtil;
+import org.exam.vo.AttendanceConditionVo;
 
 /**
  * @author Lynch
@@ -14,6 +15,6 @@ import org.exam.util.MapperUtil;
  */
 public interface AttendanceMapper extends MapperUtil<Attendance>{
 	
-	List<Attendance> findByCondition();
+	List<Attendance> findByCondition(AttendanceConditionVo vo);
 
 }
