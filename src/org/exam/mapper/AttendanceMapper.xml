@@ -5,7 +5,6 @@
 		<id property="id" column="id" jdbcType="INTEGER"/>
 		<result property="courseTotal" column="course_total" jdbcType="INTEGER"/>
 		<result property="presentTotal" column="present_total" jdbcType="INTEGER"/>
-		<result property="presentTotal" column="present_total" jdbcType="INTEGER"/>
 		<result column="class_id" property="classId" jdbcType="INTEGER" />
         <result column="subject_id" property="subjectId" jdbcType="INTEGER" />
         <result column="user_id" property="userId" jdbcType="VARCHAR" />
@@ -16,16 +15,21 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
         <association property="subject" javaType="org.exam.entity.Subject">
-        	
+       		<id property="id" column="s_id"/> 
+        	<result property="name" column="s_name"/>
         </association>
         <collection property="users" column="u_user_id" javaType="ArrayList" ofType="org.exam.entity.User">
-        
+        	<result property="userId" column="u_user_id"/>
+        	<result property="username" column="u_username"/>
+        	<result property="nickname" column="u_nickname"/>
         </collection>
         <collection property="classes" column="c_class_id" javaType="ArrayList" ofType="org.exam.entity.Classes">
-        
+        	<id property="id" column="c_class_id"/>
+        	<result property="name" column="c_name"/>
         </collection>
 	</resultMap>
 	
+	<!-- for teacher -->
 	<select id="findByCondition" parameterType="org.exam.vo.AttendanceConditionVo" resultMap="BaseResultMap">
 		select a.*,count(us.user_id) AS course_total,count(ash.user_id) AS present_total
 		from attendance_inf a 
@@ -34,7 +38,7 @@
 		left join attendance_sheet_inf ash on a.id = ash.attendance_id and us.user_id = ash.user_id and ash.status =1 
 		where 1=1
 		<if test="teacherUsername != null and teacherUsername != ''">
-			AND u.username = #{teacherUsername}
+			AND a.author = #{teacherUsername}
 		</if>
 		<if test="year != null">
 			AND a.year = #{year}
@@ -47,5 +51,32 @@
 		</if>
 		order by a.end_time desc; 
 	</select>
+	
+	<!-- 学生查询待考勤列表 -->
+	<select id="listOngoingAttendances" parameterType="org.exam.vo.AttendanceConditionVo" resultMap="BaseResultMap">
+		select a.id,a.author,a.status,s.id as s_id,s.name as s_name,a.start_time,a.end_time
+		from attendance_inf a 
+		left join subject_inf s on a.subject_id = s.id 
+		left join user_subject_inf us on us.subject_id = s.id and us.subject_id = a.subject_id 
+		left join user_inf u on u.user_id = us.user_id 
+		where 1 = 1 
+		<if test="studentUsername != null and studentUsername != ''">
+			AND u.username = #{studentUsername}
+		</if>
+	</select>
+	
+	<update id="updateAttendanceToStart">
+		UPDATE attendance_inf 
+		SET 
+			status = 1
+		WHERE status <![CDATA[ = ]]> 0 AND start_time <![CDATA[ <= ]]> #{currentTime} AND end_time <![CDATA[ > ]]> #{currentTime}
+	</update>
+	
+	<update id="updateAttendanceToEnd">
+		UPDATE attendance_inf 
+		SET 
+			status = 2 
+		WHERE status  <![CDATA[ <= ]]> 2 AND end_time <![CDATA[ <= ]]> #{currentTime}
+	</update>
 	
 </mapper>

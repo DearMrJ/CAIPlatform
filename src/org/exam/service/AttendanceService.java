@@ -23,16 +23,11 @@ public interface AttendanceService extends BaseService<Attendance>{
 	 */
 	List<Attendance> findByCondition(AttendanceConditionVo vo);
 	
-	/**
-	 * 根据状态查询所有
-	 * @return
-	 */
-	List<Attendance> selectAllByStatus(Integer status);
-
+	List<Attendance> listOngoingAttendances(AttendanceConditionVo vo);
 	
-	@Update("update "+CoreConst.ATTENDANCE_TABLE+" set status = #{status} where id = #{id}")
-	int updateStatusById(@Param("id") Integer id ,@Param("status") Integer status);
+	boolean updateAttendanceToStart();
 	
+	boolean updateAttendanceToEnd();
 	
 	
 	

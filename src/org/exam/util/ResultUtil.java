@@ -9,7 +9,7 @@ import com.github.pagehelper.PageInfo;
 
 public class ResultUtil{
 
-	public static ResponseVo success(){
+	public static ResponseVo success(){//200,500
 		return vo(CoreConst.SUCCESS_CODE,null,null);
 	}
 

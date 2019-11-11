@@ -1,0 +1,158 @@
+.xiao-col-1 {
+  width: 8.333%;
+  float: left;
+}
+
+.xiao-col-2 {
+  width: 16.666%;
+  float: left;
+}
+
+.xiao-col-3 {
+  width: 25%;
+  float: left;
+}
+
+.xiao-col-4 {
+  width: 33.333%;
+  float: left;
+}
+
+.xiao-col-5 {
+  width: 41.667%;
+  float: left;
+}
+
+.xiao-col-6 {
+  width: 50%;
+  float: left;
+}
+
+.xiao-col-7 {
+  width: 58.333%;
+  float: left;
+}
+
+.xiao-col-8 {
+  width: 66.666%;
+  float: left;
+}
+
+.xiao-col-9 {
+  width: 75%;
+  float: left;
+}
+
+.xiao-col-10 {
+  width: 83.333%;
+  float: left;
+}
+
+.xiao-col-11 {
+  width: 91.666%;
+  float: left;
+}
+
+.xiao-col-12 {
+  width: 100%;
+  float: left;
+}
+
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+
+}
+
+.container1 {
+  background-color: #F6F8F9;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.aside {
+  float: left;
+  background-color: #F6F8F9;
+  width: 250px;
+  height: 500px;
+}
+
+.main {
+  overflow: hidden;
+  background-color: white;
+  max-width: 90%;
+}
+
+a:visited {
+  color: #777777;
+}
+
+a:link {
+  color: #777777;
+}
+
+.box1 {
+  float: left;
+  width: 33%;
+}
+
+.box2 {
+  overflow: hidden;
+  max-width: 33%;
+}
+
+.box3 {
+  float: right;
+  width: 33%;
+}
+
+.head {
+  height: 113px;
+  margin: 30px 30px 0px 30px;
+  padding: 20px 20px 20px 20px;
+  background-color: #F6F8F9;
+  width: 300px;
+  font-size: 20px;
+  border-style: solid;
+  border-width: 1px 1px 0px 1px;
+  border-radius: 4px 4px 0px 0px;
+}
+
+.body {
+  width: 300px;
+  height: 177px;
+  margin: 0px 30px 0px 30px;
+  border-style: solid;
+  border-width: 1px 1px 0px 1px;
+  background: #fff;
+}
+
+.foot {
+  height: 52px;
+  width: 300px;
+  margin: 0px 30px 0px 30px;
+  border-radius: 0px 0px 4px 4px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 15px 15px 15px 15px;
+  margin: 0px 30px 30px 30px;
+}
+.message {
+  font-size: 15px;
+  color: #999;
+  background: url(images/10警告.png) no-repeat left center;
+  padding-left: 20px;
+  margin-top: 5px;
+}
+
+.wrong {
+  color: red;
+  background: url(images/08关闭.png) no-repeat left center;
+}
+
+.right {
+  color: green;
+  background: url(images/14成功.png) no-repeat left center;
+}
+h1,h2,h3,h4,h5{font-family:Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;line-height:1.28571429em;margin:calc(2rem - .14285714em) 0 1rem;font-weight:700;padding:0}h1{min-height:1rem;font-size:2rem}h2{font-size:30px}h3{font-size:1.28571429rem}h4{font-size:1.07142857rem}h5{font-size:1rem}h1:first-child,h2:first-child,h3:first-child,h4:first-child,h5:first-child{margin-top:0}h1:last-child,h2:last-child,h3:last-child,h4:last-child,h5:last-child{margin-bottom:0}

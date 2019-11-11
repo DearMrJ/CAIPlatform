@@ -1,264 +1,166 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>在线考试后台管理系统</title>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="/js/bootstrap/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/js/bootstrap/bootstrap-datetimepicker.min.css"/>
-    <link rel="stylesheet" href="/js/font-awesome/font-awesome.min.css"/>
-    <link rel="stylesheet" href="/js/adminlte/css/AdminLTE.min.css"/>
-    <link rel="stylesheet" href="/js/adminlte/css/all-skins.min.css"/>
-    <link rel="stylesheet" href="/js/pace/pace.css"/>
-    <link rel="stylesheet" href="/js/validate/validate.css"/>
-    <link rel="stylesheet" href="/js/bootstrap-table/css/bootstrap-table.min.css"/>
-    <link rel="stylesheet" href="/js/treegrid/jquery.treegrid.css"/>
-    <link rel="stylesheet" href="/js/ztree/css/ztree-bootstrap.css"/>
-    <link rel="stylesheet" href="/js/zplayer/css/zplayer.min.css"/>
-    <link rel="stylesheet" href="/js/upload/css/webuploader.css"/>
-    <link rel="stylesheet" href="/js/Ionicons/css/ionicons.min.css"/>
-    <link rel="stylesheet" href="/js/markdown/simplemde.min.css">
-    <link rel="stylesheet" href="/js/markdown/github-markdown.min.css">
-    <link rel="stylesheet" href="/js/markdown/highlight.min.css">
-    <link rel="stylesheet" href="/js/iCheck/minimal/blue.css"/>
-    <link rel="stylesheet" href="/css/admin-common.css"/>
-    <link rel="stylesheet" href="/css/examination.css"/>
-    <script src="/js/jquery/jquery.min.js"></script>
-    <script src="/js/bootstrap/bootstrap.min.js"></script>
-    <script src="/js/bootstrap/bootstrap-datetimepicker.min.js"></script>
-    <script src="/js/bootstrap/bootstrap-datetimepicker.zh-CN.js"></script>
-    <script src="/js/pace/pace.js"></script>
-    <script src="/js/jquery/jquery.slimscroll.min.js"></script>
-    <script src="/js/jquery/fastclick.min.js"></script>
-    <script src="/js/validate/validate.js"></script>
-    <script src="/js/layer/layer.js"></script>
-    <script src="/js/bootstrap-table/js/bootstrap-table.min.js"></script>
-    <script src="/js/bootstrap-table/js/bootstrap-table-zh-CN.min.js"></script>
-    <script src="/js/treegrid/jquery.treegrid.min.js"></script>
-    <script src="/js/treegrid/jquery.treegrid.extension.js"></script>
-    <script src="/js/treegrid/tree.table.js"></script>
-    <script src="/js/ztree/js/jquery.ztree.core.js"></script>
-    <script src="/js/ztree/js/jquery.ztree.excheck.js"></script>
-    <script src="/js/ztree/js/jquery.ztree.exedit.js"></script>
-    <script src="/js/upload/js/webuploader.js"></script>
-    <script src="/js/upload/js/jax.uploader.js"></script>
-    <script src="/js/upload/js/uploadCall.js"></script>
-    <script src="/js/zplayer/js/zplayer.min.js"></script>
-    <script src="/js/markdown/highlight.min.js"></script>
-    <script src="/js/markdown/simplemde.min.js"></script>
-    <script src="/js/iCheck/icheck.min.js"></script>
-    <script src="/js/chartJs/chart.js"></script>
-    <script src="/js/chartJs/echarts.min.js"></script>
-    <script src="/js/inline-attachment.js"></script>
-    <script src="/js/codemirror.inline-attachment.js"></script>
-    <script src="/js/core.js"></script>
-    <script src="/js/FileSaver.js"></script>
-    <script src="/js/jquery.wordexport.js"></script>
-</head>
-<body>
-<section class="content-header">
-	<ol class="breadcrumb">
-		<li><a href="/manager"><i class="fa fa-dashboard"></i> 首页</a></li>
-		<li class="active">管理首页</li>
-	</ol>
-</section>
-<!-- Main content -->
-<section class="content">
-	<div class="row">
-		<div class="col-lg-3 col-xs-6">
-			<div class="small-box bg-aqua">
-				<div class="inner">
-					<h3 th:text="${commentNums}">15</h3>
-					<p>新留言</p>
-				</div>
-				<div class="icon">
-					<i class="ion ion-chatbubbles"></i>
-				</div>
-				<a href="/manager#comments" class="small-box-footer">更多 <i
-					class="fa fa-arrow-circle-right"></i></a>
-			</div>
-		</div>
-		<div class="col-lg-3 col-xs-6">
-			<div class="small-box bg-green">
-				<div class="inner">
-					<h3 th:text="${subjectNums}">
-						53<sup style="font-size:20px">%</sup>
-					</h3>
-					<p>总课程数</p>
-				</div>
-				<div class="icon">
-					<i class="icon ion-compose"></i>
-				</div>
-				<a href="/manager#subjects" class="small-box-footer">更多 <i
-					class="fa fa-arrow-circle-right"></i></a>
-			</div>
-		</div>
-		<div class="col-lg-3 col-xs-6">
-			<div class="small-box bg-yellow">
-				<div class="inner">
-					<h3 th:text="${userNums}"></h3>
-					<p>用户量</p>
-				</div>
-				<div class="icon">
-					<i class="ion ion-person-add"></i>
-				</div>
-				<a href="/manager#users" class="small-box-footer">更多 <i
-					class="fa fa-arrow-circle-right"></i></a>
-			</div>
-		</div>
-		<div class="col-lg-3 col-xs-6">
-			<div class="small-box bg-red">
-				<div class="inner">
-					<h3 th:text="${questionNums}"></h3>
 
-					<p>题库量</p>
-				</div>
-				<div class="icon">
-					<i class="ion ion-cube"></i>
-				</div>
-				<a href="/manager#questions" class="small-box-footer">更多 <i
-					class="fa fa-arrow-circle-right"></i></a>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-6">
-			<div class="box box-primary">
-				<div class="box-header with-border">
-					<h3 class="box-title">最近发布的考试</h3>
-					<div class="box-tools pull-right">
-						<button type="button" class="btn btn-box-tool" data-widget="collapse">
-							<i class="fa fa-minus"></i>
-						</button>
-						<button type="button" class="btn btn-box-tool" data-widget="remove">
-							<i class="fa fa-times"></i>
-						</button>
-					</div>
-				</div>
-				<div class="box-body">
-					<ul class="products-list product-list-in-box" id="examList"></ul>
-				</div>
-				<div class="box-footer text-center">
-              		<a href="/manager#exams" class="uppercase">查 看 更 多 考 试</a>
-            	</div>
-			</div>
-		</div>
-		<div class="col-md-6">
-			<div class="box box-danger">
-				<div class="box-header with-border">
-					<h3 class="box-title">学院和学生人数统计</h3>
-					<div class="box-tools pull-right">
-						<button type="button" class="btn btn-box-tool" data-widget="collapse">
-							<i class="fa fa-minus"></i>
-						</button>
-						<button type="button" class="btn btn-box-tool" data-widget="remove">
-							<i class="fa fa-times"></i>
-						</button>
-					</div>
-				</div>
-				<div class="box-body">
-					<div id="pieChart" style="width:100%;height:325px"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-	
-	
-	<script type="text/javascript">
-		$(function () {
-			Core.postAjax("/api/aes","",function (data) {
-	            if(data.status==200){
-	            	build_exam_li(data);
-	            }else{
-	            	layer.msg(data.msg);
-	            }
-	        })
-	        
-			Core.postAjax("/api/aps","",function (data) {
-	            if(data.status==200){
-	                getData(data);
-	            }else{
-	            	layer.msg(data.msg);
-	            }
-	        })
-	        
-	        function getData(data){
-				var data = data.data;
-				var legendData = [];
-	            var seriesData = [];
-	            for (var i = 0; i < data.length; i++) {
-	                name = data[i].faculty_name;
-	                legendData.push(name); 
-	                seriesData.push({
-	                    name: name,
-	                    value: data[i].num
-	                });
-	            }
-	
-				//初始化echarts实例
-		        var myChart = echarts.init(document.getElementById('pieChart'));
-				
-		        //指定图表的配置项和数据
-		        option = {
-		       	    tooltip : {
-		       	        trigger: 'item',
-		       	        formatter: "{a} <br/>{b} : {c} 人"
-		       	    },
-		       	    legend: {
-		       	        left: 'left',
-		       	        data: legendData
-		       	    },
-		       	    series : [
-		       	        {
-		       	            name: '数据来源',
-		       	            type: 'pie',
-		       	            radius : '70%',
-		       	            center: ['50%', '50%'],
-		       	            data: seriesData,
-		       	            itemStyle: {
-		       	                emphasis: {
-		       	                    shadowBlur: 10,
-		       	                    shadowOffsetX: 0,
-		       	                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-		       	                }
-		       	            }
-		       	        }
-		       	    ]
-		       	}
-		      	//使用刚指定的配置项和数据显示图表。
-		        myChart.setOption(option);
-			}
-		})
-		
-		function build_exam_li(data){
-			var exams = data.data;
-			if(!exams.length == 0){
-				$.each(exams, function(index, items){
-					var statusSpan;
-					var imgDiv = $("<div class='product-img'></div>").append("<img src='"+items.img+"'/>");
-					if(items.status == 0){
-						statusSpan = $("<span>未开始</span>").addClass("label label-warning pull-right");
-					}else if(items.status == 1){
-						statusSpan = $("<span>进行中</span>").addClass("label label-success pull-right");
-					}else{
-						statusSpan = $("<span>已结束</span>").addClass("label label-danger pull-right");
-					}
-					var titleA = $("<a href='/manager#exams' class='product-title'></a>").append(items.title).append(statusSpan);
-					var desSpan = $("<span style='padding-top:5px'>"+items.nickname+"于"+items.create_time+"发布考试啦!</span>").addClass("product-description");
-					var infoDiv = $("<div class='product-info'></div>").append(titleA).append(desSpan);
-					$("<li class='item'></li>").append(imgDiv).append(infoDiv).appendTo("#examList");
-				})
-			}else{
-				$("<li class='item'>最近没有发布考试</li>").appendTo("#examList");
-			}
-		}
-	</script>
-	
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>辅助教学平台（教师端）</title>
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/easy.css">
+
+</head>
+
+<body style="background-color:#F6F8F9;">
+  <nav class="navbar navbar-default" style="height: 85px;">
+    <div class="container-fluid" style="height: 85px;">
+
+      <!-- logo -->
+      <div class="navbar-header" style="height: 85px;width: 40%;">
+        <a class="navbar-brand" href="#">
+          <img alt="Brand" style="margin-left: 90px;margin-top: 10px;"
+            src="/img/logo1.png">
+
+        </a>
+        <h2 style="font-weight: 300; margin-top: 30px;margin-left:50px;">辅助教学平台</h2>
+      </div>
+
+      <div class="nav navbar-nav" style="width: 60%; padding-left: 40%;">
+        <ul class="nav navbar-nav" style="margin-top: 20px; ">
+          <li><a href="#"><span class="glyphicon glyphicon-envelope" style="font-size: 25px;"></span></a></li>
+          <li role="presentation" class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="glyphicon glyphicon-user" style="font-size:25px;"></span id='user'><span id='user'>&nbsp
+                admin</span>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#">主页</a></li>
+              <li><a href="#">资料</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">退出</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container1 clearfix">
+    <aside class="aside" style="margin-top: 25px; padding-left: 30px;">
+
+      <ul class="nav nav-nav nav-stacked " style="text-align:center;">
+        <li role="presentation" class="active"><a href="#" style="color: black;"><span class="glyphicon glyphicon-home"
+              style="font-size:25px; padding-right: 45px;">&nbsp首页</span></a></li>
+        <li> &nbsp</li>
+        <li role="presentation" class="disabled"><a href="#"><span class="glyphicon glyphicon-th-list"
+              style="font-size:25px; padding-right: 45px;">&nbsp管理</span></a></li>
+        <li role="presentation"><a
+            href="#"
+            style="font-size: 18px; margin-top: 10px;">课程管理</a>
+        </li>
+        <li role="presentation"><a
+            href="#"
+            style="font-size: 18px; margin-top: 10px;">成绩管理</a>
+        </li>
+        <li role="presentation"><a
+            href="/attendance/list"
+            style="font-size: 18px; margin-top: 10px;">考勤管理</a>
+        </li>
+
+        <li role="presentation"><a
+            href="#"
+            style="font-size: 18px; margin-top: 10px;">学生评价</a>
+        </li>
+      </ul>
+
+    </aside>
+
+    <div class="main" style="margin-top: 25px;">
+      <div class="font" style="margin: 25px 0 25px 25px;;"><span style="font-size:20px">整体统计</span> </div>
+      <div class="box3" style="text-align:center;"><span class="glyphicon glyphicon-eye-open"
+          style="font-size:25px;">学生数</span></div>
+      <div class="box1" style="text-align:center;"><span class="glyphicon glyphicon-comment"
+          style="font-size:25px;">新消息</span></div>
+      <div class="box2" style="text-align:center;"><span class="glyphicon glyphicon-bookmark"
+          style="font-size:25px;">课程数</span></div>
+
+      <div class="box3" style="text-align:center; margin:25px 0 25px 0;"><span style="font-size:40px;">25</span></div>
+      <div class="box1" style="text-align:center; margin:25px 0 25px 0;"><span style="font-size:40px;">05</span></div>
+      <div class="box2" style="text-align:center; margin:25px 0 25px 0;"><span style="font-size:40px;">956</span></div>
+    </div>
+
+
+    <div class="main" style="margin-top: 25px;">
+      <div class="font" style="margin: 25px 0 25px 25px;;"><span style="font-size:20px">全部课程</span> </div>
+      <div class="container">
+        <div class="row">
+
+
+          <div class="col-md-4">
+            <div class="head"><span style="display: block; height: 40px;">计算机概论</span><span
+                style="font-size: 15px;">课程码：JK256</span><a href="#"><span class="glyphicon glyphicon-tag"
+                  style="margin-left: 40px; font-size: 25px;width: 100px; ">签到</a></span></div>
+            <div class="body">
+              <div class="p" style="margin-top: 10px; font-size: 45px;text-align:center;"><span
+                  class="glyphicon glyphicon-cloud" style="display: block;"></span><span
+                  style="font-size: 30px;">36人</span> </div><span
+                style="display: block; color:rgb(85, 88, 88); margin-left: 15px;">近期作业</span><span
+                style="display: block; font-size: 15px; margin-left: 15px; margin-bottom: 15px;">计算机概率论第一章作业</span>
+            </div>
+            <div class="foot" style="text-align:right;"><a href="">置顶 </a><a href=""> 编辑 </a><a href=""> 删除</a> </div>
+          </div>
+
+
+
+
+          <div class="col-md-4">
+            <div class="head"><span style="display: block; height: 40px;">计算机概论</span><span
+                style="font-size: 15px;">课程码：JK256</span><a href="#"><span class="glyphicon glyphicon-tag"
+                  style="margin-left: 40px; font-size: 25px;width: 100px; ">签到</a></span></div>
+            <div class="body">
+              <div class="p" style="margin-top: 10px; font-size: 45px;text-align:center;"><span
+                  class="glyphicon glyphicon-cloud" style="display: block;"></span><span
+                  style="font-size: 30px;">36人</span> </div><span
+                style="display: block; color:rgb(85, 88, 88); margin-left: 15px;">近期作业</span><span
+                style="display: block; font-size: 15px; margin-left: 15px; margin-bottom: 15px;">计算机概率论第一章作业</span>
+            </div>
+            <div class="foot" style="text-align:right;"><a href="">置顶 </a><a href=""> 编辑 </a><a href=""> 删除</a> </div>
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    var user = document.querySelector('#user');
+    console.log(user);
+    console.log(location.search);
+    var arr = location.search.split('&');
+    console.log(arr);
+    var username = arr[0].substr(10);
+    var password = arr[1].substr(9);
+    user.innerHTML = '&nbsp' + username;
+  </script>
+  .
 </body>
+
 </html>

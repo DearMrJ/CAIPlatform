@@ -133,5 +133,15 @@ public class Attendance implements Serializable{
 	public void setClasses(List<Classes> classes) {
 		this.classes = classes;
 	}
+	@Override
+	public String toString() {
+		return "Attendance [id=" + id + ", classId=" + classId + ", subjectId=" + subjectId + ", userId=" + userId
+				+ ", author=" + author + ", status=" + status + ", createTime=" + createTime + ", updateTime="
+				+ updateTime + ", startTime=" + startTime + ", endTime=" + endTime + ", courseTotal=" + courseTotal
+				+ ", presentTotal=" + presentTotal + ", users=" + users + ", subject=" + subject + ", classes="
+				+ classes + "]";
+	}
+	
+	
 	
 }

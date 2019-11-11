@@ -1,0 +1,4 @@
+.nav navbar-nav{
+      display: inline-block;
+  margin: 5px;
+}
