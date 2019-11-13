@@ -5,10 +5,9 @@ package org.exam.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Update;
 import org.exam.entity.Attendance;
-import org.exam.util.CoreConst;
+import org.exam.entity.AttendanceSheet;
+import org.exam.entity.User;
 import org.exam.vo.AttendanceConditionVo;
 
 /**
@@ -25,10 +24,10 @@ public interface AttendanceService extends BaseService<Attendance>{
 	
 	List<Attendance> listOngoingAttendances(AttendanceConditionVo vo);
 	
+	List<User> listTargetedStudents(AttendanceConditionVo vo);
+	
 	boolean updateAttendanceToStart();
 	
 	boolean updateAttendanceToEnd();
-	
-	
 	
 }

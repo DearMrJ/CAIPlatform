@@ -7,6 +7,7 @@
 		<result property="presentTotal" column="present_total" jdbcType="INTEGER"/>
 		<result column="class_id" property="classId" jdbcType="INTEGER" />
         <result column="subject_id" property="subjectId" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
         <result column="user_id" property="userId" jdbcType="VARCHAR" />
         <result column="author" property="author" jdbcType="VARCHAR" />
         <result column="status" property="status" jdbcType="INTEGER" />
@@ -28,6 +29,12 @@
         	<result property="name" column="c_name"/>
         </collection>
 	</resultMap>
+	<resultMap type="org.exam.entity.User" id="StudentsMap">
+		<id property="id" column="id" jdbcType="INTEGER"/>
+		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
+		<result property="username" column="username" jdbcType="VARCHAR"/>
+		<result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+	</resultMap>
 	
 	<!-- for teacher -->
 	<select id="findByCondition" parameterType="org.exam.vo.AttendanceConditionVo" resultMap="BaseResultMap">
@@ -37,8 +44,11 @@
 		left join user_subject_inf us on a.subject_id = us.subject_id 
 		left join attendance_sheet_inf ash on a.id = ash.attendance_id and us.user_id = ash.user_id and ash.status =1 
 		where 1=1
-		<if test="teacherUsername != null and teacherUsername != ''">
-			AND a.author = #{teacherUsername}
+		<if test="teacherUserId != null and teacherUserId != ''">
+			AND a.user_id = #{teacherUserId}
+		</if>
+		<if test="teacherNickname != null and teacherNickname != ''">
+			AND a.author = #{teacherNickname}
 		</if>
 		<if test="year != null">
 			AND a.year = #{year}
@@ -48,6 +58,9 @@
 		</if>
 		<if test="subjectId != null">
 			AND a.subject_id = #{subjectId}
+		</if>
+		<if test="type != null">
+			AND a.type = #{type}
 		</if>
 		order by a.end_time desc; 
 	</select>
@@ -60,9 +73,38 @@
 		left join user_subject_inf us on us.subject_id = s.id and us.subject_id = a.subject_id 
 		left join user_inf u on u.user_id = us.user_id 
 		where 1 = 1 
+		<if test="studentUserId != null and studentUserId != ''">
+			AND u.user_id = #{studentUserId}
+		</if>
 		<if test="studentUsername != null and studentUsername != ''">
 			AND u.username = #{studentUsername}
 		</if>
+		<if test="studentNickname != null and studentNickname != ''">
+			AND u.nickname = #{studentNickname}
+		</if>
+		<if test="type != null">
+			AND a.type = #{type}
+		</if>
+	</select>
+	
+	<!-- 老师查询单体考勤 -->
+	<select id="listTargetedStudents" parameterType="org.exam.vo.AttendanceConditionVo" resultMap="StudentsMap">
+		select u.id,u.user_id,u.username,u.nickname
+		from subject_inf s 
+		left join user_subject_inf us on s.id = us.subject_id 
+		left join user_inf u on u.user_id = us.user_id 
+		left join class_inf c on c.id = u.class_id 
+		where 1 = 1
+		<if test="subjectId != null and subjectId != ''">
+	 		AND s.id = #{subjectId}
+		</if>
+		<if test="classId != null and classId != ''">
+	 		AND c.id = #{classId}
+		</if>
+	</select>
+	
+	<select id="">
+		
 	</select>
 	
 	<update id="updateAttendanceToStart">

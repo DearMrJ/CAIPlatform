@@ -17,8 +17,12 @@ public class Attendance implements Serializable{
 
 	private Integer classId;
 	private Integer subjectId;
+	private String title;
+	private String year;
+	private Integer term;
 	private String userId;		//发布者id
 	private String author;		//发布人名字
+	private Integer type;
 	private Integer status;		//1有效，0失效(过时)
 	private Date createTime;	//签到创建时间
 	private Date updateTime;	//更新时间
@@ -56,6 +60,12 @@ public class Attendance implements Serializable{
 	public void setSubjectId(Integer subjectId) {
 		this.subjectId = subjectId;
 	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	public String getUserId() {
 		return userId;
 	}
@@ -80,7 +90,24 @@ public class Attendance implements Serializable{
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
+	public Integer getTerm() {
+		return term;
+	}
+	public void setTerm(Integer term) {
+		this.term = term;
+	}
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
+	}
 	public Date getUpdateTime() {
 		return updateTime;
 	}

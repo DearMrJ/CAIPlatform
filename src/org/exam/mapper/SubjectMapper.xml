@@ -35,6 +35,9 @@
         s.*
         FROM subject_inf s
         WHERE 1=1
+        <if test="userId !=null and userId != ''">
+			AND s.user_id = #{userId}
+		</if>
         <if test="author !=null and author != ''">
 			AND s.author = #{author}
 		</if>
@@ -45,6 +48,12 @@
 			AND s.`status` = #{status}
 		</if>
 		ORDER BY s.sort ASC
+    </select>
+    
+    <select id="subjectFromAttendance" parameterType="Integer" resultMap="BaseResultMap">
+    	select s.* from subject_inf s 
+    	left join attendance_inf a on s.id = a.subject_id 
+    	where a.id = #{id};
     </select>
     
     <delete id="deleteBatch" parameterType="map">

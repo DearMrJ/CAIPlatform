@@ -15,9 +15,10 @@ public class Subject implements Serializable{
 	@Id
 	private Integer id;
 	private String name;
+	private String code;		//选课码，备用
 	private String description;
 	private String img;
-	private String userId;		//创建者
+	private String userId;		//创建者id
     private String author;		//创建者
     private Integer sort;		//排序因子
 	private Integer status;
@@ -44,6 +45,14 @@ public class Subject implements Serializable{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getDescription() {

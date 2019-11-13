@@ -1,15 +1,15 @@
-/**
- * 
- */
 package org.exam.controller;
 
 import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
 import org.exam.entity.Attendance;
+import org.exam.entity.AttendanceSheet;
+import org.exam.entity.Grade;
 import org.exam.entity.Subject;
 import org.exam.entity.User;
 import org.exam.service.AttendanceService;
+import org.exam.service.AttendanceSheetService;
 import org.exam.service.SubjectService;
 import org.exam.service.UserService;
 import org.exam.util.PageUtil;
@@ -39,23 +39,35 @@ public class AttendanceController {
 	@Autowired
 	private AttendanceService attendanceService;
 	@Autowired
+	private AttendanceSheetService attendanceSheetService;
+	@Autowired
 	private UserService userService;
 	@Autowired
 	private SubjectService subjectService;
 	
 	
-	@GetMapping("list")
-	public String loadAttendance(Model model) {
-		//放入可选条件数据
-		//
-		User user = (User)SecurityUtils.getSubject().getPrincipal();
-		Subject subject = new Subject();
-		subject.setAuthor(user.getUsername());
-		//只返回个人所带课程信息
-		List<Subject> subjects = subjectService.selectSubjects(subject);
-		model.addAttribute(subjects);
-		return "attendance/list";
+	@GetMapping("attendance")
+	public String toAttendance() {
+		if (SecurityUtils.getSubject().isAuthenticated()) {
+			return "index/attendance";
+		}else {
+			return "redirect:/login";
+		}
 	}
+	
+//	@GetMapping("list")
+//	public String loadAttendance(Model model) {
+//		//放入可选条件数据
+//		//
+//		User user = (User)SecurityUtils.getSubject().getPrincipal();
+//		Subject subject = new Subject();
+//		subject.setUserId(user.getUserId());
+////		subject.setAuthor(user.getNickname());//特殊情况下不唯一
+//		//只返回个人所带课程信息
+//		List<Subject> subjects = subjectService.selectSubjects(subject);
+//		model.addAttribute("subjects",subjects);
+//		return "attendance/list";
+//	}
 	
 	@PostMapping("list")
 	@ResponseBody
@@ -69,10 +81,11 @@ public class AttendanceController {
 		PageHelper.startPage(PageUtil.getPageNo(limit, offset), limit);//最近一次查询有效
 		if (!roleList.contains("超级管理员")) {
 			if (roleList.contains("老师")) {
-				vo.setTeacherUsername(user.getUsername());
+				vo.setTeacherUserId(user.getUserId());
 				attendanceList = attendanceService.findByCondition(vo);
 			}else {
-				vo.setStudentUsername(user.getUsername());
+				vo.setStudentUserId(user.getUserId());
+				vo.setType(1);//仅回显全体签到
 				attendanceList = attendanceService.listOngoingAttendances(vo);
 			}
 		}
@@ -86,10 +99,11 @@ public class AttendanceController {
 		//
 		User user = (User)SecurityUtils.getSubject().getPrincipal();
 		Subject subject = new Subject();
-		subject.setAuthor(user.getUsername());
+		subject.setAuthor(user.getUserId());
+//		subject.setAuthor(user.getNickname());
 		//只返回个人所带课程信息
 		List<Subject> subjects = subjectService.selectSubjects(subject);
-		model.addAttribute(subjects);
+		model.addAttribute("subjects",subjects);
 		return "attendance/publish";
 	}
 	
@@ -131,5 +145,71 @@ public class AttendanceController {
 	
 	
 	//删除
+	
+	
+	/**
+	 * 验证该用户是否已经参加过此次考勤
+	 * @param id
+	 * @return
+	 */
+	@PostMapping("/validate")
+	@ResponseBody
+	public ResponseVo validate(Integer id) {
+		User user = (User)SecurityUtils.getSubject().getPrincipal();
+		AttendanceSheet ash  = attendanceSheetService.validate(id,user.getUserId());
+		if(ash != null) {
+			return ResultUtil.error("你已经参加过该场次考勤,不能再参加这场考勤了，如有疑问请咨询代课教师！");
+		}else {
+			return ResultUtil.success("请稍后,不要走开哟~");
+		}
+	}
+	
+	@GetMapping("/startAttendance")
+	public String startToCheck(Model model,Integer id) {
+		try {
+			Attendance attendance = attendanceService.selectByPrimaryKey(id);
+			Subject subject = subjectService.subjectFromAttendance(id);
+			attendance.setSubject(subject);
+			User user = (User) SecurityUtils.getSubject().getPrincipal();
+			model.addAttribute("attendance", attendance);
+			model.addAttribute("user", user);
+			return "index/check";
+		} catch (NullPointerException e) {
+			System.err.println("【异常定位】====>org.exam.controller.AttendanceController.startToCheck()");
+			System.err.println("空指针异常，请清空表后重新进入此页！");
+			return "index/check";
+		} catch (Exception e) {
+			System.err.println("【异常定位】====>org.exam.controller.AttendanceController.startToCheck()");
+			return "index/check";
+		}
+	}
+	
+	@PostMapping("/startAttendance")
+	@ResponseBody
+	public PageResultVo checkInRecords(Integer id, Integer limit, Integer offset) {
+		PageHelper.startPage(PageUtil.getPageNo(limit, offset), limit);
+		List<AttendanceSheet> asList = attendanceSheetService.currentCheckInRecords(id);
+		System.out.println(asList);
+		PageInfo<AttendanceSheet> pages = new PageInfo<>(asList);
+		return ResultUtil.table(asList, pages.getTotal(), pages);
+	}
+	
+	@PostMapping("/checkIn")
+	@ResponseBody
+	public ResponseVo checkIn(Integer id, String userId) {
+		try {
+			AttendanceSheet attendanceSheet = new AttendanceSheet();
+			attendanceSheet.setAttendanceId(id);
+			attendanceSheet.setUserId(userId);
+			int checkIn = attendanceSheetService.checkIn(attendanceSheet);
+			if (checkIn > 0) {
+				return ResultUtil.success("签到成功，再接再厉呀臭弟弟~");
+			}else {
+				return ResultUtil.error("签到失败了QAQ");
+			}
+		} catch (Exception e) {
+			return ResultUtil.error("后台出了点问题,签到失败了QAQ,请咨询代课教师！");
+		}
+	}
 
 }

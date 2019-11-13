@@ -14,6 +14,8 @@ public interface SubjectMapper extends MapperUtil<Subject> {
 	int deleteBatch(Integer[] ids);
 	
 	Subject selectById(Integer id);
+	
+	Subject subjectFromAttendance(Integer id);
 
 	@Select("select count(id) nums from subject")
 	int totalNum();

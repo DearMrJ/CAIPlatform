@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.exam.mapper.AttendanceSheetMapper">
+
+	<resultMap type="org.exam.entity.AttendanceSheet" id="BaseResultMap">
+		<id property="id" column="id" jdbcType="INTEGER"/>
+		<result property="attendanceId" column="attendance_id" jdbcType="INTEGER"/>
+		<result property="userId" column="user_id" jdbcType="VARCHAR"/>
+		<result property="status" column="status" jdbcType="INTEGER"/>
+		<result property="checkTime" column="check_time" jdbcType="TIMESTAMP"/>
+		<association property="user" javaType="org.exam.entity.User">
+			<result property="userId" column="u_user_id" jdbcType="VARCHAR"/>
+			<result property="username" column="username" jdbcType="VARCHAR"/>
+			<result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+			<result property="classId" column="class_id" jdbcType="INTEGER"/>
+		</association>
+		<association property="attendance" javaType="org.exam.entity.Attendance">
+			<id property="id" column="a_id" jdbcType="INTEGER"/>
+			<result property="subjectId" column="subject_id" jdbcType="INTEGER"/>
+		</association>
+		<association property="classes" javaType="org.exam.entity.Classes">
+			<id property="id" column="c_id" jdbcType="INTEGER"/>
+			<result property="name" column="name" jdbcType="VARCHAR"/>
+		</association>
+	</resultMap>
+	
+	<select id="currentCheckInRecords" parameterType="Integer" resultMap="BaseResultMap">
+		select ash.*,c.id as c_id,c.name,u.user_id as u_user_id,u.username,u.nickname,a.id,a.subject_id
+		from attendance_inf a 
+		left join attendance_sheet_inf ash on a.id = ash.attendance_id 
+		left join user_inf u on ash.user_id = u.user_id 
+		left join user_inf u2 on a.user_id = u2.user_id 
+        left join class_inf c on u.class_id = c.id
+		where a.id = #{id} 
+		order by ash.check_time desc
+	</select>
+	
+	<update id="checkIn" parameterType="org.exam.entity.AttendanceSheet">
+		update attendance_sheet_inf 
+		set status = 1,check_time = now() 
+		where 1 = 1
+			AND attendance_id <![CDATA[ = ]]> #{attendanceId}
+			AND user_id <![CDATA[ = ]]> #{userId}
+	</update>
+	
+	<update id="checkOut" parameterType="org.exam.entity.AttendanceSheet">
+		update attendance_sheet_inf 
+		set status = 0,check_time = null
+		where 1 = 1
+			AND attendance_id <![CDATA[ = ]]> #{attendanceId}
+			AND user_id <![CDATA[ = ]]> #{userId}
+			AND status <![CDATA[ > ]]> 0
+	</update>
+	
+	<update id="onLeave" parameterType="org.exam.entity.AttendanceSheet">
+		update attendance_sheet_inf 
+		set status = 2,check_time = now() 
+		where 1 = 1 
+			AND attendance_id <![CDATA[ = ]]> #{attendanceId}
+			AND user_id <![CDATA[ = ]]> #{userId}
+			AND status <![CDATA[ < ]]> 2
+	</update>
+	
+</mapper>

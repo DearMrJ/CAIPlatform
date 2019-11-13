@@ -24,6 +24,10 @@ public class AttendanceSheet implements Serializable{
 	private User user;
 	@Transient
 	private Attendance attendance;
+	@Transient
+	private Classes classes;
+	@Transient
+	private Subject subject;
 	
 	public Integer getId() {
 		return id;
@@ -55,6 +59,9 @@ public class AttendanceSheet implements Serializable{
 	public void setCheckTime(Date checkTime) {
 		this.checkTime = checkTime;
 	}
+	
+	
+	
 	public User getUser() {
 		return user;
 	}
@@ -67,7 +74,25 @@ public class AttendanceSheet implements Serializable{
 	public void setAttendance(Attendance attendance) {
 		this.attendance = attendance;
 	}
+	public Classes getClasses() {
+		return classes;
+	}
+	public void setClasses(Classes classes) {
+		this.classes = classes;
+	}
+	public Subject getSubject() {
+		return subject;
+	}
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
 	
 	
+	@Override
+	public String toString() {
+		return "AttendanceSheet [id=" + id + ", attendanceId=" + attendanceId + ", userId=" + userId + ", status="
+				+ status + ", checkTime=" + checkTime + ", user=" + user + ", attendance=" + attendance + ", classes="
+				+ classes + ", subject=" + subject + "]";
+	}
 	
 }

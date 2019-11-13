@@ -44,4 +44,12 @@ public class SubjectServiceImpl extends BaseServiceImpl<Subject> implements Subj
 		return subjectMapper.totalNum();
 	}
 
+	/**
+	 * 
+	 */
+	@Override
+	public Subject subjectFromAttendance(Integer id) {
+		return  subjectMapper.subjectFromAttendance(id);
+	}
+
 }

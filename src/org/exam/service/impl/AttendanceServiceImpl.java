@@ -7,12 +7,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.exam.entity.Attendance;
+import org.exam.entity.User;
 import org.exam.mapper.AttendanceMapper;
 import org.exam.service.AttendanceService;
 import org.exam.vo.AttendanceConditionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 /**
  * @author Lynch
@@ -53,12 +53,21 @@ public class AttendanceServiceImpl extends BaseServiceImpl<Attendance> implement
 
 
 	/**
-	 * 
+	 * 学生查看进行中的考勤活动
 	 */
 	@Override
 	public List<Attendance> listOngoingAttendances(AttendanceConditionVo vo) {
 		return attendanceMapper.listOngoingAttendances(vo);
 	}
-	
 
+
+	/**
+	 * 返回考勤目标 科目/班级 人员信息(老师用于单体考勤)
+	 */
+	@Override
+	public List<User> listTargetedStudents(AttendanceConditionVo vo) {
+		return attendanceMapper.listTargetedStudents(vo);
+	}
+
+	
 }

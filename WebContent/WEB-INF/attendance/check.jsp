@@ -71,7 +71,7 @@
           <li><a href="#"><span class="glyphicon glyphicon-envelope" style="font-size: 25px;"></span></a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span class="glyphicon glyphicon-user" style="font-size:25px;"></span>&nbsp admin<span
+              <span class="glyphicon glyphicon-user" style="font-size:25px;"></span>&nbsp; admin<span
                 class="caret"></span>
             </a>
             <ul class="dropdown-menu">
@@ -92,10 +92,10 @@
       <ul class="nav nav-nav nav-stacked " style="text-align:center;">
         <li role="presentation" class="active"><a
             href="file:///C:/Users/Mr.Xiao/Desktop/%E8%BE%85%E5%8A%A9%E6%95%99%E5%AD%A6%E5%B9%B3%E5%8F%B0/teacher1.html"><span
-              class="glyphicon glyphicon-home" style="font-size:25px; padding-right: 45px;">&nbsp首页</span></a></li>
+              class="glyphicon glyphicon-home" style="font-size:25px; padding-right: 45px;">&nbsp;首页</span></a></li>
         <li> &nbsp</li>
         <li role="presentation" class="disabled"><a href="#"><span class="glyphicon glyphicon-th-list"
-              style="font-size:25px; padding-right: 45px;">&nbsp管理</span></a></li>
+              style="font-size:25px; padding-right: 45px;">&nbsp;管理</span></a></li>
         <li role="presentation"><a
             href="file:///C:/Users/Mr.Xiao/Desktop/%E8%BE%85%E5%8A%A9%E6%95%99%E5%AD%A6%E5%B9%B3%E5%8F%B0/teacher2.html"
             style="font-size: 18px; color: black;margin-top: 10px;">课程管理</a>

@@ -13,6 +13,10 @@ public class AttendanceConditionVo extends BaseConditionVo{
 
 	private String teacherUsername;
 	
+	private String teacherUserId;
+	
+	private String teacherNickname;
+	
 	private String grade;
 	
 	private Integer status;
@@ -25,16 +29,36 @@ public class AttendanceConditionVo extends BaseConditionVo{
 	
 	private Integer term;
 	
-	private String studentUsername;
-
-
+	private Integer type;
 	
+	private String studentUsername;
+	
+	private String studentNickname;
+	
+	private String studentUserId;
+
 	public String getTeacherUsername() {
 		return teacherUsername;
 	}
 
 	public void setTeacherUsername(String teacherUsername) {
 		this.teacherUsername = teacherUsername;
+	}
+
+	public String getTeacherUserId() {
+		return teacherUserId;
+	}
+
+	public void setTeacherUserId(String teacherUserId) {
+		this.teacherUserId = teacherUserId;
+	}
+
+	public String getTeacherNickname() {
+		return teacherNickname;
+	}
+
+	public void setTeacherNickname(String teacherNickname) {
+		this.teacherNickname = teacherNickname;
 	}
 
 	public String getGrade() {
@@ -85,6 +109,14 @@ public class AttendanceConditionVo extends BaseConditionVo{
 		this.term = term;
 	}
 
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
 	public String getStudentUsername() {
 		return studentUsername;
 	}
@@ -92,5 +124,24 @@ public class AttendanceConditionVo extends BaseConditionVo{
 	public void setStudentUsername(String studentUsername) {
 		this.studentUsername = studentUsername;
 	}
+
+	public String getStudentNickname() {
+		return studentNickname;
+	}
+
+	public void setStudentNickname(String studentNickname) {
+		this.studentNickname = studentNickname;
+	}
+
+	public String getStudentUserId() {
+		return studentUserId;
+	}
+
+	public void setStudentUserId(String studentUserId) {
+		this.studentUserId = studentUserId;
+	}
+
+
+	
 	
 }

@@ -14,6 +14,8 @@ public interface SubjectService extends BaseService<Subject> {
     int deleteBatch(Integer[] ids);
     
     Subject selectById(Integer id);
+    
+    Subject subjectFromAttendance(Integer id);
 
     /**
      * 验证该课程是否有子数据
