@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.shiro.SecurityUtils;
 import org.exam.entity.Attendance;
 import org.exam.entity.AttendanceSheet;
-import org.exam.entity.Grade;
 import org.exam.entity.Subject;
 import org.exam.entity.User;
 import org.exam.service.AttendanceService;
@@ -93,7 +92,7 @@ public class AttendanceController {
 		return ResultUtil.table(attendanceList, pages.getTotal(), pages);
 	}
 	
-	@GetMapping("/add")
+	@GetMapping("list")
 	public String add(Model model) {
 		//
 		//
@@ -104,8 +103,30 @@ public class AttendanceController {
 		//只返回个人所带课程信息
 		List<Subject> subjects = subjectService.selectSubjects(subject);
 		model.addAttribute("subjects",subjects);
+		return "attendance/list";
+	}
+	
+	@GetMapping("publish")
+	public String showDetail() {
+		//subject、status、class、username、nickname
 		return "attendance/publish";
 	}
+	
+	
+	@GetMapping("add")
+	public String addCondition(Model model) {
+		//
+		//
+		User user = (User)SecurityUtils.getSubject().getPrincipal();
+		Subject subject = new Subject();
+		subject.setAuthor(user.getUserId());
+//		subject.setAuthor(user.getNickname());
+		//只返回个人所带课程信息
+		List<Subject> subjects = subjectService.selectSubjects(subject);
+		model.addAttribute("subjects",subjects);
+		return "attendance/add";
+	}
+	
 	
 	
 	@PostMapping("/add")

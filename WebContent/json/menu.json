@@ -3,159 +3,214 @@
 	"msg": "ok",
 	"data": [{
 			"id": 1,
-			"name": "会员管理",
-			"icon": "&#xe6b8;",
+			"name": "学院管理",
+			"icon": "&#59030;",
+			"shiroHead": "<shiro:hasRole name='超级管理员'>",
+			"shiroTail": "</shiro:hasRole>",
 			"url": "",
 			"children": [{
 				"id": 2,
-				"name": "会员列表",
+				"name": "学院列表",
 				"icon": "",
-				"url": "./pages/member/list.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			}, {
 				"id": 3,
-				"name": "会员删除",
+				"name": "学院xx",
 				"icon": "",
-				"url": "./pages/member/del.html"
-			}, {
-				"id": 4,
-				"name": "会员管理",
-				"icon": "&#xe70b;",
-				"url": "",
-				"children": [{
-					"id": 5,
-					"name": "输入框操作",
-					"icon": "",
-					"url": "./pages/member/addInput.html"
-				}, {
-					"id": 6,
-					"name": "三级菜单演示",
-					"icon": "",
-					"url": "./pages/404.html"
-				}, {
-					"id": 7,
-					"name": "导航菜单演示",
-					"icon": "&#xe70b;",
-					"url": "./pages/404.html"
-				}]
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			}]
 		},
 		{
-			"id": 8,
-			"name": "文章管理",
+			"id": 4,
+			"name": "课程管理",
 			"icon": "&#xe705;",
+			"shiroHead": "",
+			"shiroTail": "",
 			"url": "",
 			"children": [{
-				"id": 9,
-				"name": "文章列表",
+				"id": 5,
+				"name": "课程列表",
 				"icon": "",
-				"url": "./pages/article/list.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			}, {
-				"id": 10,
-				"name": "分类管理",
+				"id": 6,
+				"name": "课程xx",
 				"icon": "",
-				"url": "./pages/article/category.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			}]
 		},
 		{
-			"id": 11,
-			"name": "订单管理",
-			"icon": "&#xe723;",
+			"id": 7,
+			"name": "考勤管理",
+			"icon": "&#59146;",
+			"shiroHead": "",
+			"shiroTail": "",
 			"url": "",
 			"children": [{
-				"id": 12,
-				"name": "订单列表",
+				"id": 8,
+				"name": "考勤列表",
 				"icon": "",
-				"url": "./pages/order/list.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": "attendance/list"
+			}, {
+				"id": 9,
+				"name": "考勤xx",
+				"icon": "",
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
+			}]
+		},
+		{
+			"id": 10,
+			"name": "考试管理",
+			"icon": "&#59059;",
+			"shiroHead": "",
+			"shiroTail": "",
+			"url": "",
+			"children": [{
+				"id": 11,
+				"name": "考试列表",
+				"icon": "",
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
+			}, {
+				"id": 12,
+				"name": "考试管理",
+				"icon": "",
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			}]
 		},
 		{
 			"id": 13,
 			"name": "管理员权限",
 			"icon": "&#xe726;",
+			"shiroHead": "",
+			"shiroTail": "",
 			"url": "",
 			"children": [{
 				"id": 14,
 				"name": "管理员列表",
 				"icon": "",
-				"url": "./pages/admin/list.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			},
 			{
 				"id": 15,
 				"name": "角色管理",
 				"icon": "",
-				"url": "./pages/admin/role.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			},
 			{
 				"id": 16,
 				"name": "权限分类",
 				"icon": "",
-				"url": "./pages/admin/cate.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			},
 			{
 				"id": 17,
 				"name": "权限管理",
 				"icon": "",
-				"url": "./pages/admin/rule.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			}]
 		},
 		{
 			"id": 18,
 			"name": "系统统计",
 			"icon": "&#xe6ce;",
+			"shiroHead": "",
+			"shiroTail": "",
 			"url": "",
 			"children": [{
 				"id": 19,
 				"name": "拆线图",
 				"icon": "",
-				"url": "./pages/echarts/echarts1.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			},
 			{
 				"id": 20,
 				"name": "柱状图",
 				"icon": "",
-				"url": "./pages/echarts/echarts2.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			},
 			{
 				"id": 21,
 				"name": "地图",
 				"icon": "",
-				"url": "./pages/echarts/echarts3.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			},
 			{
 				"id": 22,
 				"name": "饼图",
 				"icon": "",
-				"url": "./pages/echarts/echarts4.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			},
 			{
 				"id": 23,
 				"name": "雷达图",
 				"icon": "",
-				"url": "./pages/echarts/echarts5.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			},
 			{
 				"id": 24,
 				"name": "k线图",
 				"icon": "",
-				"url": "./pages/echarts/echarts6.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			},
 			{
 				"id": 25,
 				"name": "热力图",
 				"icon": "",
-				"url": "./pages/echarts/echarts7.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			},
 			{
 				"id": 26,
 				"name": "仪表图",
 				"icon": "",
-				"url": "./pages/echarts/echarts8.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			},
 			{
 				"id": 27,
 				"name": "地图DIY实例",
 				"icon": "",
-				"url": "./pages/echarts/echarts9.html"
+				"shiroHead": "",
+				"shiroTail": "",
+				"url": ""
 			}]
 		}
 	]

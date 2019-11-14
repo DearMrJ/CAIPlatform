@@ -15,13 +15,13 @@
   </sql>
 
   <select id="findRoleByUserId" resultType="java.lang.String">
-    SELECT r.role_id FROM role r LEFT JOIN user_role ur ON r.role_id = ur.role_id
+    SELECT r.role_id FROM role_inf r LEFT JOIN user_role_inf ur ON r.role_id = ur.role_id
     WHERE ur.user_id = #{userId,jdbcType=VARCHAR}
   </select>
 
   <select id="selectRoles" parameterType="org.exam.entity.Role" resultMap="BaseResultMap" >
     select <include refid="Base_Column_List"/>
-    FROM role
+    FROM role_inf
     WHERE status=1
     <if test="name !=null and name != ''">
         AND name like concat('%', #{name}, '%')
@@ -30,7 +30,7 @@
 
   <update id="updateStatusBatch" parameterType="map">
     UPDATE
-    role
+    role_inf
     SET
     status=#{status}, update_time=now()
     where
@@ -42,7 +42,7 @@
 
   <update id="updateByRoleId" parameterType="map">
      UPDATE
-      role
+      role_inf
       SET
       name=#{name},description=#{description}, update_time=now()
       where

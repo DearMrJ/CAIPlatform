@@ -187,7 +187,7 @@
     	COUNT(u.user_id) AS num,
     	f.name AS faculty_name
     	from
-    	user u
+    	user_inf u
 		INNER JOIN class_inf c ON u.class_id = c.id
 		INNER JOIN faculty_inf f ON c.faculty_id = f.id 
 		GROUP BY

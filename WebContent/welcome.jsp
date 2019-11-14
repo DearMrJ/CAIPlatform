@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<meta charset="utf-8">
+	<head>
+	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>在线考试后台管理系统</title>
+    <title>45后台管理</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="/js/bootstrap/bootstrap.min.css"/>
     <link rel="stylesheet" href="/js/bootstrap/bootstrap-datetimepicker.min.css"/>
@@ -52,76 +52,76 @@
     <script src="/js/markdown/highlight.min.js"></script>
     <script src="/js/markdown/simplemde.min.js"></script>
     <script src="/js/iCheck/icheck.min.js"></script>
-    <script src="/js/chartJs/chart.js"></script>
+    <script src="/js/chartJs/Chart.js"></script>
     <script src="/js/chartJs/echarts.min.js"></script>
     <script src="/js/inline-attachment.js"></script>
     <script src="/js/codemirror.inline-attachment.js"></script>
     <script src="/js/core.js"></script>
     <script src="/js/FileSaver.js"></script>
     <script src="/js/jquery.wordexport.js"></script>
-</head>
-<body>
-<section class="content-header">
+	</head>
+	<body>
+		<section class="content-header">
 	<ol class="breadcrumb">
-		<li><a href="/manager"><i class="fa fa-dashboard"></i> 首页</a></li>
+		<li><a href="/welcome.jsp"><i class="fa fa-dashboard"></i> 首页</a></li>
 		<li class="active">管理首页</li>
 	</ol>
 </section>
 <!-- Main content -->
 <section class="content">
 	<div class="row">
-		<div class="col-lg-3 col-xs-6">
+		<div class="col-lg-3 col-xs-3">
 			<div class="small-box bg-aqua">
 				<div class="inner">
-					<h3 th:text="${commentNums}">15</h3>
-					<p>新留言</p>
+					<h3>${commentNums}<sup style="font-size:20px">人</sup></h3>
+					<p>学生总数</p>
 				</div>
 				<div class="icon">
 					<i class="ion ion-chatbubbles"></i>
 				</div>
-				<a href="/manager#comments" class="small-box-footer">更多 <i
+				<a href="/manager#comments" class="small-box-footer" target="container">更多 <i
 					class="fa fa-arrow-circle-right"></i></a>
 			</div>
 		</div>
-		<div class="col-lg-3 col-xs-6">
+		<div class="col-lg-3 col-xs-3">
 			<div class="small-box bg-green">
 				<div class="inner">
-					<h3 th:text="${subjectNums}">
-						53<sup style="font-size:20px">%</sup>
+					<h3>
+					${subjectNums}<sup style="font-size:20px">%</sup>
 					</h3>
 					<p>总课程数</p>
 				</div>
 				<div class="icon">
 					<i class="icon ion-compose"></i>
 				</div>
-				<a href="/manager#subjects" class="small-box-footer">更多 <i
+				<a href="/manager#subjects" class="small-box-footer" target="container">更多 <i
 					class="fa fa-arrow-circle-right"></i></a>
 			</div>
 		</div>
-		<div class="col-lg-3 col-xs-6">
+		<div class="col-lg-3 col-xs-3">
 			<div class="small-box bg-yellow">
 				<div class="inner">
-					<h3 th:text="${userNums}"></h3>
+					<h3>${userNums}<sup style="font-size:20px">人</sup></h3>
 					<p>用户量</p>
 				</div>
 				<div class="icon">
 					<i class="ion ion-person-add"></i>
 				</div>
-				<a href="/manager#users" class="small-box-footer">更多 <i
+				<a href="/manager#users" class="small-box-footer" target="container">更多 <i
 					class="fa fa-arrow-circle-right"></i></a>
 			</div>
 		</div>
-		<div class="col-lg-3 col-xs-6">
+		<div class="col-lg-3 col-xs-3">
 			<div class="small-box bg-red">
 				<div class="inner">
-					<h3 th:text="${questionNums}"></h3>
+					<h3>${questionNums}<sup style="font-size:20px">道</sup></h3>
 
 					<p>题库量</p>
 				</div>
 				<div class="icon">
 					<i class="ion ion-cube"></i>
 				</div>
-				<a href="/manager#questions" class="small-box-footer">更多 <i
+				<a href="/manager#questions" class="small-box-footer" target="container">更多 <i
 					class="fa fa-arrow-circle-right"></i></a>
 			</div>
 		</div>
@@ -144,7 +144,7 @@
 					<ul class="products-list product-list-in-box" id="examList"></ul>
 				</div>
 				<div class="box-footer text-center">
-              		<a href="/manager#exams" class="uppercase">查 看 更 多 考 试</a>
+              		<a href="/manager#exams" class="uppercase" target="container">查 看 更 多 考 试</a>
             	</div>
 			</div>
 		</div>

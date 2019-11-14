@@ -28,16 +28,16 @@ layui.define('jquery', function(exports) {
 				var items = [];
 				var _ul = $('<ul></ul>').addClass('nav').attr('id', 'nav');
 				$.each(menuList, function(index, val) {
-					var item = '<li id="menu' + val.id + '"><a _href="' + val.url + '"><i class="iconfont">' + val.icon +
+					var item = val.shiroHead+'<li id="menu' + val.id + '"><a _href="' + val.url + '"><i class="iconfont">' + val.icon +
 						'</i><cite>' + val.name +
-						'</cite><i class="iconfont nav_right">&#xe697;</i></a></li>';
+						'</cite><i class="iconfont nav_right">&#xe697;</i></a></li>'+val.shiroTail;
 
 					items.push(item);
 					if (val.children && val.children.length) {
 						//有二级子菜单
 						setTimeout(function() {
 							that.getSubMenu(val.id, val.children);
-						}, 500);
+						}, 300);
 					}
 				});
 				$('#side-nav').empty();

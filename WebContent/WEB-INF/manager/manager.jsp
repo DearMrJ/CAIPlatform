@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!doctype html>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>后台管理-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+		<title>45后台管理</title>
 		<meta name="renderer" content="webkit|ie-comp|ie-stand">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -20,7 +22,7 @@
 		<!-- 顶部开始 -->
 		<div class="container">
 			<div class="logo">
-				<a href="/manager">45 辅助教学平台</a>
+				<a href="/manager">45后台管理</a>
 			</div>
 			<div class="left_open">
 				<!-- <i title="展开左侧栏" class="iconfont">&#xe699;</i> -->
@@ -46,7 +48,7 @@
 			</ul>
 			<ul class="layui-nav right" lay-filter="">
 				<li class="layui-nav-item">
-					<a href="javascript:;">Admin</a>
+					<a href="javascript:;"><shiro:principal property="nickname"/></a>
 					<dl class="layui-nav-child">
 						<!-- 二级菜单 -->
 						<dd>
@@ -82,7 +84,7 @@
 				</ul>
 				<div class="layui-tab-content">
 					<div class="layui-tab-item layui-show">
-						<iframe src='/welcome.html' frameborder="0" scrolling="yes" class="weIframe"></iframe>
+						<iframe src='/welcome.jsp' frameborder="0" scrolling="yes" class="weIframe" id="container"></iframe>
 					</div>
 				</div>
 			</div>
