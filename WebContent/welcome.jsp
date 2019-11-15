@@ -77,9 +77,9 @@
 					<p>学生总数</p>
 				</div>
 				<div class="icon">
-					<i class="ion ion-chatbubbles"></i>
+					<i class="ion ion-person-stalker"></i>
 				</div>
-				<a href="/manager#comments" class="small-box-footer" target="container">更多 <i
+				<a href="/manager#students" class="small-box-footer" target="container">更多 <i
 					class="fa fa-arrow-circle-right"></i></a>
 			</div>
 		</div>
@@ -89,10 +89,10 @@
 					<h3>
 					${subjectNums}<sup style="font-size:20px">%</sup>
 					</h3>
-					<p>总课程数</p>
+					<p>课程总数</p>
 				</div>
 				<div class="icon">
-					<i class="icon ion-compose"></i>
+					<i class="icon ion-film-marker"></i>
 				</div>
 				<a href="/manager#subjects" class="small-box-footer" target="container">更多 <i
 					class="fa fa-arrow-circle-right"></i></a>

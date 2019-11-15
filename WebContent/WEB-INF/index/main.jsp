@@ -168,8 +168,11 @@ body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,
 				    	<a data-track="true" data-track-location="header" href="#"><shiro:principal property="nickname"/></a>			    		
 				 			<ul	class="menu2 nav " >
 				 				<li class='san'></li>
-				 				<li><a href="/manager" data-track="true" 
-				 					data-track-location="header">工作台</a></li>
+				 				<shiro:hasPermission name="manager">
+				 				<li>
+				 					<a href="/manager" data-track="true" data-track-location="header">工作台</a>
+				 				</li>
+				 				</shiro:hasPermission>
 				 				<li><a href="/logout" data-track="true" 
 				 					data-track-location="header" onclick="logoutcheck()">Logout</a></li>
 				 			</ul>

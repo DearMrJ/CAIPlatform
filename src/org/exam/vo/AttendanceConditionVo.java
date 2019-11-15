@@ -3,7 +3,10 @@
  */
 package org.exam.vo;
 
+import java.util.Date;
+
 import org.exam.vo.base.BaseConditionVo;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author Lynch
@@ -23,6 +26,8 @@ public class AttendanceConditionVo extends BaseConditionVo{
 	
 	private Integer classId;
 	
+	private String className;
+	
 	private Integer subjectId;
 	
 	private String year;
@@ -36,6 +41,15 @@ public class AttendanceConditionVo extends BaseConditionVo{
 	private String studentNickname;
 	
 	private String studentUserId;
+	//！！重要！！ 数据格式需要 与 前端传来的数据格式一致，不可多，不可少yyyy-MM-dd
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date startTime;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date endTime;
+	
+	private Integer attendanceId;
+	
+	private Integer attendanceSheetId;
 
 	public String getTeacherUsername() {
 		return teacherUsername;
@@ -141,7 +155,45 @@ public class AttendanceConditionVo extends BaseConditionVo{
 		this.studentUserId = studentUserId;
 	}
 
+	public Date getStartTime() {
+		return startTime;
+	}
 
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
+
+	public Integer getAttendanceId() {
+		return attendanceId;
+	}
+
+	public void setAttendanceId(Integer attendanceId) {
+		this.attendanceId = attendanceId;
+	}
+
+	public Integer getAttendanceSheetId() {
+		return attendanceSheetId;
+	}
+
+	public void setAttendanceSheetId(Integer attendanceSheetId) {
+		this.attendanceSheetId = attendanceSheetId;
+	}
 	
 	
 }

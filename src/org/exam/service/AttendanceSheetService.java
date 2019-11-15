@@ -3,6 +3,7 @@ package org.exam.service;
 import java.util.List;
 
 import org.exam.entity.AttendanceSheet;
+import org.exam.vo.AttendanceConditionVo;
 
 /**
  * @author Lynch
@@ -10,7 +11,7 @@ import org.exam.entity.AttendanceSheet;
  */
 public interface AttendanceSheetService extends BaseService<AttendanceSheet>{
 	
-	List<AttendanceSheet> currentCheckInRecords(Integer id);
+	List<AttendanceSheet> currentCheckInRecords(AttendanceConditionVo vo);
 	
 	int checkIn(AttendanceSheet attendanceSheet);
 	

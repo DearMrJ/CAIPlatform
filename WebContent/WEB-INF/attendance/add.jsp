@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,9 +27,9 @@
 				<div class="layui-input-inline">
 					<select name="subjectId">
 						<option value="">课程名称</option>
-						<option value="0">课程1</option>
-						<option value="1">课程2</option>
-						<option value="2">课程3</option>
+						<c:forEach items="${subjects}" var="subject">
+						<option value="${subject.id}">${subject.name}</option>
+						</c:forEach>
 					</select>
 				</div>
 				<div class="layui-input-inline">

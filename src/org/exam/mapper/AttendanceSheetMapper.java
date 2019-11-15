@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Select;
 import org.exam.entity.AttendanceSheet;
 import org.exam.util.CoreConst;
 import org.exam.util.MapperUtil;
+import org.exam.vo.AttendanceConditionVo;
 
 /**
  * @author Lynch
@@ -19,7 +20,7 @@ public interface AttendanceSheetMapper extends MapperUtil<AttendanceSheet>{
 	 * @param id
 	 * @return
 	 */
-	List<AttendanceSheet> currentCheckInRecords(Integer id);
+	List<AttendanceSheet> currentCheckInRecords(AttendanceConditionVo vo);
 	
 	/**
 	 * 学生签到

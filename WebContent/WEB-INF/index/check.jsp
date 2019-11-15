@@ -86,7 +86,7 @@
 	});
 
 	function requestPage(offset){
-		Core.postAjax("/attendance/startAttendance?id="+attendanceId,{"limit":15,"offset":offset},function (result) {
+		Core.postAjax("/attendance/startAttendance?attendanceId="+attendanceId,{"limit":15,"offset":offset},function (result) {
             build_stus_table(result);//1考勤表单
             build_page_info(result);//2页码控制
             build_page_nav(result);//3底部

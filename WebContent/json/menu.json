@@ -95,14 +95,14 @@
 		},
 		{
 			"id": 13,
-			"name": "管理员权限",
+			"name": "权限管理",
 			"icon": "&#xe726;",
 			"shiroHead": "",
 			"shiroTail": "",
 			"url": "",
 			"children": [{
 				"id": 14,
-				"name": "管理员列表",
+				"name": "用户列表",
 				"icon": "",
 				"shiroHead": "",
 				"shiroTail": "",
@@ -126,7 +126,7 @@
 			},
 			{
 				"id": 17,
-				"name": "权限管理",
+				"name": "权限xx",
 				"icon": "",
 				"shiroHead": "",
 				"shiroTail": "",

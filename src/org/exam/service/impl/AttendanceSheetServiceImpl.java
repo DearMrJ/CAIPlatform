@@ -5,6 +5,7 @@ import java.util.List;
 import org.exam.entity.AttendanceSheet;
 import org.exam.mapper.AttendanceSheetMapper;
 import org.exam.service.AttendanceSheetService;
+import org.exam.vo.AttendanceConditionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,8 @@ public class AttendanceSheetServiceImpl extends BaseServiceImpl<AttendanceSheet>
 	 * 学生签到时可看见的名单信息
 	 */
 	@Override
-	public List<AttendanceSheet> currentCheckInRecords(Integer id) {
-		return attendanceSheetMapper.currentCheckInRecords(id);
+	public List<AttendanceSheet> currentCheckInRecords(AttendanceConditionVo vo) {
+		return attendanceSheetMapper.currentCheckInRecords(vo);
 	}
 
 	/**

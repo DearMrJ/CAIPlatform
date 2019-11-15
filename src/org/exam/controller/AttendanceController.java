@@ -78,16 +78,19 @@ public class AttendanceController {
 		User user = (User)SecurityUtils.getSubject().getPrincipal();
 		List<String> roleList = userService.selectRoleByUserId(user.getUserId());
 		PageHelper.startPage(PageUtil.getPageNo(limit, offset), limit);//最近一次查询有效
-		if (!roleList.contains("超级管理员")) {
+		if (!roleList.contains("超级管理员")) {//炒鸡管理员不可以是老师
 			if (roleList.contains("老师")) {
 				vo.setTeacherUserId(user.getUserId());
 				attendanceList = attendanceService.findByCondition(vo);
+				System.err.println(attendanceList);
 			}else {
 				vo.setStudentUserId(user.getUserId());
 				vo.setType(1);//仅回显全体签到
 				attendanceList = attendanceService.listOngoingAttendances(vo);
 			}
 		}
+		//管理是否可看到所有考勤？
+		attendanceList = attendanceService.findByCondition(vo);
 		PageInfo<Attendance> pages = new PageInfo<>(attendanceList);
 		return ResultUtil.table(attendanceList, pages.getTotal(), pages);
 	}
@@ -98,7 +101,7 @@ public class AttendanceController {
 		//
 		User user = (User)SecurityUtils.getSubject().getPrincipal();
 		Subject subject = new Subject();
-		subject.setAuthor(user.getUserId());
+		subject.setUserId(user.getUserId());
 //		subject.setAuthor(user.getNickname());
 		//只返回个人所带课程信息
 		List<Subject> subjects = subjectService.selectSubjects(subject);
@@ -106,10 +109,34 @@ public class AttendanceController {
 		return "attendance/list";
 	}
 	
+	/**
+	 * 作跳转数据中转(id)
+	 * @param model
+	 * @param id
+	 * @return
+	 */
 	@GetMapping("publish")
-	public String showDetail() {
+	public String showDetail(Model model, Integer id) {
 		//subject、status、class、username、nickname
+		model.addAttribute("id", id);//此处可以前端页面间传值替代
 		return "attendance/publish";
+	}
+	
+	/**
+	 * 查看考勤明细
+	 * @param id
+	 * @param limit
+	 * @param offset
+	 * @return
+	 */
+	@PostMapping("publish")
+	@ResponseBody
+	public PageResultVo showDetail(AttendanceConditionVo vo, Integer limit, Integer offset) {
+		//subject、status、class、username、nickname
+		PageHelper.offsetPage(PageUtil.getPageNo(limit, offset), limit);
+		List<AttendanceSheet> recordList = attendanceSheetService.currentCheckInRecords(vo);
+		PageInfo<AttendanceSheet> pages = new PageInfo<>(recordList);
+		return ResultUtil.table(recordList, pages.getTotal(), pages);
 	}
 	
 	
@@ -119,7 +146,7 @@ public class AttendanceController {
 		//
 		User user = (User)SecurityUtils.getSubject().getPrincipal();
 		Subject subject = new Subject();
-		subject.setAuthor(user.getUserId());
+		subject.setUserId(user.getUserId());
 //		subject.setAuthor(user.getNickname());
 		//只返回个人所带课程信息
 		List<Subject> subjects = subjectService.selectSubjects(subject);
@@ -207,9 +234,9 @@ public class AttendanceController {
 	
 	@PostMapping("/startAttendance")
 	@ResponseBody
-	public PageResultVo checkInRecords(Integer id, Integer limit, Integer offset) {
+	public PageResultVo checkInRecords(AttendanceConditionVo vo, Integer limit, Integer offset) {
 		PageHelper.startPage(PageUtil.getPageNo(limit, offset), limit);
-		List<AttendanceSheet> asList = attendanceSheetService.currentCheckInRecords(id);
+		List<AttendanceSheet> asList = attendanceSheetService.currentCheckInRecords(vo);
 		System.out.println(asList);
 		PageInfo<AttendanceSheet> pages = new PageInfo<>(asList);
 		return ResultUtil.table(asList, pages.getTotal(), pages);
@@ -230,6 +257,70 @@ public class AttendanceController {
 			}
 		} catch (Exception e) {
 			return ResultUtil.error("后台出了点问题,签到失败了QAQ,请咨询代课教师！");
+		}
+	}
+	
+	/**
+	 * 老师补签
+	 * @param id
+	 * @return
+	 */
+	@PostMapping("/checkInByTeacher")
+	@ResponseBody
+	public ResponseVo checkIn(Integer id) {
+		try {
+			AttendanceSheet attendanceSheet = new AttendanceSheet();
+			attendanceSheet.setId(id);
+			int checkIn = attendanceSheetService.checkIn(attendanceSheet);
+			if (checkIn > 0) {
+				return ResultUtil.success("补签成功");
+			}else {
+				return ResultUtil.error("补签失败了QAQ");
+			}
+		} catch (Exception e) {
+			return ResultUtil.error("后台出了点问题,补签失败了QAQ");
+		}
+	}
+	/**
+	 * 请假
+	 * @param id
+	 * @return
+	 */
+	@PostMapping("/onLeave")
+	@ResponseBody
+	public ResponseVo onLeave(Integer id) {
+		try {
+			AttendanceSheet attendanceSheet = new AttendanceSheet();
+			attendanceSheet.setId(id);
+			int checkIn = attendanceSheetService.onLeave(attendanceSheet);
+			if (checkIn > 0) {
+				return ResultUtil.success("操作成功");
+			}else {
+				return ResultUtil.error("操作失败了QAQ");
+			}
+		} catch (Exception e) {
+			return ResultUtil.error("后台出了点问题,操作失败了QAQ");
+		}
+	}
+	/**
+	 * 老师签退
+	 * @param id
+	 * @return
+	 */
+	@PostMapping("/checkOut")
+	@ResponseBody
+	public ResponseVo checkOut(Integer id) {
+		try {
+			AttendanceSheet attendanceSheet = new AttendanceSheet();
+			attendanceSheet.setId(id);
+			int checkIn = attendanceSheetService.checkOut(attendanceSheet);
+			if (checkIn > 0) {
+				return ResultUtil.success("签退成功");
+			}else {
+				return ResultUtil.error("签退失败了QAQ");
+			}
+		} catch (Exception e) {
+			return ResultUtil.error("后台出了点问题,签退失败了QAQ");
 		}
 	}
 
