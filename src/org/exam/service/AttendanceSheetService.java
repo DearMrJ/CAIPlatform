@@ -15,6 +15,8 @@ public interface AttendanceSheetService extends BaseService<AttendanceSheet>{
 	
 	int checkIn(AttendanceSheet attendanceSheet);
 	
+	int checkInByTeacher(Integer id);
+	
 	int checkOut(AttendanceSheet attendanceSheet);
 
 	int onLeave(AttendanceSheet attendanceSheet);

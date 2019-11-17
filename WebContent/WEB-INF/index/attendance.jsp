@@ -35,10 +35,10 @@
 	<div class="ui examList container">
 		<table class="ui table" id="exam_table">
 			<thead><tr>
-	            <th class="eight wide">考勤名称</th>
-	            <th class="second wide">考勤科目</th>
-	            <th class="second wide">开始时间</th>
-	            <th class="second wide">结束时间</th>
+	            <th class="five wide">考勤科目</th>
+	            <th class="four wide">活动标题</th>
+	            <th class="third wide">开始时间</th>
+	            <th class="third wide">结束时间</th>
 	            <th class="second wide">操作</th>
 	        </tr></thead>
 	        <tbody></tbody>
@@ -60,7 +60,7 @@
 	});
 
 	function requestPage(offset){
-		Core.postAjax("/attendance/list",{"limit":5,"offset":offset},function (result) {
+		Core.postAjax("/attendance/list",{"limit":10,"offset":offset},function (result) {
             build_stus_table(result);//1考勤表单
             build_page_info(result);//2页码控制
             build_page_nav(result);//3底部
@@ -101,13 +101,13 @@
 					tableHeader = $("<span>已结束</span>").addClass("ui red ribbon label");
 					operateBtn = $("<a>进入考勤</a>").addClass("small disabled grey ui button");
 				}
-				var titleTd = $("<td></td>").append(tableHeader).append($("<span></span>").addClass("ui header").append(items.title));
-				var classTd = $("<td></td>").append(items.subject.name);
+				var subjectTd = $("<td></td>").append(tableHeader).append($("<span></span>").addClass("ui header").append(items.subject.name));
+				var titleTd = $("<td></td>").append(items.title);
 				var startTimeTd = $("<td></td>").append(new Date(items.startTime).Format('yyyy-MM-dd hh:mm:ss'));
 				var endTimeTd = $("<td></td>").append(new Date(items.endTime).Format('yyyy-MM-dd hh:mm:ss'));
 				var operateTd = $("<td></td>").append(operateBtn);
-				$("<tr></tr>").append(titleTd)
-							  .append(classTd)
+				$("<tr></tr>").append(subjectTd)
+							  .append(titleTd)
 							  .append(startTimeTd)
 							  .append(endTimeTd)
 							  .append(operateTd)
@@ -148,7 +148,7 @@
 					offset=0;
 				});
 				prePageLi.click(function(){
-					requestPage(offset-=5)	
+					requestPage(offset-=10)	
 				});
 			}
 			
@@ -159,10 +159,10 @@
 				lastPageLi.addClass("disabled");
 			}else{
 				nextPageLi.click(function(){
-					requestPage(offset+=5);
+					requestPage(offset+=10);
 				});
 				lastPageLi.click(function(){
-					requestPage(pageInfo.pages*5);
+					requestPage(pageInfo.pages*10);
 				});
 			}
 			ul.append(firstPageLi).append(prePageLi),
@@ -172,7 +172,7 @@
 					numLi.addClass("active");
 					}
 				numLi.click(function(){
-					requestPage(items*5-1);
+					requestPage(items*10-1);
 					});
 				ul.append(numLi);
 				});
@@ -183,11 +183,17 @@
 		};
 		/*进入考勤*/
 	    function startToAttendanceAction(id) {
-			Core.postAjax("/attendance/validate",{"id":id}, function(data){
-				if(data.status==200){
+				layer.msg("loading...", {
+					title: "系统提示",
+				    icon: 1,
+				    time: 800
+				},function(){
+					window.location.href="/attendance/startAttendance?id="+id;
+			    }); 
+				/* if(data.status==200){
 					layer.msg("loading...", {
 						title: "系统提示",
-					    icon: 3,
+					    icon: 1,
 					    time: 800
 					},function(){
 						window.location.href="/attendance/startAttendance?id="+id;
@@ -197,8 +203,7 @@
 						title:"系统提示",
 						icon: 2
 					});
-				}
-			})
+				} */
 	        //window.location.href="/attendance/startattendance?id="+id;
 	    }
 </script>

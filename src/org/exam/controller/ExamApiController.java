@@ -30,6 +30,15 @@ public class ExamApiController {
 	@Autowired
 	private CommentMapper commentMapper;
 	
+
+	@PostMapping("/api/stn")
+	@ResponseBody
+	public ResponseVo studentTotalNums() {
+		
+		
+		return null;
+	}
+	
 	
 	/**
 	 * 学院及格人数统计接口

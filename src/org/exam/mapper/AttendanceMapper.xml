@@ -39,6 +39,16 @@
 		<result property="nickname" column="nickname" jdbcType="VARCHAR"/>
 	</resultMap>
 	
+	<resultMap type="org.exam.entity.AttendanceSheet" id="forRandom">
+		<id property="id" column="id" jdbcType="INTEGER"/>
+		<result property="attendanceId" column="attendance_id" jdbcType="INTEGER"/>
+		<association property="user" javaType="org.exam.entity.User">
+			<result property="userId" column="user_id" jdbcType="VARCHAR"/>
+			<result property="username" column="username" jdbcType="VARCHAR"/>
+			<result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+		</association>
+	</resultMap>
+	
 	<!-- for teacher -->
 	<select id="findByCondition" parameterType="org.exam.vo.AttendanceConditionVo" resultMap="BaseResultMap">
 		select a.*,s.id as s_id,s.name as s_name,count(us.user_id) AS course_total,count(ash.user_id) AS present_total
@@ -118,8 +128,12 @@
 		</if>
 	</select>
 	
-	<select id="">
-		
+	<select id="queryRecordForRandom" resultMap="forRandom" parameterType="int">
+		select u.user_id,u.username,u.nickname,ash.id 
+		from attendance_inf a 
+		left join attendance_sheet_inf ash on a.id = ash.attendance_id 
+		left join user_inf u on u.user_id = ash.user_id 
+		where a.id = #{id};
 	</select>
 	
 	<update id="updateAttendanceToStart">
@@ -135,5 +149,18 @@
 			status = 2 
 		WHERE status  <![CDATA[ < ]]> 2 AND end_time <![CDATA[ <= ]]> #{currentTime}
 	</update>
+	
+	<delete id="deleteBatch" parameterType="map">
+		delete from attendance_inf
+			where id in
+			<foreach collection="attendanceIds" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+	</delete>
+	
+	<select id="validateEnd" parameterType="int" resultMap="BaseResultMap">
+		select a.* from attendance_inf a
+		where a.id = #{id} and a.end_time <![CDATA[ >= ]]> now()
+	</select>
 	
 </mapper>

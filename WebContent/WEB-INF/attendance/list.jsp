@@ -38,8 +38,8 @@
 			<a><cite>考勤列表</cite></a>
 		</span> <a class="layui-btn layui-btn-sm"
 			style="line-height: 1.6em; margin-top: 3px; float: right"
-			href="javascript:location.replace(location.href);" title="刷新"> <i
-			class="layui-icon" style="line-height: 30px">ဂ</i></a>
+			href="javascript:window.location.reload();" title="刷新"> <i
+			class="layui-icon" style="line-height: 30px">&#xe669;</i></a>
 	</div>
 	<div class="weadmin-body">
 		<div class="layui-row">
@@ -68,13 +68,13 @@
 					</select>
 				</div>
 				<div class="layui-inline">
-					<input class="layui-input" placeholder="开始日" name="startTime" id="start">
+					<input class="layui-input" autocomplete="off" placeholder="起始日" name="startTime" id="start">
 				</div>
 				<div class="layui-inline">
-					<input class="layui-input" placeholder="截止日" name="endTime" id="end">
+					<input class="layui-input" autocomplete="off" placeholder="截止日" name="endTime" id="end">
 				</div>
 				<div class="layui-inline">
-					<input class="layui-input" placeholder="年份" name="year" id="year">
+					<input class="layui-input" autocomplete="off" placeholder="年份" name="year" id="year">
 				</div>
 				<div class="layui-inline">
 					<select name="term">
@@ -90,7 +90,7 @@
 			</form>
 		</div>
 		<div class="weadmin-block">
-			<button class="layui-btn layui-btn-danger" onclick="delAll()">
+			<button class="layui-btn layui-btn-danger" onclick="delSelected()">
 				<i class="layui-icon"></i>批量删除
 			</button>
 			<button class="layui-btn" onclick="WeAdminShow('添加考勤','/attendance/add')">
@@ -101,9 +101,9 @@
 		<table class="layui-table" id="attendance_table">
 			<thead>
 				<tr>
-					<th>
+					<th> 
 						<div class="layui-unselect header layui-form-checkbox"
-							lay-skin="primary">
+							lay-skin="primary" data-id="">
 							<i class="layui-icon">&#xe605;</i>
 						</div>
 					</th>
@@ -136,18 +136,19 @@
 					<td class="td-manage"><a title="查看"
 						onclick="WeAdminShow('编辑','/attendance/publish')" href="javascript:;">
 							<i class="layui-icon">&#xe63c;</i>
-					</a> <a title="删除" onclick="member_del(this,'要删除的id')"
+					</a> <a title="删除" onclick="delAttend("+items.id+")"
 						href="javascript:;"> <i class="layui-icon">&#xe640;</i>
 					</a>
 					</td>
 				</tr> -->
 			</tbody>
 		</table>
-		<div class="page">
-			<div>
-				<a class="prev" href="">&lt;&lt;</a> <a class="num" href="">1</a> <span
-					class="current">2</span> <a class="num" href="">3</a> <a
-					class="num" href="">489</a> <a class="next" href="">&gt;&gt;</a>
+		<!-- 显示分页信息 -->
+		<div class="row">
+			<!-- 分页文字信息 -->
+			<div class="col-md-6" id="page_info_area">
+			</div>
+			<div class="col-md-6" id="page_nav_area">
 			</div>
 		</div>
 
@@ -165,6 +166,7 @@
 		//执行一个laydate实例
 		laydate.render({
 			elem : '#end' //指定元素
+			//与后台接收参数相匹配，可以指定type: datetime/time/year/month,默认只有日期选择
 		});
 		
 		/******合并json函数开始*****/
@@ -215,7 +217,7 @@
 			} */
 
 			/*用户-删除*/
-			/* function member_del(obj, id) {
+			/* function delAttend(obj, id) {
 				layer.confirm('确认要删除吗？', function(index) {
 					//发异步删除数据
 					$(obj).parents("tr").remove();
@@ -249,12 +251,11 @@
 	            build_stus_table(result);//1考勤表单
 	            build_page_info(result);//2页码控制
 	            build_page_nav(result);//3底部分页
-	            console.log(result.id);
 	            examIndexPage.init(result.rows);
 	        })
 		}
 		Date.prototype.Format = function(fmt)   
-		{ //author: meizz   
+		{  
 		  var o = {   
 		    "M+" : this.getMonth()+1,                 //月份   
 		    "d+" : this.getDate(),                    //日   
@@ -280,22 +281,22 @@
 					if(items.status==0){//<span class="layui-btn layui-btn-normal layui-btn-xs">已启用</span>
 						statusTd = $("<td></td>").addClass("td-status").append($("<span>未开始</span>").addClass("layui-btn layui-btn-warm layui-btn-xs"));
 						operateBtn = $("<a title=\"明细\" onclick=\"WeAdminShow('详情','/attendance/publish?id="+items.id+"\')\" href=\"javascript:;\"><i class=\"layui-icon\">&#xe63c;</i></a>"
-								+"<a title=\"删除\" onclick=\"member_del(this,'要删除的id')\" href=\"javascript:;\"> <i class=\"layui-icon\">&#xe640;</i></a>");
+								+"<a title=\"删除\" onclick=\"delAttend("+items.id+")\" href=\"javascript:;\"> <i class=\"layui-icon\">&#xe640;</i></a>");
 					}else if(items.status == 1){
 						statusTd = $("<td></td>").addClass("td-status").append($("<span>进行中</span>").addClass("layui-btn layui-btn-green layui-btn-xs"));
 						operateBtn = $("<a title=\"明细\" onclick=\"WeAdminShow('详情','/attendance/publish?id="+items.id+"\')\" href=\"javascript:;\"><i class=\"layui-icon\">&#xe63c;</i></a>"
-										+"<a title=\"删除\" onclick=\"member_del(this,'要删除的id')\" href=\"javascript:;\"> <i class=\"layui-icon\">&#xe640;</i></a>");
+										+"<a title=\"删除\" onclick=\"delAttend("+items.id+")\" href=\"javascript:;\"> <i class=\"layui-icon\">&#xe640;</i></a>");
 					}else{
 						statusTd = $("<td></td>").addClass("td-status").append($("<span>已结束</span>").addClass("layui-btn layui-btn-danger layui-btn-xs"));
 						operateBtn =$("<a title=\"明细\" onclick=\"WeAdminShow('详情','/attendance/publish?id="+items.id+"\')\" href=\"javascript:;\"><i class=\"layui-icon\">&#xe63c;</i></a>"
-								+"<a title=\"删除\" onclick=\"member_del(this,'要删除的id')\" href=\"javascript:;\"> <i class=\"layui-icon\">&#xe640;</i></a>");
+								+"<a title=\"删除\" onclick=\"delAttend("+items.id+")\" href=\"javascript:;\"> <i class=\"layui-icon\">&#xe640;</i></a>");
 					}
 					if(items.type==0){
 						typeTd = $("<td></td>").append("<span>随机</span>");
 					}else if(items.type==1){
 						typeTd = $("<td></td>").append("<span>全体</span>");
 					}
-					var headTd = $("<td></td>").append("<div class='layui-unselect layui-form-checkbox' lay-skin='primary' data-id='2'> <i class='layui-icon'>&#xe605;</i> </div>");
+					var headTd = $("<td></td>").append("<div class='layui-unselect layui-form-checkbox' lay-skin='primary' data-id='"+items.id+"'> <i class='layui-icon'>&#xe605;</i> </div>");
 					var subjectTd = $("<td></td>").append(items.subject.name);
 					var yearAndTermTd = $("<td></td>").append(items.year+'~'+(++items.year)+'/'+items.term);
 					//var typeTd = $("<td></td>").append();
@@ -321,17 +322,81 @@
 				})
 			}else{
 				$("#attendance_table tbody").empty();
-				$("<tr style='text-align:center'><td colspan='5'>当前没有记录</td></tr>").appendTo("#attendance_table tbody");
+				$("<tr style='text-align:center'><td colspan='11'>当前没有记录</td></tr>").appendTo("#attendance_table tbody");
 			}
 		}
-		/*
-		<td class="td-manage"><a title="查看"
-			onclick="WeAdminShow('编辑','/attendance/publish')" href="javascript:;">
-				<i class="layui-icon">&#xe63c;</i>
-		</a> <a title="删除" onclick="member_del(this,'要删除的id')"
-			href="javascript:;"> <i class="layui-icon">&#xe640;</i>
-		</a>
-		</td>*/
+		
+		function delAttend(id){
+			layer.msg("确定删除吗，操作将不可恢复！", {
+				title: "系统提示",
+			    time: 0,//不自动关闭
+			    icon: 3,
+			    btn: ['执意删除', '再考虑一下'],
+			    yes: function(index){
+					    layer.close(index);
+						Core.postAjax("/attendance/delete",{"id":id}, function(data){
+							if(data.status==200){
+								layer.msg(data.msg, {
+									title: "系统提示",
+								    icon: 1,
+								    time: 800
+								},function(){
+									window.location.reload();
+							    }); 
+							}else{
+								layer.alert(data.msg, {
+									title:"系统提示",
+									icon: 2
+								});
+							}
+						})
+		    		}
+			});
+		}
+		
+		function delSelected(){
+			var data = $('.layui-form-checked');
+			var len = data.length;
+			if (len == 0) {
+				parent.layer.msg('请至少选择一行记录后再操作！',{icon: 2,time: 1000});
+				return;
+			}
+			var idStr = "";
+			data.each(function(index,item){
+				if (index < len-1 && index !=0) {
+					idStr += (""+$(this).attr('data-id'))+",";
+				}else {
+					idStr += (""+$(this).attr('data-id'));
+				}
+			})
+			console.log("idStr:"+idStr);
+			layer.msg("确定删除吗，操作将不可恢复！", {
+				title: "系统提示",
+			    time: 0,//不自动关闭
+			    icon: 3,
+			    btn: ['执意删除', '再考虑一下'],
+			    yes: function(index){
+					    layer.close(index);
+						Core.postAjax("/attendance/batch/delete",{"idStr":idStr}, function(data){
+							if(data.status==200){
+								layer.msg(data.msg, {
+									title: "系统提示",
+								    icon: 1,
+								    time: 800
+								},function(){
+									window.location.reload();
+							    }); 
+							}else{
+								layer.alert(data.msg, {
+									title:"系统提示",
+									icon: 2
+								});
+							}
+						})
+		    		}
+			});
+		}
+		
 		/*********分页开始*********/
 		function build_page_info(result){
 			var pageInfo = result.pageInfo;
@@ -353,8 +418,8 @@
 			if(!pageInfo.pageNum == 0){
 				$("#page_nav_area").empty();
 				var ul = $("<ul></ul>").addClass("pagination");
-				var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href","#"));
-				var prePageLi = $("<li></li>").append($("<a></a>").append("&laquo;").attr("href","#"));
+				var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href","#"));//首页
+				var prePageLi = $("<li></li>").append($("<a></a>").append("&laquo;").attr("href","#"));//上一页
 				if(pageInfo.hasPreviousPage == false){
 					firstPageLi.addClass("disabled");
 					prePageLi.addClass("disabled");
@@ -364,21 +429,21 @@
 						offset=0;
 					});
 					prePageLi.click(function(){
-						requestPage(offset-=5)	
+						requestPage(offset-=10)	
 					});
 				}
 				
-				var nextPageLi = $("<li></li>").append($("<a></a>").append("&raquo;").attr("href","#"));
-				var lastPageLi = $("<li></li>").append($("<a></a>").append("尾页").attr("href", "#"));
+				var nextPageLi = $("<li></li>").append($("<a></a>").append("&raquo;").attr("href","#"));//下一页
+				var lastPageLi = $("<li></li>").append($("<a></a>").append("尾页").attr("href", "#"));//尾页
 				if(pageInfo.hasNextPage == false){
 					nextPageLi.addClass("disabled");
 					lastPageLi.addClass("disabled");
 				}else{
 					nextPageLi.click(function(){
-						requestPage(offset+=5);
-					});
+						requestPage(offset+=10);
+					});//自offset+=10开始 到 offset+=10+=limit
 					lastPageLi.click(function(){
-						requestPage(pageInfo.pages*5);
+						requestPage(pageInfo.pages*10);//页数*10，到尾页
 					});
 				}
 				ul.append(firstPageLi).append(prePageLi),
@@ -388,7 +453,7 @@
 						numLi.addClass("active");
 						}
 					numLi.click(function(){
-						requestPage(items*5-1);
+						requestPage(items*10-1);
 						});
 					ul.append(numLi);
 					});
@@ -398,26 +463,6 @@
 				}
 			};
 			/*********分页结束*********/
-			/*进入考勤*/
-		    function startToAttendanceAction(id) {
-				Core.postAjax("/attendance/validate",{"id":id}, function(data){
-					if(data.status==200){
-						layer.msg("loading...", {
-							title: "系统提示",
-						    icon: 3,
-						    time: 800
-						},function(){
-							window.location.href="/attendance/startAttendance?attendanceId="+id;
-					    }); 
-					}else{
-						layer.alert(data.msg, {
-							title:"系统提示",
-							icon: 2
-						});
-					}
-				})
-		        //window.location.href="/attendance/startattendance?attendanceId="+id;
-		    }
 		    /******请求已发布考勤信息结束*******/
 	</script>
 </body>

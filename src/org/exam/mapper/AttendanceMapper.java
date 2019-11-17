@@ -2,6 +2,7 @@ package org.exam.mapper;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -43,4 +44,10 @@ public interface AttendanceMapper extends MapperUtil<Attendance>{
 			+ "where a.id = #{id}"
 			+ "		and ash.user_id = #{userId}")
 	AttendanceSheet validateAttendance(@Param("id") Integer id,@Param("userId") String userId);
+	
+	int deleteBatch(Map<String, Object> params);
+	
+	List<AttendanceSheet> queryRecordForRandom(Integer id);
+	
+	Attendance validateEnd(Integer id);
 }

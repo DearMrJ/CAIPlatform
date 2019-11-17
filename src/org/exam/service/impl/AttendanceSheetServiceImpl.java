@@ -59,4 +59,12 @@ public class AttendanceSheetServiceImpl extends BaseServiceImpl<AttendanceSheet>
 		return attendanceSheetMapper.validate(id, userId);
 	}
 
+	/**
+	 * 教师补签
+	 */
+	@Override
+	public int checkInByTeacher(Integer id) {
+		return attendanceSheetMapper.checkInByTeacher(id);
+	}
+
 }

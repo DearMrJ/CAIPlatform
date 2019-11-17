@@ -172,36 +172,36 @@
 	
 	<script type="text/javascript">
 		$(function () {
-			Core.postAjax("/api/aes","",function (data) {
+			Core.postAjax("/api/aes","",function (data) {//最近考试
 	            if(data.status==200){
-	            	build_exam_li(data);
+	            	build_exam_li(data);//239行
 	            }else{
 	            	layer.msg(data.msg);
 	            }
 	        })
 	        
-			Core.postAjax("/api/aps","",function (data) {
+			Core.postAjax("/api/aps","",function (data) {//学院人数统计
 	            if(data.status==200){
-	                getData(data);
+	                getData(data);//191行
 	            }else{
 	            	layer.msg(data.msg);
 	            }
 	        })
 	        
-	        function getData(data){
+	        function getData(data){//学院人数统计
 				var data = data.data;
-				var legendData = [];
-	            var seriesData = [];
+				var legendData = [];//
+	            var seriesData = [];//
 	            for (var i = 0; i < data.length; i++) {
 	                name = data[i].faculty_name;
-	                legendData.push(name); 
-	                seriesData.push({
+	                legendData.push(name); //装学院名
+	                seriesData.push({ //学院名+学生数量	
 	                    name: name,
 	                    value: data[i].num
 	                });
 	            }
 	
-				//初始化echarts实例
+				//初始化echarts实例，作学院人数统计
 		        var myChart = echarts.init(document.getElementById('pieChart'));
 				
 		        //指定图表的配置项和数据

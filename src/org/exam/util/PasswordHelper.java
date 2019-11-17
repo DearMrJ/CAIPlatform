@@ -26,11 +26,11 @@ public class PasswordHelper {
 
 	public static void main(String[] args) {
 		User user = new User();
-		user.setUsername("Louis");
+		user.setUsername("Mikami");
 		user.setPassword("123456");
 		encryptPassword(user);
+		System.out.println(user.getUsername());
 		System.out.println(user.getPassword());
 		System.out.println(user.getSalt());
-		System.out.println(getPassword(user));
 	}
 }

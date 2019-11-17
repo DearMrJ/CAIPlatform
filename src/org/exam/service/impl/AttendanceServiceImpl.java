@@ -4,9 +4,11 @@
 package org.exam.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.exam.entity.Attendance;
+import org.exam.entity.AttendanceSheet;
 import org.exam.entity.User;
 import org.exam.mapper.AttendanceMapper;
 import org.exam.service.AttendanceService;
@@ -67,6 +69,35 @@ public class AttendanceServiceImpl extends BaseServiceImpl<Attendance> implement
 	@Override
 	public List<User> listTargetedStudents(AttendanceConditionVo vo) {
 		return attendanceMapper.listTargetedStudents(vo);
+	}
+
+
+	/**
+	 * 批量删除考勤活动(实属鸡肋)
+	 */
+	@Override
+	public int deleteBatch(List<String> attendanceIds) {
+		HashMap<String, Object> params = new HashMap<>(1);
+		params.put("attendanceIds", attendanceIds);
+		return attendanceMapper.deleteBatch(params);
+	}
+
+
+	/**
+	 * 返回随机考勤目标学生信息
+	 */
+	@Override
+	public List<AttendanceSheet> queryRecordForRandom(Integer id) {
+		return attendanceMapper.queryRecordForRandom(id);
+	}
+
+
+	/**
+	 * 当前考勤是否已经结束
+	 */
+	@Override
+	public Attendance validateEnd(Integer id) {
+		return attendanceMapper.validateEnd(id);
 	}
 
 	

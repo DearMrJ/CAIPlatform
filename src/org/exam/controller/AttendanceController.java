@@ -1,5 +1,7 @@
 package org.exam.controller;
 
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
@@ -13,12 +15,14 @@ import org.exam.service.SubjectService;
 import org.exam.service.UserService;
 import org.exam.util.PageUtil;
 import org.exam.util.ResultUtil;
+import org.exam.util.SemesterUtil;
 import org.exam.vo.AttendanceConditionVo;
 import org.exam.vo.base.PageResultVo;
 import org.exam.vo.base.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -163,11 +167,61 @@ public class AttendanceController {
 			User user = (User) SecurityUtils.getSubject().getPrincipal();
 			attendance.setUserId(user.getUserId());
 			attendance.setAuthor(user.getNickname());
+			String year = SemesterUtil.getYear();
+			int term = SemesterUtil.getTerm();
+			attendance.setYear(year);
+			attendance.setTerm(term);
+			Date date = new Date();
+			attendance.setCreateTime(date);
+			attendance.setUpdateTime(date);
+			if (null==attendance.getType()) {
+				attendance.setType(1);
+			}
+			if (attendance.getStartTime().compareTo(date)>0) {
+				attendance.setStatus(0);
+			}else if (attendance.getStartTime().compareTo(date)<=0 && attendance.getEndTime().compareTo(date)>0) {
+				attendance.setStatus(1);
+			}else {
+				attendance.setStatus(2);
+			}
+			System.err.println(attendance);
 			//
 			attendanceService.insertSelective(attendance);
 			return ResultUtil.success("发布考勤成功");
 		} catch (Exception e) {
+			System.err.println(e);
 			return ResultUtil.error("发布考勤失败");
+		}
+	}
+	
+	@PostMapping("delete")
+	@ResponseBody
+	public ResponseVo removeAttendance(Integer id) {
+		try {
+			int count = attendanceService.delete(id);
+			if (count>0) {
+				return ResultUtil.success("删除成功~");
+			}
+			return ResultUtil.success("找不到记录，删除失败了QAQ");
+		} catch (Exception e) {
+			return ResultUtil.error("服务器大姨妈来了，删除失败了QAQ");
+		}
+	}
+	
+	@PostMapping("/batch/delete")
+	@ResponseBody
+	public ResponseVo batchRemoveAttendance(String idStr) {
+		try {
+			String[] attendanceIds = idStr.split(",");
+			List<String> attendanceIdsList = Arrays.asList(attendanceIds);
+			int count = attendanceService.deleteBatch(attendanceIdsList);
+			if (count>0) {
+				return ResultUtil.success("批量删除成功~");
+			}else {
+				return ResultUtil.success("木有找到记录，删除失败了~");
+			}
+		} catch (Exception e) {
+			return ResultUtil.error("服务器它大姨妈来了，删除失败了QAQ");
 		}
 	}
 	
@@ -242,15 +296,37 @@ public class AttendanceController {
 		return ResultUtil.table(asList, pages.getTotal(), pages);
 	}
 	
+	@GetMapping("/random")
+	public String toRandom(Model model,Integer id) {
+		model.addAttribute("id",id);
+		return "attendance/random";
+	}
+	
+	@PostMapping("/random")
+	@ResponseBody
+	public ResponseVo recordForRandom(Integer id) {
+		List<AttendanceSheet> resultList = attendanceService.queryRecordForRandom(id);
+		if (CollectionUtils.isEmpty(resultList)) {
+			return ResultUtil.error("没有数据");
+		}
+		return ResultUtil.success("来了来了~", resultList);
+	}
+	
 	@PostMapping("/checkIn")
 	@ResponseBody
 	public ResponseVo checkIn(Integer id, String userId) {
 		try {
+			/*********签到活动关闭校验**********/
+			Attendance attendance = attendanceService.validateEnd(id);
+			if (attendance==null) {
+				return ResultUtil.error("签到活动已经关闭！");
+			}
+			/******************************/
 			AttendanceSheet attendanceSheet = new AttendanceSheet();
 			attendanceSheet.setAttendanceId(id);
 			attendanceSheet.setUserId(userId);
-			int checkIn = attendanceSheetService.checkIn(attendanceSheet);
-			if (checkIn > 0) {
+			int count = attendanceSheetService.checkIn(attendanceSheet);
+			if (count > 0) {
 				return ResultUtil.success("签到成功，再接再厉呀臭弟弟~");
 			}else {
 				return ResultUtil.error("签到失败了QAQ");
@@ -269,15 +345,14 @@ public class AttendanceController {
 	@ResponseBody
 	public ResponseVo checkIn(Integer id) {
 		try {
-			AttendanceSheet attendanceSheet = new AttendanceSheet();
-			attendanceSheet.setId(id);
-			int checkIn = attendanceSheetService.checkIn(attendanceSheet);
-			if (checkIn > 0) {
+			int count = attendanceSheetService.checkInByTeacher(id);
+			if (count > 0) {
 				return ResultUtil.success("补签成功");
 			}else {
 				return ResultUtil.error("补签失败了QAQ");
 			}
 		} catch (Exception e) {
+			
 			return ResultUtil.error("后台出了点问题,补签失败了QAQ");
 		}
 	}
@@ -299,6 +374,7 @@ public class AttendanceController {
 				return ResultUtil.error("操作失败了QAQ");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResultUtil.error("后台出了点问题,操作失败了QAQ");
 		}
 	}
@@ -320,8 +396,10 @@ public class AttendanceController {
 				return ResultUtil.error("签退失败了QAQ");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResultUtil.error("后台出了点问题,签退失败了QAQ");
 		}
 	}
+	
 
 }

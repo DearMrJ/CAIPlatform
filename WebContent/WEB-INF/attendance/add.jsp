@@ -10,9 +10,21 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet" href="/js/bootstrap/bootstrap.min.css"/>
+<link rel="stylesheet" href="/js/semantic-ui/semantic.min.css" />
+<link rel="stylesheet" href="/js/zplayer/css/zplayer.min.css"/>
+<link rel="stylesheet" href="/css/exam-common.css"/>
+<link rel="stylesheet" href="/css/web-common.css"/>
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/weadmin.css">
+<script src="/js/jquery/jquery.min.js"></script>
+<script src="/js/jquery/jquery.countdown.min.js"></script>
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+<script src="/js/semantic-ui/semantic.min.js"></script>
+<script src="/js/layer/layer.js"></script>
+<script src="/js/core.js"></script>
 <script src="/lib/layui/layui.js" charset="utf-8"></script>
+<script src="/js/attendance.js"></script>
 <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
 <!--[if lt IE 9]>
 	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -25,7 +37,7 @@
 		<div class="layui-row">
 			<form class="layui-form layui-col-md12 we-search">
 				<div class="layui-input-inline">
-					<select name="subjectId">
+					<select name="subjectId" id="subjectId">
 						<option value="">课程名称</option>
 						<c:forEach items="${subjects}" var="subject">
 						<option value="${subject.id}">${subject.name}</option>
@@ -33,7 +45,7 @@
 					</select>
 				</div>
 				<div class="layui-input-inline">
-					<select name="type">
+					<select name="type" id="type">
 						<option value="">考勤类型</option>
 						<option value="0">随机考勤</option>
 						<option value="1">全体考勤</option>
@@ -46,7 +58,7 @@
 					<input class="layui-input" placeholder="截止时间" autocomplete="off" name="endTime" id="end">
 				</div>
 				
-				<button class="layui-btn" lay-submit="" lay-filter="sreach">
+				<button class="layui-btn" lay-submit="" lay-filter="search">
 					<i class="layui-icon">&#xe609;</i>
 				</button>
 			</form>
@@ -74,20 +86,15 @@
 			admin : '{/}/js/admin'
 		});
 		layui.use([ 'laydate', 'jquery', 'admin' ], function() {
-			var laydate = layui.laydate, $ = layui.jquery, admin = layui.admin;
+			var laydate = layui.laydate, $ = layui.jquery, admin = layui.admin, form = layui.form;
 			
 			var nowTime = new Date().valueOf();
-			//在这里并没有什么实际效果的获取startTime函数
-			function getSelectStartTime(){
-				var selectStartTime = new Date($('#start').val()).getTime();
-				console.log(selectStartTime);
-				return selectStartTime;
-			}
 			//执行一个laydate实例
 			laydate.render({
 				elem : '#start', //指定元素
 				type: 'datetime',
 				min: nowTime,
+				format: 'yyyy-MM-dd HH:mm:ss',//HH,hh出现问题，且后台实体类也必须是HH，出大问题
 				//没有什么卵用的时间控制
 				done: function(value, date, endDate) {
 					var startDate = new Date(value).getTime();
@@ -102,7 +109,8 @@
 			laydate.render({
 				elem : '#end', //指定元素
 				type: 'datetime',
-				min: getSelectStartTime(),//======>NAN,推断出，这里是进入页面后被立即加载
+				min: nowTime,
+				format: 'yyyy-MM-dd HH:mm:ss',
 				//并没有什么卵用的时间控制
 				done: function(value, date, endDate) {
 					var startDate = new Date($('#start').val()).getTime();
@@ -114,7 +122,57 @@
 				}
 			});
 
-
+			
+			/***********************提交表单开始*************************/
+			form.on('submit(search)', function (data) {
+				/***********限制输入非空开始************/
+				var $1 = $.trim($('#subjectId').val());
+	            var $2 = $.trim($("#type").val());
+	            var $3 = $.trim($("#start").val());
+	            var $4 = $.trim($("#end").val());
+	            if($1 == null || $1 == ''){  
+	                layer.msg('请选择目标课程！',function() {time:1000}); 
+	                return false;  
+	            }
+	            if($2 == null || $2 == ''){  
+	                layer.msg('请选择考勤类型！',function() {time:1000});
+	                return false; 
+	            }
+	            if($3 == null || $3 == ''){  
+	                layer.msg('开始时间需非空！',function() {time:1000});
+	                return false; 
+	            }
+	            if($4 == null || $4 == ''){  
+	                layer.msg('结束时间需非空！',function() {time:1000});
+	                return false; 
+	            }
+	            if($3 >= $4){  
+	                layer.msg('结束时间必须大于开始时间！',function() {time:1000});
+	                return false; 
+	            }
+	            /***********限制输入非空开始************/
+	            /***********表单数据提交开始************/
+				Core.postAjax("/attendance/add",data.field, function(result){
+					if(result.status==200){
+						layer.msg(result.msg, {
+							title: "系统提示",
+						    icon: 1,
+						    time: 800
+						},function(){
+							window.parent.location.reload();//刷新父窗口
+							window.close(); //关闭当前窗口
+					    }); 
+					}else{
+						layer.alert(result.msg, {
+							title:"系统提示",
+							icon: 2
+						});
+					}
+				})
+				/***********表单数据提交结束************/
+				return false;//这里是拦截layui自带的提交 
+			});
+			/***********************提交表单结束*************************/
 			/*用户-停用*/
 			/* function member_stop(obj, id) {
 				layer.confirm('确认要停用吗？', function(index) {

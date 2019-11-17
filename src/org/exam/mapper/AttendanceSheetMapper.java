@@ -30,6 +30,13 @@ public interface AttendanceSheetMapper extends MapperUtil<AttendanceSheet>{
 	int checkIn(AttendanceSheet attendanceSheet);
 	
 	/**
+	 * 教师补签
+	 * @param attendanceSheet
+	 * @return
+	 */
+	int checkInByTeacher(Integer id);
+	
+	/**
 	 * 签退学生
 	 * @param attendanceSheet
 	 * @return

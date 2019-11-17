@@ -59,7 +59,7 @@
 			<button class="layui-btn layui-btn-danger" onclick="checkOutSelected()">
 				<i class="layui-icon">&#xe69c;</i>批量签退
 			</button>
-			<span class="fr" style="line-height: 40px">...</span>
+			<span id="toRandom" class="fr" style="line-height: 40px"></span>
 		</div>
 		<table class="layui-table" id="attendance_table">
 			<thead>
@@ -102,11 +102,12 @@
 				</tr> -->
 			</tbody>
 		</table>
-		<div class="page">
-			<div>
-				<a class="prev" href="">&lt;&lt;</a> <a class="num" href="">1</a> <span
-					class="current">2</span> <a class="num" href="">3</a> <a
-					class="num" href="">489</a> <a class="next" href="">&gt;&gt;</a>
+		<!-- 显示分页信息 -->
+		<div class="row">
+			<!-- 分页文字信息 -->
+			<div class="col-md-6" id="page_info_area">
+			</div>
+			<div class="col-md-6" id="page_nav_area">
 			</div>
 		</div>
 
@@ -207,7 +208,7 @@
 		});
 
 		function requestPage(offset){
-			Core.postAjax("/attendance/publish?attendanceId="+requestTarget,{"limit":5,"offset":offset},function (result) {
+			Core.postAjax("/attendance/publish?attendanceId="+requestTarget,{"limit":10,"offset":offset},function (result) {
 	            build_stus_table(result);//1考勤表单
 	            build_page_info(result);//2页码控制
 	            build_page_nav(result);//3底部分页
@@ -232,14 +233,16 @@
 		  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
 		  return fmt;   
 		}  
+		
 		function build_stus_table(result){
+			var type = 1;
 			var attendances = result.rows;
 			if(!attendances.length==0){
 				$("#attendance_table tbody").empty();
 				$.each(attendances, function(index, items){
 					var statusTd,operateBtn,typeTd;
 					if(items.status==0){//<span class="layui-btn layui-btn-normal layui-btn-xs">已启用</span>
-						statusTd = $("<td></td>").addClass("td-status").append($("<span>未签到</span>").addClass("layui-btn layui-btn-warm layui-btn-xs"));
+						statusTd = $("<td></td>").addClass("td-status").append($("<span>未签到</span>").addClass("layui-btn layui-btn-danger layui-btn-xs"));
 						operateBtn =$("<a title=\"补签\" onclick=\"checkIn("+items.id+")\" href=\"javascript:;\"><i class=\"layui-icon\">&#xe60c;</i></a>"
 								+"<a title=\"请假\" onclick=\"onLeave("+items.id+")\" href=\"javascript:;\"> <i class=\"layui-icon\">&#xe664;</i></a>"
 								+"<a title=\"签退\" onclick=\"checkOut("+items.id+")\" href=\"javascript:;\"> <i class=\"layui-icon\">&#xe69c;</i></a>");
@@ -249,15 +252,15 @@
 								+"<a title=\"请假\" onclick=\"onLeave("+items.id+")\" href=\"javascript:;\"> <i class=\"layui-icon\">&#xe664;</i></a>"
 								+"<a title=\"签退\" onclick=\"checkOut("+items.id+")\" href=\"javascript:;\"> <i class=\"layui-icon\">&#xe69c;</i></a>");
 					}else{
-						statusTd = $("<td></td>").addClass("td-status").append($("<span>已请假</span>").addClass("layui-btn layui-btn-danger layui-btn-xs"));
+						statusTd = $("<td></td>").addClass("td-status").append($("<span>已请假</span>").addClass("layui-btn layui-btn-warm layui-btn-xs"));
 						operateBtn =$("<a title=\"补签\" onclick=\"checkIn("+items.id+")\" href=\"javascript:;\"><i class=\"layui-icon\">&#xe60c;</i></a>"
 								+"<a title=\"请假\" onclick=\"onLeave("+items.id+")\" href=\"javascript:;\"> <i class=\"layui-icon\">&#xe664;</i></a>"
 								+"<a title=\"签退\" onclick=\"checkOut("+items.id+")\" href=\"javascript:;\"> <i class=\"layui-icon\">&#xe69c;</i></a>");
 					}
-					if(items.type==0){
-						typeTd = $("<td></td>").append("<span>随机</span>");
-					}else if(items.type==1){
-						typeTd = $("<td></td>").append("<span>全体</span>");
+					if(index==0 && items.attendance.type==0){
+						type = 0;
+					}else if(index==0 && items.attendance.type==1){
+						type = 1;
 					}
 					var headTd = $("<td></td>").append("<div class='layui-unselect layui-form-checkbox' lay-skin='primary' data-id='2'> <i class='layui-icon'>&#xe605;</i> </div>");
 					var classTd = $("<td></td>").append(items.classes.name);
@@ -278,8 +281,17 @@
 				})
 			}else{
 				$("#attendance_table tbody").empty();
-				$("<tr style='text-align:center'><td colspan='5'>当前没有记录</td></tr>").appendTo("#attendance_table tbody");
+				$("<tr style='text-align:center'><td colspan='7'>当前没有记录</td></tr>").appendTo("#attendance_table tbody");
 			}
+			if(type==0){
+				$('#toRandom').empty();//清空必要
+				var toRandomBtn = $("<button onclick=\"toRandom("+requestTarget+")\"></button>").addClass("layui-btn layui-btn-normal").append("<i>&#xe66c;</i> 去考勤").addClass("layui-icon"); 
+				$('#toRandom').append(toRandomBtn);
+			}
+		}
+		
+		function toRandom(id){
+			window.location.href="/attendance/random?id="+id;
 		}
 		
 		/***********************补签、请假、签退 开始************************/
@@ -287,9 +299,9 @@
 		function checkIn(id){
 			Core.postAjax("/attendance/checkInByTeacher",{"id":id}, function(data){
 				if(data.status==200){
-					layer.msg("loading...", {
+					layer.msg("补签成功...", {
 						title: "系统提示",
-					    icon: 3,
+					    icon: 1,
 					    time: 800
 					},function(){
 						window.location.reload();
@@ -307,9 +319,9 @@
 		function onLeave(id){
 			Core.postAjax("/attendance/onLeave",{"id":id}, function(data){
 				if(data.status==200){
-					layer.msg("loading...", {
+					layer.msg("请假成功...", {
 						title: "系统提示",
-					    icon: 3,
+					    icon: 1,
 					    time: 800
 					},function(){
 						window.location.reload();
@@ -327,9 +339,9 @@
 		function checkOut(id){
 			Core.postAjax("/attendance/checkOut",{"id":id}, function(data){
 				if(data.status==200){
-					layer.msg("loading...", {
+					layer.msg("签退成功...", {
 						title: "系统提示",
-					    icon: 3,
+					    icon: 1,
 					    time: 800
 					},function(){
 						window.location.reload();
@@ -384,7 +396,7 @@
 						offset=0;
 					});
 					prePageLi.click(function(){
-						requestPage(offset-=5)	
+						requestPage(offset-=10)	
 					});
 				}
 				
@@ -395,10 +407,10 @@
 					lastPageLi.addClass("disabled");
 				}else{
 					nextPageLi.click(function(){
-						requestPage(offset+=5);
+						requestPage(offset+=10);
 					});
 					lastPageLi.click(function(){
-						requestPage(pageInfo.pages*5);
+						requestPage(pageInfo.pages*10);
 					});
 				}
 				ul.append(firstPageLi).append(prePageLi),
@@ -408,7 +420,7 @@
 						numLi.addClass("active");
 						}
 					numLi.click(function(){
-						requestPage(items*5-1);
+						requestPage(items*10-1);
 						});
 					ul.append(numLi);
 					});
@@ -418,26 +430,6 @@
 				}
 			};
 			/*********分页结束*********/
-			/*进入考勤*/
-		    function startToAttendanceAction(id) {
-				Core.postAjax("/attendance/validate",{"id":id}, function(data){
-					if(data.status==200){
-						layer.msg("loading...", {
-							title: "系统提示",
-						    icon: 3,
-						    time: 800
-						},function(){
-							window.location.href="/attendance/startAttendance?attendanceId="+id;
-					    }); 
-					}else{
-						layer.alert(data.msg, {
-							title:"系统提示",
-							icon: 2
-						});
-					}
-				})
-		        //window.location.href="/attendance/startattendance?attendanceId="+id; 
-		    }
 		    /******请求已发布考勤信息结束*******/
 	</script>
 </html>

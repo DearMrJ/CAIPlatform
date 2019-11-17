@@ -15,14 +15,14 @@ public class SemesterUtil {
 	private static int term;
 	private static int month;
 	
-	public static int getYear() {
+	public static String getYear() {
 		Calendar calendar = Calendar.getInstance();
 		year = calendar.get(Calendar.YEAR);
 		month = calendar.get(calendar.MONTH);
 		if (month < 9) {
-			return year-1;
+			return String.valueOf(year-1);
 		}else {
-			return year;
+			return String.valueOf(year);
 		}
 	}
 	

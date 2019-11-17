@@ -27,7 +27,9 @@ public class Attendance implements Serializable{
 	private Integer status;		//1有效，0失效(过时)
 	private Date createTime;	//签到创建时间
 	private Date updateTime;	//更新时间
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date startTime;		//开始时间
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date endTime;		//签到截至时间
 	
 	

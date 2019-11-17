@@ -26,8 +26,14 @@ public interface AttendanceService extends BaseService<Attendance>{
 	
 	List<User> listTargetedStudents(AttendanceConditionVo vo);
 	
+	int deleteBatch(List<String> attendanceIds);
+	
 	boolean updateAttendanceToStart();
 	
 	boolean updateAttendanceToEnd();
+	
+	List<AttendanceSheet> queryRecordForRandom(Integer id);
+	
+	Attendance validateEnd(Integer id);
 	
 }

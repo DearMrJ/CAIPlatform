@@ -17,6 +17,7 @@
 		<association property="attendance" javaType="org.exam.entity.Attendance">
 			<id property="id" column="a_id" jdbcType="INTEGER"/>
 			<result property="subjectId" column="subject_id" jdbcType="INTEGER"/>
+			<result property="type" column="type" jdbcType="INTEGER"/>
 		</association>
 		<association property="classes" javaType="org.exam.entity.Classes">
 			<id property="id" column="c_id" jdbcType="INTEGER"/>
@@ -25,7 +26,7 @@
 	</resultMap>
 	
 	<select id="currentCheckInRecords" parameterType="org.exam.vo.AttendanceConditionVo" resultMap="BaseResultMap">
-		select ash.*,c.id as c_id,c.name,u.user_id as u_user_id,u.username,u.nickname,a.id,a.subject_id
+		select ash.*,c.id as c_id,c.name,u.user_id as u_user_id,u.username,u.nickname,a.id,a.subject_id,a.type
 		from attendance_inf a 
 		left join attendance_sheet_inf ash on a.id = ash.attendance_id 
 		left join user_inf u on ash.user_id = u.user_id 
@@ -62,6 +63,13 @@
 		</if>
 	</update>
 	
+	<update id="checkInByTeacher" parameterType="int">
+		update attendance_sheet_inf 
+		set status = 1,check_time = now() 
+		where 1 = 1
+			AND id <![CDATA[ = ]]> #{id}
+	</update>
+	
 	<update id="checkOut" parameterType="org.exam.entity.AttendanceSheet">
 		update attendance_sheet_inf 
 		set status = 0,check_time = null
@@ -69,13 +77,11 @@
 		<if test="attendanceId != null">
 			AND attendance_id <![CDATA[ = ]]> #{attendanceId}
 		</if>
-		<if test="id != null">
 			AND id <![CDATA[ = ]]> #{id}
-		</if>
 		<if test="userId != null">
 			AND user_id <![CDATA[ = ]]> #{userId}
 		</if>
-			AND status <![CDATA[ > ]]> 0
+			AND status <![CDATA[ >= ]]> 0
 	</update>
 	
 	<update id="onLeave" parameterType="org.exam.entity.AttendanceSheet">
@@ -91,7 +97,7 @@
 		<if test="userId != null">
 			AND user_id <![CDATA[ = ]]> #{userId}
 		</if>
-			AND status <![CDATA[ < ]]> 2
+			AND status <![CDATA[ <= ]]> 2
 	</update>
 	
 </mapper>
