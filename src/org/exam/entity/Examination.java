@@ -24,6 +24,7 @@ public class Examination implements Serializable{
 	private Integer totalScore;	//总成绩（选择题自动阅卷成绩+手工阅卷成绩）
 	private Integer classId;	//班级id
 	private Integer subjectId;	//科目id
+	private Integer type;		//类型：考试(仅客观题)/测试（老师可改：分主观题客观题）
 	private Date startTime;		//答题开始时间
 	private Date endTime;		//答题结束时间
 	private Date createTime;	//记录插入时间
@@ -98,6 +99,18 @@ public class Examination implements Serializable{
 	}
 	public void setSubjectId(Integer subjectId) {
 		this.subjectId = subjectId;
+	}
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public Date getStartTime() {
 		return startTime;

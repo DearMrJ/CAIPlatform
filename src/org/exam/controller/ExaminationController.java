@@ -87,13 +87,13 @@ public class ExaminationController {
 	
 	@PostMapping("/add")
 	@ResponseBody
-	public ResponseVo add(Examination examination , Integer[]question) {
+	public ResponseVo add(Examination examination , Integer[] questions) {//指定测试/考试 类型
 		try {
 			User user = (User)SecurityUtils.getSubject().getPrincipal();
 			examination.setUserId(user.getUserId());
 			examination.setAuthor(user.getNickname());
 			Examination exam = examService.insertExam(examination);
-			examQuestionService.insertList(exam.getId(),question);
+			examQuestionService.insertList(exam.getId(),questions);
 			return ResultUtil.success("发布考试成功");
 		} catch (Exception e) {
 			return ResultUtil.error("发布考试失败");

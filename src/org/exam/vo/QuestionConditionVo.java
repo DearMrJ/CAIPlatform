@@ -5,7 +5,7 @@ import org.exam.vo.base.BaseConditionVo;
 public class QuestionConditionVo extends BaseConditionVo {
 	
 	private Integer subjectId;
-	private Integer questionType;
+	private Integer type;
 	private String orderBy;
 	private Integer status;
 	private String keywords;
@@ -17,11 +17,11 @@ public class QuestionConditionVo extends BaseConditionVo {
 		this.subjectId = subjectId;
 	}
 	
-	public Integer getQuestionType() {
-		return questionType;
+	public Integer getType() {
+		return type;
 	}
-	public void setQuestionType(Integer questionType) {
-		this.questionType = questionType;
+	public void setType(Integer type) {
+		this.type = type;
 	}
 	public String getOrderBy() {
 		return orderBy;

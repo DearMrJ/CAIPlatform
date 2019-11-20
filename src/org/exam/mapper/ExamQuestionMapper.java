@@ -11,6 +11,4 @@ public interface ExamQuestionMapper extends MapperUtil<ExamQuestion>{
 
 	int deleteBatch(Integer[] ids);
 	
-	
-
 }

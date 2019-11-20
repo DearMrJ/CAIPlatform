@@ -24,7 +24,7 @@
 			<result property="description" jdbcType="VARCHAR" column="s_subject_description"/>
 		</association>
     </resultMap>
-    <resultMap id="VlidateResultMap" type="org.exam.entity.Question" >
+    <resultMap id="ValidateResultMap" type="org.exam.entity.Question" >
         <id column="num" property="counts" jdbcType="INTEGER" />
     </resultMap>
     <sql id="Base_Column_List" >
@@ -87,7 +87,7 @@
     	</foreach>
     </insert>
     
-	<select id="validateBySubjectIds" parameterType="map" resultMap="VlidateResultMap">
+	<select id="validateBySubjectIds" parameterType="map" resultMap="ValidateResultMap">
 		SELECT
 		COUNT(question.id) AS num
 		FROM
