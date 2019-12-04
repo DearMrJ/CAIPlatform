@@ -24,12 +24,16 @@ import org.exam.vo.QuestionConditionVo;
 import org.exam.vo.base.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.exam.exception.ExcelException;
 
 import com.github.pagehelper.util.StringUtil;
 
 @Service
+@Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.DEFAULT)
 public class QuestionServiceImpl extends BaseServiceImpl<Question> implements QuestionService {
 	
 	private final static String XLS = "xls";

@@ -15,12 +15,16 @@ import org.exam.service.AttendanceService;
 import org.exam.vo.AttendanceConditionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Lynch
  *
  */
 @Service
+@Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.DEFAULT)
 public class AttendanceServiceImpl extends BaseServiceImpl<Attendance> implements AttendanceService{
 	
 	@Autowired
@@ -64,7 +68,7 @@ public class AttendanceServiceImpl extends BaseServiceImpl<Attendance> implement
 
 
 	/**
-	 * 返回考勤目标 科目/班级 人员信息(老师用于单体考勤)
+	 * 返回考勤目标 科目/班级 人员信息(teacher用于单体考勤)
 	 */
 	@Override
 	public List<User> listTargetedStudents(AttendanceConditionVo vo) {

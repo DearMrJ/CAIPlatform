@@ -133,7 +133,7 @@
 					<td>2019-11-14 17:30</td>
 					<td>2017-11-14 17:35</td>
 					<td>已结束</td>
-					<td class="td-manage"><a title="查看"
+					<td class="td-manager"><a title="查看"
 						onclick="WeAdminShow('编辑','/attendance/publish')" href="javascript:;">
 							<i class="layui-icon">&#xe63c;</i>
 					</a> <a title="删除" onclick="delAttend("+items.id+")"
@@ -306,7 +306,7 @@
 					var presentTd = $("<td></td>").append(items.presentTotal);
 					var presentRateTd = $("<td></td>").append(((items.presentTotal*100)/items.courseTotal).toFixed(2)+"%");
 					//var statusTd = $("<td></td>").append(tableTail);
-					var operateTd = $("<td></td>").addClass("td-manage").append(operateBtn);
+					var operateTd = $("<td></td>").addClass("td-manager").append(operateBtn);
 					$("<tr></tr>").append(headTd)
 					 			  .append(subjectTd)
 								  .append(yearAndTermTd)

@@ -170,7 +170,7 @@ body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,
 				 				<li class='san'></li>
 				 				<shiro:hasPermission name="manager">
 				 				<li>
-				 					<a href="/manager" data-track="true" data-track-location="header">工作台</a>
+				 					<a href="/manage" data-track="true" data-track-location="header">工作台</a>
 				 				</li>
 				 				</shiro:hasPermission>
 				 				<li><a href="/logout" data-track="true" 

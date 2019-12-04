@@ -78,7 +78,6 @@ public class UserController {
         			return ResultUtil.error("两次密码不一致");
         		}
         	}
-        	
         }else {
         	userForm.setPassword(CoreConst.DEFAULT_PASSWORD);
         }

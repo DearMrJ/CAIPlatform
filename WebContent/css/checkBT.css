@@ -1,0 +1,80 @@
+
+.main-bottom{
+  margin: 50px;
+  height: 300px;
+  background-color: #fff;
+}
+.main-bottom .select{
+  font-size: 16px;
+}
+
+.main-bottom .select .radio-line{
+  margin-left: 20px;
+}
+.main-bottom .select .start{
+  margin-left: 20px;
+  background:rgba(19, 140, 136, 1);  border-radius: 5px; 
+  width: 150px; 
+  height: 40px; 
+  color:white;
+}
+.main-bottom .select .end{
+  margin-left: 20px;
+  background:white;  
+  border-radius: 5px; 
+  width: 150px; 
+  height: 40px; 
+  color:rgba(19, 140, 136, 1);
+}
+
+.main-bottom .qiandao
+{
+  margin:50px 30px 20px 60px;font-size: 16px;
+}
+
+.main-bottom #qiandao{
+  font-size:40px; margin-left: 20px;margin-right: 20px;
+}
+.main-bottom .up
+{
+  background:white;  border-radius: 5px; width: 150px; height: 40px; margin-left: 20px;
+}
+.main-bottom .button{
+  margin:30px 30px 80px 20px;
+  font-size: 16px;
+}
+
+
+#name{
+  font-size: 32px;
+  margin:0 10px;
+}
+.button a{
+  text-align: center;
+  margin-left: 20px;
+  border-radius: 5px;
+  display: inline-block;
+  line-height: 34px;
+  width: 87px; height: 34px; 
+  color:white;
+  text-decoration: none;
+}
+
+#down3{
+  background:rgba(217, 0, 27, 1);
+}
+#down3:hover{
+ background-color: rgb(225, 51, 73);
+}
+#down2{
+  background:rgba(245, 154, 35, 1);
+}
+#down2:hover{
+ background-color: rgb(247, 174, 79);
+}
+#down1{
+  background:rgba(19, 140, 136, 1);
+}
+#down1:hover{
+ background-color: rgb(66, 163, 160);
+}

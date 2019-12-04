@@ -112,7 +112,7 @@
 		order by a.end_time desc;
 	</select>
 	
-	<!-- 老师查询单体考勤 -->
+	<!-- teacher查询单体考勤 -->
 	<select id="listTargetedStudents" parameterType="org.exam.vo.AttendanceConditionVo" resultMap="StudentsMap">
 		select u.id,u.user_id,u.username,u.nickname
 		from subject_inf s 

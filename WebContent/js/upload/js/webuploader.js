@@ -323,21 +323,21 @@
              *     console.log( 'hello' );
              * };
              *
-             * var Manager = Base.inherits( Person, {
+             * var manager = Base.inherits( Person, {
              *     world: function() {
              *         console.log( 'World' );
              *     }
              * });
              *
              * // 因为没有指定构造器，父类的构造器将会执行。
-             * var instance = new Manager();    // => Super
+             * var instance = new manager();    // => Super
              *
              * // 继承子父类的方法
              * instance.hello();    // => hello
              * instance.world();    // => World
              *
              * // 子类的__super__属性指向父类
-             * console.log( Manager.__super__ === Person );    // => true
+             * console.log( manager.__super__ === Person );    // => true
              */
             inherits: function( Super, protos, staticProtos ) {
                 var child;

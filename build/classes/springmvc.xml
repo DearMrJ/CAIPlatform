@@ -26,7 +26,7 @@
 	<!-- 开启Spring AOC Shiro注解支持 -->
 	<!-- <bean
 		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-		<property name="securityManager" ref="securityManager" />
+		<property name="securitymanager" ref="securitymanager" />
 	</bean> -->
 	<!-- ========================================================================================= -->
 	
@@ -56,7 +56,7 @@
 	<bean
 		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
 		depends-on="lifecycleBeanPostProcessor">
-		<property name="proxyTargetClass" value="true" />
+		<property name="proxyTargetClass" value="true"/>
 	</bean>
 	
 	<!-- 开启Spring AOC Shiro注解支持 -->
@@ -87,7 +87,7 @@
 	
 	
 	<mvc:view-controller path="/" view-name="index/main"/>
-	<mvc:view-controller path="/manager" view-name="manager/manager"/>
+	<mvc:view-controller path="/manage" view-name="manager/manager"/>
 
 	<!-- 使用默认的servlet来响应    《静态文件 》 -->
 	<mvc:default-servlet-handler/>

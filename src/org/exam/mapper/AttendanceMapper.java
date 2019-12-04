@@ -20,7 +20,7 @@ import org.exam.vo.AttendanceConditionVo;
 public interface AttendanceMapper extends MapperUtil<Attendance>{
 	
 	/**
-	 * 老师查询考勤列表+出勤率等信息
+	 * teacher查询考勤列表+出勤率等信息
 	 * @param vo
 	 * @return
 	 */

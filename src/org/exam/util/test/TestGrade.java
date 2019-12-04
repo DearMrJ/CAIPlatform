@@ -3,6 +3,7 @@
  */
 package org.exam.util.test;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,8 +15,13 @@ import org.exam.mapper.ExaminationMapper;
 import org.exam.service.ExaminationService;
 import org.exam.service.GradeService;
 import org.exam.service.UserService;
+import org.exam.util.CoreConst;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.data.redis.connection.RedisPassword;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
 import com.alibaba.fastjson.JSON;
 
@@ -24,6 +30,8 @@ import com.alibaba.fastjson.JSON;
  *
  */
 public class TestGrade {
+	
+	
 	
 	
 	private ExaminationService examService;

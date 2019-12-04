@@ -17,7 +17,7 @@ import org.exam.vo.AttendanceConditionVo;
 public interface AttendanceService extends BaseService<Attendance>{
 	
 	/**
-	 * 分页查询考勤活动(特定老师、科目)
+	 * 分页查询考勤活动(特定teacher、科目)
 	 * @return
 	 */
 	List<Attendance> findByCondition(AttendanceConditionVo vo);

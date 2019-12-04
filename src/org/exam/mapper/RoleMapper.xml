@@ -15,7 +15,7 @@
   </sql>
 
   <select id="findRoleByUserId" resultType="java.lang.String">
-    SELECT r.role_id FROM role_inf r LEFT JOIN user_role_inf ur ON r.role_id = ur.role_id
+    SELECT r.name FROM role_inf r LEFT JOIN user_role_inf ur ON r.role_id = ur.role_id
     WHERE ur.user_id = #{userId,jdbcType=VARCHAR}
   </select>
 

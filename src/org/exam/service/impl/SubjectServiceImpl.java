@@ -9,9 +9,13 @@ import org.exam.mapper.SubjectMapper;
 import org.exam.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
+@Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.DEFAULT)
 public class SubjectServiceImpl extends BaseServiceImpl<Subject> implements SubjectService {
 	
 	@Autowired

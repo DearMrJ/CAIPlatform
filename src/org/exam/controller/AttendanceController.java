@@ -82,8 +82,8 @@ public class AttendanceController {
 		User user = (User)SecurityUtils.getSubject().getPrincipal();
 		List<String> roleList = userService.selectRoleByUserId(user.getUserId());
 		PageHelper.startPage(PageUtil.getPageNo(limit, offset), limit);//最近一次查询有效
-		if (!roleList.contains("超级管理员")) {//炒鸡管理员不可以是老师
-			if (roleList.contains("老师")) {
+		if (!roleList.contains("administrator")) {//炒鸡管理员不可以是teacher
+			if (roleList.contains("teacher")) {
 				vo.setTeacherUserId(user.getUserId());
 				attendanceList = attendanceService.findByCondition(vo);
 				System.err.println(attendanceList);
@@ -337,7 +337,7 @@ public class AttendanceController {
 	}
 	
 	/**
-	 * 老师补签
+	 * teacher补签
 	 * @param id
 	 * @return
 	 */
@@ -379,7 +379,7 @@ public class AttendanceController {
 		}
 	}
 	/**
-	 * 老师签退
+	 * teacher签退
 	 * @param id
 	 * @return
 	 */

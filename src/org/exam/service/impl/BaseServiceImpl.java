@@ -5,7 +5,11 @@ import java.util.List;
 import org.exam.service.BaseService;
 import org.exam.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.DEFAULT)
 public class BaseServiceImpl<T> implements BaseService<T> {
     @Autowired
     protected MapperUtil<T> mapper;

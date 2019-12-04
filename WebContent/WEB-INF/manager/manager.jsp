@@ -22,7 +22,7 @@
 		<!-- 顶部开始 -->
 		<div class="container">
 			<div class="logo">
-				<a href="/manager">45后台管理</a>
+				<a href="/manage">45后台管理</a>
 			</div>
 			<div class="left_open">
 				<!-- <i title="展开左侧栏" class="iconfont">&#xe699;</i> -->
@@ -72,8 +72,62 @@
 		<!-- 中部开始 -->
 		<!-- 左侧菜单开始 -->
 		<div class="left-nav">
-			<div id="side-nav"></div>
-		</div>
+            <div id="side-nav">
+              <ul class="nav" id="nav" style="background-color: rgb(246, 248, 249);">
+              	<shiro:hasRole name="administrator">
+                <li id="menu1" class=""><a _href=""><i class="iconfont"></i><cite>学院管理</cite><i class="iconfont nav_right"></i></a>
+                  <ul class="sub-menu" style="display: none;">
+                    <li id="menu2"><a _href=""><i class="iconfont"></i><cite>学院列表</cite></a></li>
+                    <li id="menu3"><a _href=""><i class="iconfont"></i><cite>学院xx</cite></a></li>
+                  </ul>
+                </li>
+                </shiro:hasRole>
+                <shiro:hasRole name="teacher">
+                <li id="menu4" class=""><a _href=""><i class="iconfont"></i><cite>课程管理</cite><i class="iconfont nav_right"></i></a>
+                  <ul class="sub-menu" style="display: none; height: 120px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
+                    <li id="menu5"><a _href=""><i class="iconfont"></i><cite>课程列表</cite></a></li>
+                    <li id="menu6"><a _href=""><i class="iconfont"></i><cite>课程xx</cite></a></li>
+                  </ul>
+                </li>
+                </shiro:hasRole>
+                <shiro:hasRole name="teacher">
+                <li id="menu7"><a _href=""><i class="iconfont"></i><cite>考勤管理</cite><i class="iconfont nav_right"></i></a>
+                  <ul class="sub-menu">
+                    <li id="menu8"><a _href="attendance/list"><i class="iconfont"></i><cite>考勤列表</cite></a></li>
+                    <li id="menu9"><a _href=""><i class="iconfont"></i><cite>考勤xx</cite></a></li>
+                  </ul>
+                </li>
+                </shiro:hasRole>
+                <shiro:hasRole name="teacher">
+                <li id="menu10"><a _href=""><i class="iconfont"></i><cite>考试管理</cite><i class="iconfont nav_right"></i></a>
+                  <ul class="sub-menu">
+                    <li id="menu11"><a _href=""><i class="iconfont"></i><cite>考试列表</cite></a></li>
+                    <li id="menu12"><a _href=""><i class="iconfont"></i><cite>考试管理</cite></a></li>
+                  </ul>
+                </li>
+                </shiro:hasRole>
+                <shiro:hasRole name="administrator">
+                <li id="menu13"><a _href=""><i class="iconfont"></i><cite>权限管理</cite><i class="iconfont nav_right"></i></a>
+                  <ul class="sub-menu">
+                    <li id="menu14"><a _href=""><i class="iconfont"></i><cite>用户列表</cite></a></li>
+                    <li id="menu15"><a _href=""><i class="iconfont"></i><cite>角色管理</cite></a></li>
+                    <li id="menu16"><a _href=""><i class="iconfont"></i><cite>权限分类</cite></a></li>
+                  </ul>
+                </li>
+                </shiro:hasRole>
+                <shiro:hasAnyRoles name="administrator,teacher">
+                <li id="menu18"><a _href=""><i class="iconfont"></i><cite>系统统计</cite><i class="iconfont nav_right"></i></a>
+                  <ul class="sub-menu">
+                    <li id="menu19"><a _href=""><i class="iconfont"></i><cite>拆线图</cite></a></li>
+                    <li id="menu20"><a _href=""><i class="iconfont"></i><cite>柱状图</cite></a></li>
+                    <li id="menu21"><a _href=""><i class="iconfont"></i><cite>地图</cite></a></li>
+                  </ul>
+                </li>
+                </shiro:hasAnyRoles>
+              </ul>
+            </div>
+          </div>
+
 		<!-- <div class="x-slide_left"></div> -->
 		<!-- 左侧菜单结束 -->
 		<!-- 右侧主体开始 -->
@@ -106,7 +160,9 @@
 //			layui.use('admin', function(){
 //			  var admin = layui.admin;
 //			});
-			layui.config({
+
+
+			/* layui.config({
 				base: '/js/'
 				,version: '101100'
 			}).extend({ //设定模块别名
@@ -133,7 +189,19 @@
 					}
 				});
 			});
-
+ */
+		 layui.config({
+		     base: '/js/'
+		     , version: '101100'
+		   }).extend({ //设定模块别名
+		     admin: 'admin'
+		     , menu: 'menu'
+		   });
+		   layui.use(['jquery', 'admin', 'menu'], function () {
+		     var $ = layui.jquery,
+		       admin = layui.admin,
+		       menu = layui.menu;
+		   });
 		</script>
 	</body>
 	<!--Tab菜单右键弹出菜单-->

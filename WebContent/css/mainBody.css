@@ -1,0 +1,30 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.main-top{
+  height: 80px;
+  line-height: 80px;
+  background-color:rgb(246, 248, 249) ;
+}
+.main-top .bigtitle{
+   font-size: 25px;
+   font-weight: 400;
+}
+.line{
+  height: 4px;
+  background-color: rgb(246, 248, 249);
+}
+.main-center{
+  padding-left:30px ;
+  margin-bottom: 2px;
+  height: 64px;
+  line-height: 64px;
+   background-color: #fff;
+   
+}
+.main-center .smalltitle{
+  font-size: 15px;
+  font-weight: 400;
+}

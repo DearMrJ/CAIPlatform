@@ -3,14 +3,13 @@ package org.exam.config;
 
 import java.io.IOException;
 import java.time.Duration;
-import java.util.Properties;
 
+import org.exam.util.CoreConst;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
@@ -45,19 +44,29 @@ public class RedisConfig extends CachingConfigurerSupport {
      */
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() throws IOException {
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration ();
-        Properties prop = PropertiesLoaderUtils.loadAllProperties("redis.properties");
-        redisStandaloneConfiguration.setHostName(prop.getProperty("hostName"));
-        redisStandaloneConfiguration.setPort(Integer.parseInt(prop.getProperty("port")));
-        redisStandaloneConfiguration.setDatabase(16);
-        redisStandaloneConfiguration.setPassword(RedisPassword.of(prop.getProperty("password")));
-
-        JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
-        jedisClientConfiguration.connectTimeout(Duration.ofMillis(Long.parseLong(prop.getProperty("timeout"))));//  connection timeout
-
-        JedisConnectionFactory factory = new JedisConnectionFactory(redisStandaloneConfiguration,
-                jedisClientConfiguration.build());
-        return factory;
+    	RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration ();
+        
+    //  Properties prop = PropertiesLoaderUtils.loadAllProperties("redis.properties");
+    //  redisStandaloneConfiguration.setHostName(prop.getProperty("hostName"));
+    //  System.err.println(prop.getProperty("hostName"));
+    //  redisStandaloneConfiguration.setPort(Integer.parseInt(prop.getProperty("port")));
+    //  System.err.println(prop.getProperty("port"));
+    //  redisStandaloneConfiguration.setDatabase(16);
+    //  System.err.println(prop.getProperty("hostName"));
+    //  redisStandaloneConfiguration.setPassword(RedisPassword.of(prop.getProperty("password")));
+    //
+    //  JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
+    //  jedisClientConfiguration.connectTimeout(Duration.ofMillis(Long.parseLong(prop.getProperty("timeout"))));//  connection timeout
+      
+      redisStandaloneConfiguration.setHostName(CoreConst.REDIS_HOST);
+      redisStandaloneConfiguration.setPort(CoreConst.REDIS_PORT);
+      redisStandaloneConfiguration.setDatabase(16);
+      redisStandaloneConfiguration.setPassword(RedisPassword.of(CoreConst.REDIS_PASSWORD));
+      JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
+      jedisClientConfiguration.connectTimeout(Duration.ofMillis((CoreConst.REDIS_TIMEOUT)));//  connection timeout
+      JedisConnectionFactory factory = new JedisConnectionFactory(redisStandaloneConfiguration,
+              jedisClientConfiguration.build());
+      return factory;
     }
     
     /**

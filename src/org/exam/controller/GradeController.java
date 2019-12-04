@@ -47,8 +47,8 @@ public class GradeController {
 	public String listOfGrade(Model model,GradeConditionVo gradeConditionVo) {
 		User user = (User)SecurityUtils.getSubject().getPrincipal();
 		List<String> roleList = userService.selectRoleByUserId(user.getUserId());
-		if(!roleList.contains("超级管理员")) {
-			if(roleList.contains("老师")) {
+		if(!roleList.contains("administrator")) {
+			if(roleList.contains("teacher")) {
 				gradeConditionVo.setAuthor(user.getNickname());
 			}else {
 				gradeConditionVo.setUserId(user.getUserId());
@@ -66,8 +66,8 @@ public class GradeController {
 		PageHelper.startPage(PageUtil.getPageNo(limit, offset),limit);
 		User user = (User)SecurityUtils.getSubject().getPrincipal();
 		List<String> roleList = userService.selectRoleByUserId(user.getUserId());
-		if(!roleList.contains("超级管理员")) {
-			if(roleList.contains("老师")) {
+		if(!roleList.contains("administrator")) {
+			if(roleList.contains("teacher")) {
 				gradeConditionVo.setAuthor(user.getNickname());
 			}else {
 				gradeConditionVo.setUserId(user.getUserId());

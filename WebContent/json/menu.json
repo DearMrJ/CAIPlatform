@@ -5,7 +5,7 @@
 			"id": 1,
 			"name": "学院管理",
 			"icon": "&#59030;",
-			"shiroHead": "<shiro:hasRole name='超级管理员'>",
+			"shiroHead": "<shiro:hasRole name='administrator'>",
 			"shiroTail": "</shiro:hasRole>",
 			"url": "",
 			"children": [{

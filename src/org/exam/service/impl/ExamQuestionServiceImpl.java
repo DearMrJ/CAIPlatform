@@ -9,10 +9,14 @@ import org.exam.mapper.ExamQuestionMapper;
 import org.exam.service.ExamQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import tk.mybatis.mapper.entity.Example;
 
 @Service
+@Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.DEFAULT)
 public class ExamQuestionServiceImpl extends BaseServiceImpl<ExamQuestion> implements ExamQuestionService {
 
 	@Autowired

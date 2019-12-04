@@ -79,7 +79,7 @@
 				<div class="icon">
 					<i class="ion ion-person-stalker"></i>
 				</div>
-				<a href="/manager#students" class="small-box-footer" target="container">更多 <i
+				<a href="/manage#students" class="small-box-footer" target="container">更多 <i
 					class="fa fa-arrow-circle-right"></i></a>
 			</div>
 		</div>
@@ -94,7 +94,7 @@
 				<div class="icon">
 					<i class="icon ion-film-marker"></i>
 				</div>
-				<a href="/manager#subjects" class="small-box-footer" target="container">更多 <i
+				<a href="/manage#subjects" class="small-box-footer" target="container">更多 <i
 					class="fa fa-arrow-circle-right"></i></a>
 			</div>
 		</div>
@@ -107,7 +107,7 @@
 				<div class="icon">
 					<i class="ion ion-person-add"></i>
 				</div>
-				<a href="/manager#users" class="small-box-footer" target="container">更多 <i
+				<a href="/manage#users" class="small-box-footer" target="container">更多 <i
 					class="fa fa-arrow-circle-right"></i></a>
 			</div>
 		</div>
@@ -121,7 +121,7 @@
 				<div class="icon">
 					<i class="ion ion-cube"></i>
 				</div>
-				<a href="/manager#questions" class="small-box-footer" target="container">更多 <i
+				<a href="/manage#questions" class="small-box-footer" target="container">更多 <i
 					class="fa fa-arrow-circle-right"></i></a>
 			</div>
 		</div>
@@ -144,7 +144,7 @@
 					<ul class="products-list product-list-in-box" id="examList"></ul>
 				</div>
 				<div class="box-footer text-center">
-              		<a href="/manager#exams" class="uppercase" target="container">查 看 更 多 考 试</a>
+              		<a href="/manage#exams" class="uppercase" target="container">查 看 更 多 考 试</a>
             	</div>
 			</div>
 		</div>
@@ -249,7 +249,7 @@
 					}else{
 						statusSpan = $("<span>已结束</span>").addClass("label label-danger pull-right");
 					}
-					var titleA = $("<a href='/manager#exams' class='product-title'></a>").append(items.title).append(statusSpan);
+					var titleA = $("<a href='/manage#exams' class='product-title'></a>").append(items.title).append(statusSpan);
 					var desSpan = $("<span style='padding-top:5px'>"+items.nickname+"于"+items.create_time+"发布考试啦!</span>").addClass("product-description");
 					var infoDiv = $("<div class='product-info'></div>").append(titleA).append(desSpan);
 					$("<li class='item'></li>").append(imgDiv).append(infoDiv).appendTo("#examList");

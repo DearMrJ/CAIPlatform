@@ -36,7 +36,7 @@
     </cache>
 
     <!--Default Cache configuration. These will applied to caches programmatically created through
-        the CacheManager.
+        the Cachemanager.
 
         The following attributes are required for defaultCache:
 
@@ -61,7 +61,7 @@
 
     <!--Predefined caches.  Add your cache configuration settings here.
         If you do not have a configuration for your cache a WARNING will be issued when the
-        CacheManager starts
+        Cachemanager starts
 
         The following attributes are required for defaultCache:
 

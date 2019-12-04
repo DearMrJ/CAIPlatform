@@ -24,7 +24,7 @@ public class Examination implements Serializable{
 	private Integer totalScore;	//总成绩（选择题自动阅卷成绩+手工阅卷成绩）
 	private Integer classId;	//班级id
 	private Integer subjectId;	//科目id
-	private Integer type;		//类型：考试(仅客观题)/测试（老师可改：分主观题客观题）
+	private Integer type;		//类型：考试(仅客观题)/测试（teacher可改：分主观题客观题）
 	private Date startTime;		//答题开始时间
 	private Date endTime;		//答题结束时间
 	private Date createTime;	//记录插入时间

@@ -48,7 +48,7 @@
                 DataSource associated with the database to access. A
                 String value represents a relative path to a JNDI
                 resource or the parameters for the JDBC
-                DriverManager facility.
+                Drivermanager facility.
             </description>
             <name>dataSource</name>
             <required>false</required>
@@ -106,7 +106,7 @@
                 Data source associated with the database to
                 query. A String value represents a relative path
                 to a JNDI resource or the parameters for the
-                DriverManager class.
+                Drivermanager class.
             </description>
             <name>dataSource</name>
             <required>false</required>
@@ -176,7 +176,7 @@
                 Data source associated with the database to update.
                 A String value represents a relative path to a JNDI
                 resource or the parameters for the JDBC
-                DriverManager class.
+                Drivermanager class.
             </description>
             <name>dataSource</name>
             <required>false</required>
