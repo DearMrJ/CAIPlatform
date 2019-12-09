@@ -60,7 +60,7 @@ public class CoreConst {
 	
 	
 	/*********************************Redis********************************/
-	public static final String REDIS_HOST = "60.205.170.169";
+	public static final String REDIS_HOST = "192.168.66.65";
 	public static final String REDIS_PASSWORD = "";
 	public static final Integer REDIS_PORT = 6379;
 	public static final Integer REDIS_TIMEOUT = 0;

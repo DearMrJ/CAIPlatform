@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/测试页面(教师端).css">
+<script src="js/jQuery 3.4.1.js"></script>
+<link rel="stylesheet" href="./js/semantic-ui/semantic.min.css" />
+<script src="js/detail.js"></script>
+<script src="js/core.js"></script>
+<script src="js/测试页面(教师端).js"></script>
+
+<body>
+  <div class="nav">
+    <div class="logo"><img src="images/1.png" alt="">
+      <h2>教学辅助平台（教师端）</h2>
+    </div>
+    <div class="user">
+      <ul class="nav navbar-nav">
+        <li><a href="#"><span class="glyphicon glyphicon-envelope"></span></a></li>
+        <li role="presentation" class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-user"> </span> admin<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="">主页</a>
+            </li>
+            <li><a href="#">资料</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">退出</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div>
+    <ol class="breadcrumb">
+      <li><a href=" #">课程管理</a></li>
+      <li class="active" style="color: black;">计算机概论 </li>
+    </ol>
+  </div>
+  <!-- 修改分数页面 -->
+  <div class="ui problemDetail container">
+    <div class="ui grid">
+      <div class="ten wide column">
+        <div class="row" style="padding-left: 2.5em">
+          <div class="ui stacked segment" id="question">
+            <h4 class="ui horizontal divider header"><i class="help circle icon"></i>题目描述</h4>
+
+          </div>
+
+          <div id="preAndNextButton"></div>
+        </div>
+      </div>
+
+      <div class="five wide column" style="margin-left:2em">
+        <div class="row">
+          <table class="ui table">
+            <tbody>
+              <tr>
+                <td><span style="font-weight: bolder;">考生学号:</span></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><span style="font-weight: bolder;">当前考生:</span></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td><span style="font-weight: bolder;">开始时间:</span></td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td><span style="font-weight: bolder;">结束时间:</span></td>
+                <td><span>
+                    <fmt:formatDate value="${data.exam.endTime}" type="date" pattern="yyyy-MM-dd HH:mm" /></span></td>
+              </tr>
+              <tr>
+                <td><span style="font-weight: bolder;">总分:</span></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row" style="margin-top: 1em;">
+          <!-- <div class="ui segment">
+              <div class="title">答题卡</div> -->
+          <!-- <div class="content ui segment" id="currentQuestionButton">
+            </div> -->
+          <!-- <div class="extra content">
+                <button type="button" onclick="examDetailPage.finishExamAction()" class="ui positive button">交卷</button>
+              </div> -->
+          <!-- </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="return_top"><a class="fa fa-arrow-up"></a></div>
+
+</body>
+
+</html>

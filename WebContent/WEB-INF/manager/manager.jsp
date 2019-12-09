@@ -86,7 +86,7 @@
                 <li id="menu4" class=""><a _href=""><i class="iconfont"></i><cite>课程管理</cite><i class="iconfont nav_right"></i></a>
                   <ul class="sub-menu" style="display: none; height: 120px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
                     <li id="menu5"><a _href=""><i class="iconfont"></i><cite>课程列表</cite></a></li>
-                    <li id="menu6"><a _href=""><i class="iconfont"></i><cite>课程xx</cite></a></li>
+                    <li id="menu6"><a _href="subject/subject"><i class="iconfont"></i><cite>课程xx</cite></a></li>
                   </ul>
                 </li>
                 </shiro:hasRole>
