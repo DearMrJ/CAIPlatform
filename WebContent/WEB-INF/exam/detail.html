@@ -1,0 +1,343 @@
+<meta charset="utf-8">
+<section class="content-header">
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">考试管理</a></li>
+        <li class="active">编辑考试</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="jax-box">
+        <div class="box-body">
+            <form id="examForm" class="form-horizontal">
+            	<input th:value="${examination.id}" type="hidden" name="id">
+            	<input id="question" type="hidden" name="question">
+                <div class="col-lg-4 exam-extra">
+                	<div class="form-group">
+                        <div class="col-xs-12">
+                        	<label class="control-label label-four">考试标题:</label>
+                        	<div class="ml80">
+                            	<input type="text" class="form-control" th:value="${examination.title}" id="title" name="title" placeholder="请输入考试标题" require="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+						<div class="col-xs-12">
+							<label class="control-label label-four">考试年级:</label>
+							<div class="ml80">
+								<select class="form-control" name="grade" require="必填项">
+		                            <option  value="">请选择</option>
+		                            <option th:each="grade:${grades}" th:selected="(${examination.grade} == ${grade})" th:value="${grade}" th:text="${grade}"></option>
+                        		</select>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-12">
+							<label class="control-label label-four">考试班级:</label>
+							<div class="ml80">
+								<select class="form-control" name="classId" require="必填项">
+		                            <option  value="">请选择</option>
+		                            <option th:each="class:${classes}" th:selected="(${examination.classId} == ${class.id})" th:value="${class.id}" th:text="${class.className}"></option>
+                        		</select>
+							</div>
+						</div>
+					</div>
+                    <div class="form-group">
+                        <div class="col-xs-12 ">
+                            <label class="control-label label-four">考试课程:</label>
+                            <div class="ml80">
+                                <select id="subject-select" onchange="selectValue();" class="form-control" name="subjectId" require="">
+                                	<option  value="">请选择</option>
+		                            <option th:each="subject:${subjects}" th:selected="(${examination.subjectId} == ${subject.id})" th:value="${subject.id}" th:text="${subject.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                        	<label class="control-label label-four">考试分值:</label>
+                        	<div class="ml80">
+                            	<input type="text" class="form-control" th:value="${examination.totalScore}" id="totalScore" name="totalScore" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+						<div class="col-xs-12">
+							<label class="control-label label-four">出卷方式:</label>
+							<div class="question radio icheck ml80" require="">
+								<label> 
+									<input class="minimal" type="radio" name="type" checked value="0">从题库中导入
+								</label> 
+								<label> 
+									<input class="minimal" type="radio" name="type" value="1">自动随机组卷
+								</label>
+							</div>
+						</div>
+					</div>
+                    <div class="form-group">
+                    	<div class="col-xs-12">
+                            <label class="control-label label-four">开始时间:</label>
+                            <div class="ml80">
+                                <input type="text" class="form-control" th:value="${#dates.format(examination.startTime, 'yyyy-MM-dd HH:mm:ss')}" data-date-format="yyyy-mm-dd hh:ii:ss" name="startTime" id="startExamTime" placeholder="请选择开始考试时间" readonly="readonly" require="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    	<div class="col-xs-12">
+                            <label class="control-label label-four">结束时间:</label>
+                            <div class="ml80">
+                                <input type="text" class="form-control" th:value="${#dates.format(examination.endTime, 'yyyy-MM-dd HH:mm:ss')}" data-date-format="yyyy-mm-dd hh:ii:ss" name="endTime" id="endExamTime" placeholder="请选择结束考试时间" readonly="readonly" require="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <a class="btn btn-primary col-xs-12 btn-style" style="height:100px" onclick="updateExam()">
+	                            <span class="glyphicon glyphicon-blackboard"></span>
+	                           		确定修改
+	                        </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 form-editor">
+                    <div id="manual">
+						<div class="form-group">
+							<div class="col-xs-12">
+								<div id="toolbar">
+						            <button id="btn_sort" type="button" class="btn btn-primary">
+						                	按题目类型排序
+						            </button>
+						            <button id="btn_sort" type="button" class="btn btn-danger">
+						              		按难度排序
+						            </button>
+						        </div>
+								<table id="table" style="table-layout: fixed"></table>
+							</div>
+						</div>
+					</div>
+					<div id="automatic">
+						<div class="box box-success">
+							<div class="box-header with-border">
+								<h3 class="box-title">自动随机组卷</h3>
+							</div>
+							<div class="box-body">
+								<div class="row">
+									<div class="col-xs-3">
+										<input type="text" class="form-control" placeholder="单项选择题">
+									</div>
+									<div class="col-xs-4">
+										<input type="text" class="form-control" placeholder="多项选择题">
+									</div>
+									<div class="col-xs-5">
+										<input type="text" class="form-control" placeholder="主管问答题">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<script>
+	$("#automatic").hide();
+  	//日期时间控件
+    $('#startExamTime').datetimepicker({
+        language:  'zh-CN',
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: false,
+        showMeridian: 1,
+        startDate:new Date(),
+        todayBtn: true,
+        format: "yyyy-mm-dd hh:ii", //时间格式
+    }).on("click",function(){
+        $("#startExamTime").datetimepicker("setEndDate",$("#endExamTime").val())
+    });
+    $('#endExamTime').datetimepicker({
+        language:  'zh-CN',
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: false,
+        showMeridian: 1,
+        todayBtn: true,
+        format: "yyyy-mm-dd hh:ii", //时间格式
+    }).on("click",function(){
+        $("#endExamTime").datetimepicker("setStartDate",$("#startExamTime").val())
+    });
+    
+    function selectValue(){
+		var subjectId = $("#subject-select").val();
+		Core.refreshTable("#table");
+	}
+	
+	$('[type="radio"].minimal').on('ifChecked', function(event) {
+		var checkVal = $("input[class=minimal]:checked").val();
+		if (checkVal == 0) {
+			Core.refreshTable("#table");
+			$("#manual").show();
+			$("#automatic").hide();
+		} else {
+			Core.refreshTable("#table");
+			$("#manual").hide();
+			$("#automatic").show();
+		}
+	}).iCheck({
+		checkboxClass : 'icheckbox_minimal-blue',
+		radioClass : 'iradio_minimal-blue',
+	});
+    var overAllIds = new Array();  //全局数组
+    overAllIds = [[${questionIds}]];
+    var score = $("#totalScore").val();
+    var columns = [
+        {
+            align: 'center',
+            checkbox: true,
+            formatter: function(i,row){
+				if($.inArray(row.id,Array.from(overAllIds)) != -1){
+					return{
+						checked : true
+					}
+				}	
+            }
+            
+        },{
+            field: 'title',
+            title: '题名',
+            width : '33%',
+            cellStyle:{ 
+           	css:{
+           	"overflow": "hidden", 
+           	"text-overflow": "ellipsis", 
+           	"white-space": "nowrap", 
+           	"word-break": "keep-all",
+        	"white-space": "nowrap",
+           	}
+            },
+        },{
+            field: 'questionType',
+            title: '题目类型',
+            align : "center",
+            width : '10%',
+            formatter: function (questionType) {
+                var questionTypeName = '';
+                if(questionType == 0){
+                	questionTypeName = '单项选择题';
+                }else if(questionType == 1){
+                   	questionTypeName = '多项选择题';
+                }else if(questionType == 2){
+                   	questionTypeName = '主观问答题';
+                }else if(questionType == 3){
+                   	questionTypeName = '编程题';
+                }  
+                return questionTypeName;
+            }
+        },{
+            field: 'difficulty',
+            title: '难度',
+            align : "center",
+            width : '10%',
+            formatter : function(difficulty) {
+                var diffHtml = '';
+                if(difficulty == 1){
+                	diffHtml = "★☆☆☆☆";
+                }else if(difficulty == 2){
+                	diffHtml = "★★☆☆☆";	
+                 }else if(difficulty == 3){
+                	diffHtml = "★★★☆☆";	
+                 }else if(difficulty == 4){
+                	diffHtml = "★★★★☆";	
+                 }else if(difficulty == 5){
+                	diffHtml = "★★★★★";	
+                 }
+                return diffHtml;
+            }
+        },{
+            field: 'score',
+            title: '分值',
+            align : "center",
+            width : '10%',
+        }];
+    
+    var options={
+        id:"#table",
+        url: '/question/list',
+        columns:columns,
+        toolbar: '#toolbar',
+        showRefresh: true,
+        queryParams : queryParams
+    }
+    Core.initTable(options);
+    /*查询参数*/
+    function queryParams(params) {
+        var temp = { //这里的键的名字和控制器的变量名必须一致，这边改动，控制器也需要改成一样的
+            limit : params.limit, //页面大小
+            offset : params.offset, //页码
+            keywords : $("#keywords").val(),
+            subjectId : $("#subject-select").val(),
+            
+        };
+        return temp;
+    }
+
+    $('#table').on('uncheck.bs.table check.bs.table check-all.bs.table uncheck-all.bs.table',function(e,rows){
+        var datas = $.isArray(rows) ? rows : [rows];  // 点击时获取选中的行或取消选中的行
+        examine(e.type,datas);                        // 保存到全局 Array() 里
+   });
+    
+    function examine(type,datas){            
+        if(type.indexOf('uncheck')==-1){    
+            $.each(datas,function(i,v){
+               // 添加时，判断一行或多行的 id 是否已经在数组里 不存则添加　
+               overAllIds.indexOf(v.id) == -1 ? overAllIds.push(v.id) : -1;
+               score += v.score;
+            });
+        }else{
+            $.each(datas,function(i,v){
+                overAllIds.splice(overAllIds.indexOf(v.id),1);    //删除取消选中行
+                score -= v.score;
+            });
+        }
+           $("#totalScore").val(score);
+    }
+    
+    function updateExam() {
+        if(validExam()){
+            Core.confirm("确认修改考试？",function () {
+            	var startTime = new Date($('#startExamTime').val());
+                var endTime = new Date($('#endExamTime').val());
+                $('#startExamTime').val(startTime);
+                $('#endExamTime').val(endTime);
+                $("#question").val(overAllIds);
+                Core.postAjax("/exam/edit", $("#examForm").serialize(), function (data) {
+                    if(data.status=200){
+                    	$("#examForm")[0].reset(); //清空表单
+                    } 
+                    layer.msg(data.msg)
+                })
+            })
+        }
+    }
+    
+    function  validExam() {
+        if(doValidForm(examForm)){
+        	var checkedRows= Core.selectMutiData("#table");
+	        var ids =[];
+	        $.each(checkedRows, function (i, item) {
+                ids.push(item.id);
+            })
+	        if(ids.length>0){
+	            return true;
+	        }else{
+	            layer.msg("请添加题目！")
+	        }
+        }
+        return false;
+    }
+   
+</script>

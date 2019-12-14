@@ -27,9 +27,23 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.DEFAULT)
 public class AttendanceServiceImpl extends BaseServiceImpl<Attendance> implements AttendanceService{
 	
+	
 	@Autowired
 	private AttendanceMapper attendanceMapper;
 
+	@Override
+	public int countByCondition(Attendance attendance) {
+		return attendanceMapper.countByCondition(attendance);
+	}
+	
+	/* 
+	 * 插入并返回id
+	 */
+	@Override
+	public int insertAndReturnId(Attendance attendance) {
+		return attendanceMapper.insertAndReturnId(attendance);
+	}
+	
 	/**
 	 * 分页条件查询
 	 */
@@ -103,6 +117,9 @@ public class AttendanceServiceImpl extends BaseServiceImpl<Attendance> implement
 	public Attendance validateEnd(Integer id) {
 		return attendanceMapper.validateEnd(id);
 	}
+
+
+	
 
 	
 }

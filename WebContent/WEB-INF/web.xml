@@ -110,7 +110,7 @@
         </init-param>  
         <init-param>  
             <param-name>loginPassword</param-name>  
-            <param-value>123456</param-value>  
+            <param-value>j123456</param-value>  
         </init-param>  
     </servlet>  
     <servlet-mapping>  

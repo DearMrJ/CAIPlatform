@@ -7,7 +7,7 @@ public class StatisticConditionVo extends BaseConditionVo {
 	
 	private String grade;
 	
-	private Integer insId;
+	private Integer facultyId;
 	
 	private Integer classId;
 	
@@ -31,12 +31,13 @@ public class StatisticConditionVo extends BaseConditionVo {
 		this.grade = grade;
 	}
 
-	public Integer getInsId() {
-		return insId;
+
+	public Integer getFacultyId() {
+		return facultyId;
 	}
 
-	public void setInsId(Integer insId) {
-		this.insId = insId;
+	public void setFacultyId(Integer facultyId) {
+		this.facultyId = facultyId;
 	}
 
 	public Integer getClassId() {

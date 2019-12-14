@@ -32,6 +32,30 @@ public class SubjectController {
 	@Autowired
 	private SubjectService subjectService;
 	
+	@GetMapping("list")
+	public String list(){
+		return "subject/list";
+	}
+	
+	
+	@GetMapping("totalView")
+	public String totalView(Model model){
+		User user = (User)SecurityUtils.getSubject().getPrincipal();
+		Subject subject = new Subject();
+		subject.setUserId(user.getUserId());
+		List<Subject> subjects = subjectService.selectSubjects(subject);
+		model.addAttribute("subjects", subjects);
+		return "subject/totalView";
+	}
+	
+	@GetMapping("teacherView")
+	public String teacherView(){
+		return "subject/teacherView";
+	}
+	
+	
+	
+	
 	@PostMapping("list")
 	@ResponseBody
 	public PageResultVo loadSubject(Subject subject, Integer limit, Integer offset){

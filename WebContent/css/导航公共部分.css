@@ -1,0 +1,144 @@
+/* 导航栏部分css */
+*{
+  margin: 0;
+  padding: 0;
+}
+li{
+  list-style: none;
+}
+
+body{
+  background-color: rgb(246, 248, 249);
+}
+.nav{
+  height: 64px;
+  background-color: rgb(255, 255, 255);
+}
+
+.nav .logo{
+ 
+  float: left;
+  margin-left:61px;
+}
+.nav .logo img{
+  margin-top: 12px;
+  float: left;
+  width: 32px;
+}
+.nav .logo h2{
+  margin-top: 20px;
+  margin-left: 18px;
+  float: left;
+  font-size: 22.4px;
+  font-weight: 700;
+}
+.user{
+  float: right;
+  margin-right: 50px;
+}
+.user .dropdown-toggle a{
+  font-size: 20px;
+}
+.user span{
+  font-size: 25px;
+}
+.user a:link{
+    color: rgb(19, 140, 136);
+}
+.user a:visited{
+  color: rgb(19, 140, 136);
+}
+.nav .user .navbar-nav li a:hover
+{
+  color: green;
+  background-color: rgb(255, 255, 255);
+  
+}
+.user .dropdown-menu {
+   width: 50px;
+  text-align: center;
+}
+
+/* 主体和侧边栏 */
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.container1 {
+  background-color: #F6F8F9;
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+
+
+
+/* 左导航栏css */
+.left {
+  float: left;
+  background-color: #F6F8F9;
+  height: 670px;
+}
+
+.left .content{
+  margin-top: 42px;
+ 
+}
+.left .shouye
+{
+  margin-left: 50px;
+}
+.content a{
+  text-decoration: none;
+  color: black;
+}
+
+.content .val .top{
+  margin-left: 50px;
+  height: 35px;
+  margin-top: 30px;
+}
+
+.content .val  a{
+  text-align: center;
+  line-height: 35px;
+}
+.content .val  a:hover{
+  color:  rgb(19, 140, 136);
+}
+.content .val #side-nav  .sub-menu li a:hover{
+  background-color:rgb(228, 228, 228);
+  color:  rgb(19, 140, 136);
+}
+
+
+.left .content .index{
+  font-size: 14.4px;
+}
+.left .content ul  span img{
+  width: 20px;
+}
+.left .content ul img{
+  width: 18px;
+}
+
+/* 网页主体 */
+.container {
+  width: 98%;
+  margin: 0 auto;
+}
+
+.main {
+  overflow: hidden;
+  background-color: white;
+  max-width: 100%;
+}
+iframe{
+  width: 100%;
+  height: 598px;
+}
+
+

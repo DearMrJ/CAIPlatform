@@ -16,6 +16,9 @@ import org.exam.vo.AttendanceConditionVo;
  */
 public interface AttendanceService extends BaseService<Attendance>{
 	
+	int countByCondition(Attendance attendance);
+	
+	int insertAndReturnId(Attendance attendance);
 	/**
 	 * 分页查询考勤活动(特定teacher、科目)
 	 * @return

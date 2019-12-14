@@ -1,15 +1,22 @@
 package org.exam.controller;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
+import org.exam.entity.Classes;
 import org.exam.entity.Examination;
+import org.exam.entity.Faculty;
 import org.exam.entity.Grade;
 import org.exam.entity.Question;
+import org.exam.entity.Subject;
 import org.exam.entity.User;
+import org.exam.service.ClassesService;
 import org.exam.service.ExaminationService;
+import org.exam.service.FacultyService;
 import org.exam.service.GradeService;
+import org.exam.service.SubjectService;
 import org.exam.service.UserService;
 import org.exam.util.CoreConst;
 import org.exam.util.PageUtil;
@@ -21,7 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,9 +48,38 @@ public class GradeController {
 	private ExaminationService examService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+    private SubjectService subjectService;
+    @Autowired
+    private FacultyService facultyService;
+    @Autowired
+    private ClassesService classesService;
+	
+	
+	@GetMapping("datas")
+    public String data(Model model) {
+    	List<Examination> examList = examService.selectAllByStatus(CoreConst.EXAM_END);
+    	List<String> grades = userService.selectGradeList();
+    	List<Faculty> faculties = facultyService.selectAll();
+    	List<Classes> classes = classesService.selectAll();
+    	List<Subject> subjects = subjectService.selectAll();
+    	grades.removeAll(Collections.singleton(""));
+    	model.addAttribute("exams", examList);
+    	model.addAttribute("grades", grades);
+    	model.addAttribute("faculties", faculties);
+    	model.addAttribute("classes", classes);
+    	model.addAttribute("subjects", subjects);
+		return "grade/barChart";
+	}
+	
+	@GetMapping("grade")
+	public String toGrades() {
+		return "grade/grade";
+	}
+	
 	
 	@GetMapping("list")
-	public String listOfGrade(Model model,GradeConditionVo gradeConditionVo) {
+	public String listOfGrade(Model model, GradeConditionVo gradeConditionVo) {
 		User user = (User)SecurityUtils.getSubject().getPrincipal();
 		List<String> roleList = userService.selectRoleByUserId(user.getUserId());
 		if(!roleList.contains("administrator")) {

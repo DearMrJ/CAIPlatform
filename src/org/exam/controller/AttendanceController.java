@@ -1,6 +1,7 @@
 package org.exam.controller;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -49,6 +50,12 @@ public class AttendanceController {
 	private SubjectService subjectService;
 	
 	
+	
+	@GetMapping("barChart")
+	public String toBarChart() {
+		return "attendance/barChart";
+	}
+	
 	@GetMapping("attendance")
 	public String toAttendance() {
 		if (SecurityUtils.getSubject().isAuthenticated()) {
@@ -57,6 +64,19 @@ public class AttendanceController {
 			return "redirect:/login";
 		}
 	}
+	
+	
+	@GetMapping("check")
+	public String toCheck(Model model, Integer id) {
+		Subject subject = subjectService.selectById(id);
+		Attendance attendance = new Attendance();
+		attendance.setSubjectId(id);;
+		int count = attendanceService.countByCondition(attendance);
+		model.addAttribute("count",count);
+		model.addAttribute("subject", subject);
+		return "attendance/check";
+	}
+	
 	
 //	@GetMapping("list")
 //	public String loadAttendance(Model model) {
@@ -174,6 +194,10 @@ public class AttendanceController {
 			Date date = new Date();
 			attendance.setCreateTime(date);
 			attendance.setUpdateTime(date);
+			if (null == attendance.getStartTime() && null == attendance.getEndTime()) {
+				attendance.setStartTime(date);
+				attendance.setEndTime(new Date(date.getTime()+600000));//10分钟
+			}
 			if (null==attendance.getType()) {
 				attendance.setType(1);
 			}
@@ -186,8 +210,10 @@ public class AttendanceController {
 			}
 			System.err.println(attendance);
 			//
-			attendanceService.insertSelective(attendance);
-			return ResultUtil.success("发布考勤成功");
+			int count = attendanceService.insertAndReturnId(attendance);
+			System.err.println(attendance.getId());
+			List<AttendanceSheet> list = attendanceService.queryRecordForRandom(attendance.getId());
+			return ResultUtil.success("发布考勤成功",list);
 		} catch (Exception e) {
 			System.err.println(e);
 			return ResultUtil.error("发布考勤失败");

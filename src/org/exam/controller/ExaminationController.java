@@ -1,6 +1,7 @@
 package org.exam.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
@@ -51,6 +52,13 @@ public class ExaminationController {
 	@Autowired
 	private ClassesService classesService;
 
+	
+	@GetMapping("list")
+	public String loadExamList() {
+		return "exam/list";
+	}
+	
+	
 	@PostMapping("list")
 	@ResponseBody
 	public PageResultVo loadExam(ExaminationConditionVo vo,Integer limit, Integer offset) {
@@ -74,10 +82,11 @@ public class ExaminationController {
 	@GetMapping("/add")
 	public String addExam(Model model) {
 		Subject subject = new Subject();
-		subject.setStatus(CoreConst.STATUS_INVALID);
+		subject.setStatus(CoreConst.STATUS_VALID);
 		List<Subject> subjects = subjectService.selectSubjects(subject);
 		List<String> grades = userService.selectGradeList();
 		List<Classes> classes = classesService.selectAll();
+		grades.removeAll(Collections.singleton(""));//剔除老师grade为''的影响，返回值boolean
 		model.addAttribute("subjects", subjects);
 		model.addAttribute("classes", classes);
 		model.addAttribute("grades", grades);

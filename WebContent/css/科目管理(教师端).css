@@ -1,0 +1,376 @@
+
+/* 提示信息 */
+*{
+  margin: 0;
+  padding: 0;
+}
+.message {
+  font-size: 15px;
+  color: #999;
+  background: url(../images/10警告.png) no-repeat left center;
+  padding-left: 20px;
+  margin-left: 20px;
+  margin-top: 10px;
+  float: left;
+}
+
+.wrong {
+  color: red;
+  background: url(../images/08关闭.png) no-repeat left center;
+}
+
+.right1 {
+  color: green;
+  background: url(../images/14成功.png) no-repeat left center;
+}
+
+
+
+/* 导航栏部分css */
+li{
+  list-style: none;
+}
+
+
+.nav{
+  height: 64px;
+  background-color: rgb(255, 255, 255);
+}
+
+.nav .logo{
+ 
+  float: left;
+  margin-left:61px;
+}
+.nav .logo img{
+  margin-top: 12px;
+  float: left;
+  width: 32px;
+}
+.nav .logo h2{
+  margin-top: 20px;
+  margin-left: 18px;
+  float: left;
+  font-size: 22.4px;
+  font-weight: 700;
+}
+.user{
+  float: right;
+  margin-right: 50px;
+}
+.user .dropdown-toggle a{
+  font-size: 20px;
+}
+.user span{
+  font-size: 25px;
+}
+.user a:link{
+    color: rgb(19, 140, 136);
+}
+.user a:visited{
+  color: rgb(19, 140, 136);
+}
+.nav .user .navbar-nav li a:hover
+{
+  color: green;
+  background-color: rgb(255, 255, 255);
+  
+}
+.user .dropdown-menu {
+   width: 50px;
+  text-align: center;
+}
+
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.main-bottom{
+
+  max-width:  1200px;
+  margin:25px auto; 
+}
+.main-bottom .top{
+  height: 109px;
+  color: white;
+  border: 1px solid rgb(7, 151, 156) ;
+  background-color: rgb(7, 151, 156);
+  border-radius: 10px 10px 0 0 ;
+}
+
+.main-bottom .top .one {
+  margin: 25px;
+  margin-left: 64px;
+  float: left;
+}
+.main-bottom .top .one h1{
+  font-weight: 700;
+  font-size: 21px;
+}
+.main-bottom .top .one img{
+  width: 14px;
+}
+.main-bottom .top .one h2{
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 13px;
+}
+.main-bottom .top .two{
+  float: right;
+  margin-right:76px ;
+  margin-top: 23px;
+  text-align: center;
+}
+.main-bottom .top .two h1{
+  font-weight: 700;
+  font-size: 26px;
+}
+.main-bottom .top .two h2{
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 10px;
+}
+
+.main-bottom .top .three{
+  margin-top: 23px;
+  margin-right:34px ;
+  float: right;
+  text-align: center;
+}
+.main-bottom .top .three h1{
+  font-weight: 700;
+  font-size: 26px;
+}
+.main-bottom .top .three h2{
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 10px;
+}
+.main-bottom .top .four{
+  margin-top: 23px;
+  margin-right:34px ;
+  float: right;
+  text-align: center;
+}
+
+.main-bottom .top .four h1{
+  font-weight: 700;
+  font-size: 26px;
+}
+.main-bottom .top .four h2{
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 10px;
+}
+.main-bottom .top .five{
+  margin-right:34px ;
+  margin-top: 23px;
+  float: right;
+  text-align: center;
+}
+
+.main-bottom .top .five h1{
+  font-weight: 700;
+  font-size: 26px;
+}
+.main-bottom .top .five h2{
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 10px;
+}
+
+/* list列表 */
+.main-bottom .list{
+
+  height: 63px;
+  background-color: rgb(230, 230, 230);
+}
+.main-bottom .list ul li {
+  float: left;
+  margin-left: 60px;
+  list-style: none;
+  line-height: 63px;
+  height: 48px;
+  width: 60px;
+  text-align: center;
+} 
+.main-bottom .list ul li a{
+  color: black;
+  text-decoration: none;
+} 
+
+/* 被选中的list */
+.list .current {
+  border-bottom: 2px solid rgb(7, 151, 156);
+}
+
+/* list的css */
+.main-bottom .content .item .btn{
+  margin-top: 20px;
+  border: 1px solid rgb(7, 151, 156);
+  color: rgb(7, 151, 156);
+  background-color: #fff;
+}
+.main-bottom .content  .item .box{
+  margin-top: 20px;
+border-radius: 8px;
+border: 1px solid rgb(188, 188, 188);
+height: 150px;
+}
+
+.main-bottom .content .item .left{
+  float: left;
+}
+.main-bottom .content .item .left h5{
+  margin-left: 43px;
+  margin-top: 19px;
+  color: #999999;
+}
+.main-bottom .content .item .left h3{
+  margin-left: 43px;
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.main-bottom .content .item .left .image1{
+  width: 50px;
+  height: 50px;
+}
+.main-bottom .content .item .left .image2{
+  width: 14px;
+}
+.main-bottom .content .item .right{
+  float: right;
+  margin: 60px;
+}
+
+.main-bottom .content .item .right a{
+  padding-left: 50px;
+  text-decoration: none;
+  color: black;
+}
+
+.main-bottom .content .item .left h4{
+  font-size: 13px;
+  margin-left: 43px;
+  margin-top: 7px;
+}
+.main-bottom .content .item .left span{
+  display: block;
+  font-size: 11px;
+  margin-left: 43px;
+  margin-top: 13px;
+  color: #999999;
+}
+.main-bottom .content .item .center div{
+  padding-left: 26px;
+  padding-top: 56px;
+  float: right;
+}
+
+.main-bottom .content .item .center h1{
+  font-size: 22px;
+  font-weight: 700;
+}
+.main-bottom .content .item .center h4{
+  font-size: 13px;
+}
+.main-bottom .content .item textarea{
+  display: block;
+  margin:10px auto; 
+  width: 1100px;
+  height: 300px;
+  font-size:14px;
+  color:#555;
+  border:1px solid #ccc;
+  border-radius:4px
+}
+.main-bottom .content .item .upload{
+ 
+
+
+  border-radius: 3px; 
+  display: block;
+  margin:20px auto; 
+  border: 1px solid rgba(19, 140, 136, 1);
+  background-color: rgba(19, 140, 136, 1);
+  width: 1100px;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+}
+.main-bottom .content .item .upload:hover{
+  background-color: rgb(66, 163, 160);
+}
+
+
+.main-bottom .content .item .talkbox{
+  margin:20px auto; 
+  width: 1100px; 
+  min-height: 300px; 
+  font-size:14px;
+  color:#555;
+  border:1px solid #ccc;
+  border-radius:4px
+}
+.main-bottom .content .item .talkopera{
+  text-align: center;
+}
+.main-bottom .content .item .talkopera .send{ 
+  display: inline-block;
+  border:1px solid rgb(7, 151, 156);
+  background-color: rgb(7, 151, 156);
+  color: #fff;
+  border-radius: 3px;
+  width: 96px;
+  line-height: 32px;
+  height: 32px;
+   text-decoration: none;
+   margin-left: 20px;
+}
+
+.main-bottom .content .item .talkopera .return{ display: inline-block;
+  border:1px solid rgb(7, 151, 156);
+  background-color: #fff;
+  color: rgb(7, 151, 156);
+  border-radius: 3px;
+  width: 96px;
+  line-height: 32px;
+  height: 32px;
+   text-decoration: none;
+   margin-left: 10px;
+}
+
+.main-bottom .content .item .talkopera #content{
+   
+   margin: -10px;
+  display: inline-block;
+  height: 32px;
+  border-radius: 3px;
+   width: 788px;
+}
+
+#talk li {
+  list-style-type: none;
+  border: solid;
+  border-width: 0 0 1px 0;
+  width: 1000px;
+  margin:40px auto;
+}
+
+#talk li a {
+  float: right;
+}
+
+.modal-body tr{
+  height: 40px;
+}
+
+.modal-body td{
+  padding-left: 10px;
+}
+#homework{
+  margin-left: 10px;
+  margin-top: 5px;
+}

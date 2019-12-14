@@ -116,7 +116,7 @@
 					<th>出勤数</th>
 					<th>出勤率</th>
 					<th>状态</th>
-					<th>操作</th>
+					<th><font color="#FF0000"><strong>操作</strong></font></th>
 				</tr>
 			</thead>
 			<tbody>

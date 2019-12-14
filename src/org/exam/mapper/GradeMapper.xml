@@ -15,8 +15,8 @@
         <result column="auto_json" property="autoJson" jdbcType="LONGVARCHAR" />
         <result column="manul_json" property="manulJson" jdbcType="LONGVARCHAR" />
         <association property="user" javaType="org.exam.entity.User">
-			<result property="username" jdbcType="VARCHAR" column="u_user_name"/>
-			<result property="nickname" jdbcType="VARCHAR" column="u_nick_name"/>
+			<result property="username" jdbcType="VARCHAR" column="u_username"/>
+			<result property="nickname" jdbcType="VARCHAR" column="u_nickname"/>
 			<result property="grade" jdbcType="VARCHAR" column="u_grade"/>
 		</association>
 		<association property="faculty" javaType="org.exam.entity.Faculty" >
@@ -43,8 +43,8 @@
     <select id="findByCondition" parameterType="org.exam.vo.GradeConditionVo" resultMap="BaseResultMap">
     	SELECT
     	g.*,
-    	u.username as u_user_name,
-    	u.nickname as u_nick_name,
+    	u.username as u_username,
+    	u.nickname as u_nickname,
     	u.grade as u_grade,
     	f.name AS faculty_name,
     	c.name AS class_name,
@@ -68,7 +68,7 @@
     	<if test="stuId != null and stuId != ''">
     		AND u.username = #{stuId}
     	</if>
-    	<if test="examId != null and examId != ''">
+    	<if test="examId != null">
     		AND g.exam_id = #{examId}
     	</if>
     	<if test="author != null and author != ''">

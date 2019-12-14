@@ -355,17 +355,19 @@ public class ExamWebController {
 			StringBuffer autoStr = new StringBuffer();
 			StringBuffer manulStr = new StringBuffer();
 			Examination examination = examService.queryByExamId(grade.getExamId());
+			System.err.println(examination);
 			List<Question> questions = examination.getQuestions();
+			System.err.println(questions);
 			for(int i = 0; i < questions.size(); i++) {
 				Question question = questions.get(i);
 				//分别拼接 客观题 和 主观题 的答案
-				if(question.getType() <= 1 || question.getType() == 4) {//单选多选判断,有必要将判断题的type改为2
+				if(question.getType() <= 2) {
 					autoStr.append(answerStr.get(i)+"~_~");
 				}else {
 					manulStr.append(answerStr.get(i)+"~_~");
 				}
-				//(选择题) 客观题评分	
-				if((question.getType() <= 1 || question.getType() == 4) && question.getAnswer().equals(answerStr.get(i))) {
+				// 客观题评分	
+				if((question.getType() <= 2) && question.getAnswer().equals(answerStr.get(i))) {
 					autoResult += question.getScore();
 				}
 			}
@@ -377,14 +379,18 @@ public class ExamWebController {
 			grade.setAutoJson(autoJson);//学生客观题答案
 			grade.setManulJson(manulJson);//学生主观题答案
 			grade.setManulResult(0);
-			grade.setStatus(CoreConst.STATUS_INVALID);
+			if (examination.getType()==0 || null==manulJson || manulJson.equals("")) {
+				grade.setStatus(CoreConst.STATUS_VALID);//仅客观题 即时可以查看成绩
+			} else {
+				grade.setStatus(CoreConst.STATUS_INVALID);
+			}
 			Date date = new Date();
 			grade.setCreateTime(date);
 			grade.setUpdateTime(date);
 			gradeService.insertSelective(grade);
 			return ResultUtil.success("提交考试成功！");
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 			return ResultUtil.error("提交考试失败！请联系管理员处理");
 		}
 	}

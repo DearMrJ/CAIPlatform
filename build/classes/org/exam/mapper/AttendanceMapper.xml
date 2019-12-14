@@ -49,6 +49,24 @@
 		</association>
 	</resultMap>
 	
+	<select id="countByCondition" parameterType="org.exam.entity.Attendance" resultType="integer">
+		select count(id) 
+		from attendance_inf 
+		where 1 = 1
+		<if test="subjectId != null and subjectId != 0">
+			and subject_id = #{subjectId}
+		</if>
+	</select>
+	
+	<insert id="insertAndReturnId" parameterType="org.exam.entity.Attendance">
+        insert into attendance_inf(subject_id, type, year, term, user_id, author, create_time, update_time, start_time, end_time)
+        values (#{subjectId}, #{type}, #{year}, #{term}, #{userId}, #{author}, #{createTime}, #{updateTime}, #{startTime}, #{endTime})
+        <selectKey resultType="java.lang.Integer" keyProperty="id" >
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+	</insert>
+	
+	
 	<!-- for teacher -->
 	<select id="findByCondition" parameterType="org.exam.vo.AttendanceConditionVo" resultMap="BaseResultMap">
 		select a.*,s.id as s_id,s.name as s_name,count(us.user_id) AS course_total,count(ash.user_id) AS present_total

@@ -10,6 +10,7 @@
         <result column="total_score" property="totalScore" jdbcType="INTEGER" />
         <result column="class_id" property="classId" jdbcType="INTEGER" />
         <result column="subject_id" property="subjectId" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="INTEGER"/>
         <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
         <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />

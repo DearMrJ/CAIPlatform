@@ -1,0 +1,142 @@
+
+.message {
+  font-size: 15px;
+  color: #999;
+  background: url(../images/10警告.png) no-repeat left center;
+  padding-left: 20px;
+  margin-left: 20px;
+  margin-top: 10px;
+  float: left;
+}
+
+.wrong {
+  color: red;
+  background: url(../images/08关闭.png) no-repeat left center;
+}
+
+.right {
+  color: green;
+  background: url(../images/14成功.png) no-repeat left center;
+}
+
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.main-bottom{
+  max-width:  1300px;
+
+}
+
+.main-bottom ul li{
+  float: left;
+  list-style: none;
+  margin-left: 30px;
+  margin-top: 40px;
+  
+}
+
+
+ /* 盒子顶部 */
+.main-bottom ul li .head {
+  height: 110px;
+  width: 265px;
+  color: white;
+  background-color: rgb(7, 151, 156);
+   border:1px solid rgb(7, 151, 156);
+   border-radius: 2px;
+}
+.main-bottom ul li .head h3{
+  font-weight: 500;
+  font-size: 19px;
+}
+.main-bottom ul li .head h4{
+  margin-top: 13px;
+  font-size: 13px;
+  font-weight: 400;
+}
+.main-bottom ul li .head div{
+  float: left;
+  font-size: 19px;
+}
+.main-bottom ul li .head .one{
+  margin: 20px;
+}
+.main-bottom ul li .head .two{
+  margin-top: 30px;
+}
+.main-bottom ul li .head img{
+  width: 19px;
+}
+.main-bottom ul li .head a{
+  color: white;
+  text-decoration: none;
+}
+
+/* 盒子身体 */
+
+.main-bottom ul li .body{
+  border: 1px  solid rgb(204, 204, 204);
+  border-collapse: collapse;
+  height: 160px;
+}
+.main-bottom ul li .body .one{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 22px;
+  width: 80px; 
+  text-align: center;
+}
+.main-bottom ul li .body .one img{
+  width: 58px; 
+}
+.main-bottom ul li .body .one a{
+  text-decoration: none;
+}
+
+.main-bottom ul li .body .one h1{
+  color: rgb(7, 151, 156);
+  font-weight: 400;
+  font-size: 25px;
+}
+.main-bottom ul li .body .one h3{
+  color: rgb(7, 151, 156);
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.main-bottom ul li .body .two{
+  margin-top: 13px;
+  margin-left: 20px;
+}
+.main-bottom ul li .body .two h4{
+  font-size: 15px;
+  margin-top: 5px;
+    font-weight: 400;
+}
+.main-bottom ul li .body .two h5{
+  font-weight: 400;
+  color: #999999;
+}
+
+/* 盒子下体 */
+.main-bottom ul li .foot {
+  border: 1px solid rgb(204, 204, 204);
+  border-collapse: collapse;
+  height: 50px;
+}
+.main-bottom ul li .foot a{
+    float: right;
+    padding-right:13px;
+    line-height: 50px;
+    color: #999999;
+    text-decoration: none;
+}
+
+/* 取消模态框后面阴影 */
+.modal-backdrop {
+  opacity: 0 !important;
+  filter: alpha(opacity=0) !important;
+}

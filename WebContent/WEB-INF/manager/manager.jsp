@@ -83,26 +83,28 @@
                 </li>
                 </shiro:hasRole>
                 <shiro:hasRole name="teacher">
-                <li id="menu4" class=""><a _href=""><i class="iconfont"></i><cite>课程管理</cite><i class="iconfont nav_right"></i></a>
-                  <ul class="sub-menu" style="display: none; height: 120px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
-                    <li id="menu5"><a _href=""><i class="iconfont"></i><cite>课程列表</cite></a></li>
-                    <li id="menu6"><a _href="subject/subject"><i class="iconfont"></i><cite>课程xx</cite></a></li>
+                <li id="menu4"><a _href=""><i class="iconfont"></i><cite>课程管理</cite><i class="iconfont nav_right"></i></a>
+                  <ul class="sub-menu">
+                    <li id="menu5"><a _href="subject/totalView"><i class="iconfont"></i><cite>课程总览</cite></a></li>
+                    <li id="menu6"><a _href=""><i class="iconfont"></i><cite>课程列表</cite></a></li>
+                    <li id="menu7"><a _href="grade/grade"><i class="iconfont"></i><cite>历史成绩</cite></a></li>
                   </ul>
                 </li>
                 </shiro:hasRole>
                 <shiro:hasRole name="teacher">
-                <li id="menu7"><a _href=""><i class="iconfont"></i><cite>考勤管理</cite><i class="iconfont nav_right"></i></a>
+                <li id="menu8"><a _href=""><i class="iconfont"></i><cite>考勤管理</cite><i class="iconfont nav_right"></i></a>
                   <ul class="sub-menu">
-                    <li id="menu8"><a _href="attendance/list"><i class="iconfont"></i><cite>考勤列表</cite></a></li>
-                    <li id="menu9"><a _href=""><i class="iconfont"></i><cite>考勤xx</cite></a></li>
+                    <li id="menu9"><a _href="attendance/list"><i class="iconfont"></i><cite>考勤列表</cite></a></li>
+                    <li id="menu9"><a _href="attendance/barChart"><i class="iconfont"></i><cite>考勤情况</cite></a></li>
                   </ul>
                 </li>
                 </shiro:hasRole>
                 <shiro:hasRole name="teacher">
                 <li id="menu10"><a _href=""><i class="iconfont"></i><cite>考试管理</cite><i class="iconfont nav_right"></i></a>
                   <ul class="sub-menu">
-                    <li id="menu11"><a _href=""><i class="iconfont"></i><cite>考试列表</cite></a></li>
-                    <li id="menu12"><a _href=""><i class="iconfont"></i><cite>考试管理</cite></a></li>
+                    <li id="menu11"><a _href="exam/list"><i class="iconfont"></i><cite>考试列表</cite></a></li>
+                    <li id="menu12"><a _href="exam/add"><i class="iconfont"></i><cite>发布考试</cite></a></li>
+                    <li id="menu12"><a _href="grade/datas"><i class="iconfont"></i><cite>考试情况</cite></a></li>
                   </ul>
                 </li>
                 </shiro:hasRole>
