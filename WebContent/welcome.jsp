@@ -241,7 +241,8 @@
 			if(!exams.length == 0){
 				$.each(exams, function(index, items){
 					var statusSpan;
-					var imgDiv = $("<div class='product-img'></div>").append("<img src='"+items.img+"'/>");
+					//var imgDiv = $("<div class='product-img'></div>").append("<img src='"+items.img+"'/>");
+					var imgDiv = $("<div class='product-img'></div>").append("<img src='/icon/test1.png'/>");
 					if(items.status == 0){
 						statusSpan = $("<span>未开始</span>").addClass("label label-warning pull-right");
 					}else if(items.status == 1){
@@ -249,8 +250,12 @@
 					}else{
 						statusSpan = $("<span>已结束</span>").addClass("label label-danger pull-right");
 					}
-					var titleA = $("<a href='/manage#exams' class='product-title'></a>").append(items.title).append(statusSpan);
-					var desSpan = $("<span style='padding-top:5px'>"+items.nickname+"于"+items.create_time+"发布考试啦!</span>").addClass("product-description");
+					var titleA = $("<a href='/exam/list' class='product-title'></a>").append(items.title).append(statusSpan);
+					/***********将Unix时间戳转换为 普通时间格式****************/
+					var unixTimestamp = new Date(items.create_time);
+					var commonTime = unixTimestamp.toLocaleString();
+					/*************************************************/
+					var desSpan = $("<span style='padding-top:5px'>"+items.nickname+"于"+commonTime+"发布考试啦!</span>").addClass("product-description");
 					var infoDiv = $("<div class='product-info'></div>").append(titleA).append(desSpan);
 					$("<li class='item'></li>").append(imgDiv).append(infoDiv).appendTo("#examList");
 				})

@@ -28,6 +28,13 @@ public class ExaminationServiceImpl extends BaseServiceImpl<Examination> impleme
 	@Autowired
 	private QuestionMapper questionMapper;
 
+	
+	@Override
+	public List<Examination> findByConditionOnly(ExaminationConditionVo vo){
+		List<Examination> examList = examMapper.findByConditionOnly(vo);
+		return examList;
+	}
+	
 	@Override
 	public List<Examination> findByCondition(ExaminationConditionVo vo) {
 		List<Examination> examList = examMapper.findByCondition(vo);
@@ -57,7 +64,7 @@ public class ExaminationServiceImpl extends BaseServiceImpl<Examination> impleme
 		Date date = new Date();
 		examination.setCreateTime(date);
 		examination.setUpdateTime(date);
-		examMapper.insertSelective(examination);
+		examMapper.insertAndReturnId(examination);
 		return examination;
 	}
 

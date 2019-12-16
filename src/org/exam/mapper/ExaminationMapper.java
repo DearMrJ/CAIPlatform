@@ -12,6 +12,8 @@ import org.exam.vo.SendEmailVo;
 
 public interface ExaminationMapper extends MapperUtil<Examination> {
 	
+	int insertAndReturnId(Examination examination);
+	
 	/**
 	 * 分页查询考试、关联课程
 	 * @param vo
@@ -19,6 +21,9 @@ public interface ExaminationMapper extends MapperUtil<Examination> {
 	 */
 	List<Examination> findByCondition(ExaminationConditionVo vo);
 
+	
+	List<Examination> findByConditionOnly(ExaminationConditionVo vo);
+	
 	/**
 	 * 统计指定考试的题目集合
 	 * @param ids

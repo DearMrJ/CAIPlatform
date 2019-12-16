@@ -79,19 +79,8 @@ public class GradeController {
 	
 	
 	@GetMapping("list")
-	public String listOfGrade(Model model, GradeConditionVo gradeConditionVo) {
-		User user = (User)SecurityUtils.getSubject().getPrincipal();
-		List<String> roleList = userService.selectRoleByUserId(user.getUserId());
-		if(!roleList.contains("administrator")) {
-			if(roleList.contains("teacher")) {
-				gradeConditionVo.setAuthor(user.getNickname());
-			}else {
-				gradeConditionVo.setUserId(user.getUserId());
-			}
-		}
-		List<Grade> gradeList = gradeService.findByCondition(gradeConditionVo);
-		PageInfo<Grade> pages = new PageInfo<>(gradeList);
-		model.addAttribute("table",ResultUtil.table(gradeList, pages.getTotal(), pages));
+	public String listOfGrade(Model model, Integer examId) {
+		model.addAttribute("examId", examId);
 		return "grade/list";
 	}
 	

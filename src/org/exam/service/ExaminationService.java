@@ -7,6 +7,9 @@ import org.exam.vo.ExaminationConditionVo;
 
 public interface ExaminationService extends BaseService<Examination> {
 	
+	
+	List<Examination> findByConditionOnly(ExaminationConditionVo vo);
+	
 	/**
 	 * 分页查询所有考试
 	 * @param vo

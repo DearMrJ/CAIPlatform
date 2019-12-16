@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -106,7 +107,6 @@ public class AttendanceController {
 			if (roleList.contains("teacher")) {
 				vo.setTeacherUserId(user.getUserId());
 				attendanceList = attendanceService.findByCondition(vo);
-				System.err.println(attendanceList);
 			}else {
 				vo.setStudentUserId(user.getUserId());
 				vo.setType(1);//仅回显全体签到

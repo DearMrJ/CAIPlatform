@@ -151,12 +151,12 @@ public class Grade implements Serializable{
 		this.examination = examination;
 	}
 	
-//	@Override
-//	public String toString() {
-//		return "\nGrade [id=" + id + ", userId=" + userId + ", examId=" + examId + ", result=" + result + ", autoResult="
-//				+ autoResult + ", manulResult=" + manulResult + ", autoJson=" + autoJson + ", manulJson=" + manulJson
-//				+ ", answerJson=" + answerJson + ", createTime=" + createTime + ", updateTime=" + updateTime
-//				+ ", status=" + status + "]";
-//	}
+	@Override
+	public String toString() {
+		return "\nGrade [id=" + id + ", userId=" + userId + ", examId=" + examId + ", result=" + result + ", autoResult="
+				+ autoResult + ", manulResult=" + manulResult + ", autoJson=" + autoJson + ", manulJson=" + manulJson
+				+ ", answerJson=" + answerJson + ", createTime=" + createTime + ", updateTime=" + updateTime
+				+ ", status=" + status + "]";
+	}
 	
 }

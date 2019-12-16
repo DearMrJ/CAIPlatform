@@ -53,8 +53,22 @@ public class SubjectController {
 		return "subject/teacherView";
 	}
 	
+
+	@GetMapping("selective")
+	public String selective(Model model) {
+		//
+		
+		return "subject/selective";
+	}
 	
-	
+	@PostMapping("selective")
+	@ResponseBody
+	public PageResultVo loadStudent(String startId, String endId, Integer limit, Integer offset) {
+		PageHelper.startPage(PageUtil.getPageNo(limit, offset),limit);
+		List<Subject> userList = null;//
+		PageInfo<Subject> pages = new PageInfo<>(userList);
+		return ResultUtil.table(userList, pages.getTotal(), pages);
+	}
 	
 	@PostMapping("list")
 	@ResponseBody
@@ -87,6 +101,9 @@ public class SubjectController {
 			return ResultUtil.error("新增课目失败！");
 		}
 	}
+	
+	
+	
 	
 	/**
 	 * 编辑课程信息

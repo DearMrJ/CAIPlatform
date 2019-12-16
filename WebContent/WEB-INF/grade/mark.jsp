@@ -31,8 +31,8 @@
 
 
 <link rel="stylesheet" href="/js/semantic-ui/semantic.min.css" />
-<link rel="stylesheet" href="/css/exam-common.css" />
-<link rel="stylesheet" href="/css/web-common.css" />
+<!-- <link rel="stylesheet" href="/css/exam-common.css" />
+<link rel="stylesheet" href="/css/web-common.css" /> -->
 <link rel="stylesheet" href="css/easy.css">
 <script src="/js/jquery/jquery.min.js"></script>
 <script src="/js/jquery/jquery.countdown.min.js"></script>
@@ -43,46 +43,6 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-default" style="height: 85px;">
-		<div class="container-fluid" style="height: 85px;">
-
-			<!-- logo -->
-			<div class="navbar-header" style="height: 85px; width: 40%;">
-				<a class="navbar-brand" href="#"> <img alt="Brand"
-					style="margin-left: 90px; margin-top: 10px;" src="/img/logo1.png">
-
-				</a>
-				<h2 style="font-weight: 300; margin-top: 30px; margin-left: 50px;">辅助教学平台（学生端）</h2>
-			</div>
-
-			<div class="nav navbar-nav" style="width: 60%; padding-left: 40%;">
-				<ul class="nav navbar-nav"
-					style="margin-top: 20px; margin-left: 5%;">
-					<li><a href="#"><span class="glyphicon glyphicon-envelope"
-							style="font-size: 25px;"></span></a></li>
-					<li role="presentation" class="dropdown"><a href="#"
-						class="dropdown-toggle" data-toggle="dropdown"> <span
-							class="glyphicon glyphicon-user" style="font-size: 25px;"></span>&nbsp
-							admin<span class="caret"></span>
-					</a>
-						<ul class="dropdown-menu">
-							<li><a href="#">主页</a></li>
-							<li><a href="#">资料</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="#">退出</a></li>
-						</ul></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<div>
-		<ol class="breadcrumb" style="padding-left: 200px; font-size: 18px;"
-			id="headerMain">
-			<li><a href="#">课程管理</a></li>
-			<li><a href="#">计算机概论</a></li>
-
-		</ol>
-	</div>
 
 	<div class="ui problemDetail container">
 		<div class="ui grid">
@@ -159,237 +119,85 @@
     console.log(answer.examination.questions);
 
 
-    exam.questions.forEach((val, index) => {
-      console.log(answer.examination.questions[index].answer);
-      /* if (exam.questions[index].type == 0) {
-        if (answer.examination.questions[index].stuAnswer == 'A') {
-          var $selectOptionStr = `<label>第` + (index + 1) + `题.&nbsp&nbsp( 单项选择题 )&nbsp;&nbsp;` + exam.questions[index].title + `(` + exam.questions[index].score + `分)</label >
-          <div class="grouped fields"><div class="article-body markdown-body editor-preview-active-side" style="margin-top:10px;"></div>
-          <div class="field" style="padding-top:5px;"> <div class="ui radio checkbox"><input type="radio" checked="checked" name="questionAnswer`+ index + `" value="A"/><label>A.&nbsp;&nbsp;` + exam.questions[0].optionA + `</label></div></div>
-          <div class="field" style="padding-top:5px;"> <div class="ui radio checkbox"><input type="radio" name="questionAnswer`+ index + `" value="B"/><label>B.&nbsp;&nbsp;` + exam.questions[0].optionB + `</label></div></div>
-          <div class="field" style="padding-top:5px;"> <div class="ui radio checkbox"><input type="radio" name="questionAnswer`+ index + `" value="C"/><label>C.&nbsp;&nbsp;` + exam.questions[0].optionC + `</label></div></div>
-          <div class="field" style="padding-top:5px;"> <div class="ui radio checkbox"><input type="radio" name="questionAnswer`+ index + `" value="D"/><label>D.&nbsp;&nbsp;` + exam.questions[0].optionD + `</label></div></div>
-          <p >正确答案:&nbsp`+ answer.examination.questions[index].answer + `</p><p style="margin-bottom:40px">解析:&nbsp` + answer.examination.questions[index].parse + `</p>
-          </div>`;
-          $('#question').append($selectOptionStr);
-        } else if (answer.examination.questions[index].stuAnswer == 'B') {
-          var $selectOptionStr = `<label>第` + (index + 1) + `题.&nbsp&nbsp( 单项选择题 )&nbsp;&nbsp;` + exam.questions[index].title + `(` + exam.questions[index].score + `分)</label >
-          <div class="grouped fields"><div class="article-body markdown-body editor-preview-active-side" style="margin-top:10px;"></div>
-          <div class="field" style="padding-top:5px;"> <div class="ui radio checkbox"><input type="radio"  name="questionAnswer`+ index + `" value="A"/><label>A.&nbsp;&nbsp;` + exam.questions[0].optionA + `</label></div></div>
-          <div class="field" style="padding-top:5px;"> <div class="ui radio checkbox"><input type="radio" checked="checked" name="questionAnswer`+ index + `" value="B"/><label>B.&nbsp;&nbsp;` + exam.questions[0].optionB + `</label></div></div>
-          <div class="field" style="padding-top:5px;"> <div class="ui radio checkbox"><input type="radio" name="questionAnswer`+ index + `" value="C"/><label>C.&nbsp;&nbsp;` + exam.questions[0].optionC + `</label></div></div>
-          <div class="field" style="padding-top:5px;"> <div class="ui radio checkbox"><input type="radio" name="questionAnswer`+ index + `" value="D"/><label>D.&nbsp;&nbsp;` + exam.questions[0].optionD + `</label></div></div>
-          <p >正确答案:&nbsp`+ answer.examination.questions[index].answer + `</p><p style="margin-bottom:40px">解析:&nbsp` + answer.examination.questions[index].parse + `</p>
-          </div>`;
-          $('#question').append($selectOptionStr);
-        } else if (answer.examination.questions[index].stuAnswer == 'C') {
-          var $selectOptionStr = `<label>第` + (index + 1) + `题.&nbsp&nbsp( 单项选择题 )&nbsp;&nbsp;` + exam.questions[index].title + `(` + exam.questions[index].score + `分)</label >
-          <div class="grouped fields"><div class="article-body markdown-body editor-preview-active-side" style="margin-top:10px;"></div>
-          <div class="field" style="padding-top:5px;"> <div class="ui radio checkbox"><input type="radio"  name="questionAnswer`+ index + `" value="A"/><label>A.&nbsp;&nbsp;` + exam.questions[0].optionA + `</label></div></div>
-          <div class="field" style="padding-top:5px;"> <div class="ui radio checkbox"><input type="radio"  name="questionAnswer`+ index + `" value="B"/><label>B.&nbsp;&nbsp;` + exam.questions[0].optionB + `</label></div></div>
-          <div class="field" style="padding-top:5px;"> <div class="ui radio checkbox"><input type="radio" checked="checked" name="questionAnswer`+ index + `" value="C"/><label>C.&nbsp;&nbsp;` + exam.questions[0].optionC + `</label></div></div>
-          <div class="field" style="padding-top:5px;"> <div class="ui radio checkbox"><input type="radio" name="questionAnswer`+ index + `" value="D"/><label>D.&nbsp;&nbsp;` + exam.questions[0].optionD + `</label></div></div>
-          <p >正确答案:&nbsp`+ answer.examination.questions[index].answer + `</p><p style="margin-bottom:40px">解析:&nbsp` + answer.examination.questions[index].parse + `</p>
-          </div>`;
-          $('#question').append($selectOptionStr);
-        } else if (answer.examination.questions[index].stuAnswer == 'D') {
-          var $selectOptionStr = `<label>第` + (index + 1) + `题.&nbsp&nbsp( 单项选择题 )&nbsp;&nbsp;` + exam.questions[index].title + `(` + exam.questions[index].score + `分)</label >
-          <div class="grouped fields"><div class="article-body markdown-body editor-preview-active-side" style="margin-top:10px;"></div>
-          <div class="field" style="padding-top:5px;"> <div class="ui radio checkbox"><input type="radio"  name="questionAnswer`+ index + `" value="A"/><label>A.&nbsp;&nbsp;` + exam.questions[0].optionA + `</label></div></div>
-          <div class="field" style="padding-top:5px;"> <div class="ui radio checkbox"><input type="radio"  name="questionAnswer`+ index + `" value="B"/><label>B.&nbsp;&nbsp;` + exam.questions[0].optionB + `</label></div></div>
-          <div class="field" style="padding-top:5px;"> <div class="ui radio checkbox"><input type="radio"  name="questionAnswer`+ index + `" value="C"/><label>C.&nbsp;&nbsp;` + exam.questions[0].optionC + `</label></div></div>
-          <div class="field" style="padding-top:5px;"> <div class="ui radio checkbox"><input type="radio" checked="checked" name="questionAnswer`+ index + `" value="D"/><label>D.&nbsp;&nbsp;` + exam.questions[0].optionD + `</label></div></div>
-          <p >正确答案:&nbsp`+ answer.examination.questions[index].answer + `</p><p style="margin-bottom:40px">解析:&nbsp` + answer.examination.questions[index].parse + `</p>
-          </div>`;
-          $('#question').append($selectOptionStr);
-        }
+    $(function () {
+    	  $.each(answer.examination.questions, function (index, val) {
 
-      } else if (exam.questions[index].type == 1) {
-        var $selectOptionStr = `<label style="margin-top:20px">第` + (index + 1) + `题.&nbsp&nbsp( 多项选择题 )&nbsp;&nbsp;` + exam.questions[index].title + `(` + exam.questions[index].score + `分)</label >
-          <div class="grouped fields"><div class="article-body markdown-body editor-preview-active-side" style="margin-top:10px;"></div>
-          <div class="field"><div class="ui checkbox checkbox"><input type="checkbox" name="questionAnswer`+ index + `" value="A"/><label>A.&nbsp;&nbsp;` + exam.questions[index].optionA + `</label></div></div>
-          <div class="field"><div class="ui checkbox checkbox"><input type="checkbox" name="questionAnswer`+ index + `" value="B"/><label>B.&nbsp;&nbsp;` + exam.questions[index].optionB + `</label></div></div>
-          <div class="field"><div class="ui checkbox checkbox"><input type="checkbox" name="questionAnswer`+ index + `" value="C"/><label>C.&nbsp;&nbsp;` + exam.questions[index].optionC + `</label></div></div>
-          <div class="field"><div class="ui checkbox checkbox"><input type="checkbox" name="questionAnswer`+ index + `" value="D"/><label>D.&nbsp;&nbsp;` + exam.questions[index].optionD + `</label></div></div><p>正确答案:&nbsp` + answer.examination.questions[index].answer + `</p><p style="margin-bottom:40px">解析:&nbsp` + answer.examination.questions[index].parse + `</p>
-          </div>`;
-        $('#question').append($selectOptionStr);
-      } else if (exam.questions[index].type == 2) {
-        if (answer.examination.questions[index].stuAnswer == 'A') {
-          var $selectOptionStr = `<label style="margin-top:20px">第` + (index + 1) + `题.&nbsp&nbsp( 判断题 )&nbsp;&nbsp;` + exam.questions[index].title + `(` + exam.questions[index].score + `分)</label >
-          <div class="field" style="padding-top:5px;"><div class="ui radio checkbox"><input type="radio"  checked="checked" name="questionAnswer`+ index + `" value="A"/><label>A.&nbsp;&nbsp;` + exam.questions[index].optionA + `</label></div></div>
-          <div class="field" style="padding-top:5px;"><div class="ui radio checkbox"><input type="radio" name="questionAnswer`+ index + `" value="B"/><label>B.&nbsp;&nbsp;` + exam.questions[index].optionB + `</label></div></div><p>正确答案:&nbsp` + answer.examination.questions[index].answer + `</p><p style="margin-bottom:40px">解析:&nbsp` + answer.examination.questions[index].parse + `</p>
-          </div>`;
-          $('#question').append($selectOptionStr);
-        } else if (answer.examination.questions[index].stuAnswer == 'B') {
-          var $selectOptionStr = `<label style="margin-top:20px">第` + (index + 1) + `题.&nbsp&nbsp( 判断题 )&nbsp;&nbsp;` + exam.questions[index].title + `(` + exam.questions[index].score + `分)</label >
-          <div class="field" style="padding-top:5px;"><div class="ui radio checkbox"><input type="radio" name="questionAnswer`+ index + `" value="A"/><label>A.&nbsp;&nbsp;` + exam.questions[index].optionA + `</label></div></div>
-          <div class="field" style="padding-top:5px;"><div class="ui radio checkbox"><input checked="checked" type="radio" name="questionAnswer`+ index + `" value="B"/><label>B.&nbsp;&nbsp;` + exam.questions[index].optionB + `</label></div></div><p >正确答案:` + answer.examination.questions[index].answer + `</p><p style="margin-bottom:40px">解析:&nbsp` + answer.examination.questions[index].parse + `</p>
-          </div>`;
-          $('#question').append($selectOptionStr);
-        }
-      } else if (exam.questions[index].type == 3) {
-        var $selectOptionStr = `<label style="margin-top:20px">第` + (index + 1) + `题.&nbsp&nbsp( 填空题 )&nbsp;&nbsp;` + exam.questions[index].title + `(` + exam.questions[index].score + `分)</label >
-          <div class="grouped fields"><div class="article-body markdown-body editor-preview-active-side" style="margin-top:10px;"></div>
-          <div class="form-group"><input id="questionAnswer`+ index + `" class="form-control" rows="3" value="` + answer.examination.questions[index].stuAnswer + `"> 打分:&nbsp<input class="score" style=" margin-top:10px; margin-bottom:10px;">&nbsp&nbsp该题满分:` + exam.questions[index].score + `分<p>正确答案:&nbsp` + answer.examination.questions[index].answer + `</p><p style="margin-bottom:40px">解析:&nbsp;` + answer.examination.questions[index].parse + `</p>
-          </div>`;
-        $('#question').append($selectOptionStr);
+    	    if (answer.examination.questions[index].type == 3) {
+    	      var $selectOptionStr = `<div class="ui stacked segment" style="margin-bottom:50px;"><label style="margin-top:20px">第` + (index + 1) + `题.&nbsp&nbsp( 填空题 )&nbsp;&nbsp;` + answer.examination.questions[index].title + `(` + answer.examination.questions[index].score + `分)</label >
+    	          <div class="grouped fields"><div class="article-body markdown-body editor-preview-active-side" style="margin-top:10px;"></div>
+    	          <div class="form-group"><input id="questionAnswer`+ index + `" class="form-control" rows="3" value="` + answer.examination.questions[index].stuAnswer + `"> 打分:&nbsp<input class="score"  style=" margin-top:10px; margin-bottom:10px;">&nbsp&nbsp该题满分:` + answer.examination.questions[index].score + `分<p>正确答案:&nbsp` + answer.examination.questions[index].answer + `</p><p>解析:&nbsp;` + answer.examination.questions[index].parse + `</p>
+    	  
+    	            </div></div>`;
+    	      $('#question').append($selectOptionStr);
 
-      } else if (exam.questions[index].type == 4) {
-        var $selectOptionStr = `<label style="margin-top:20px">第` + (index + 1) + `题.&nbsp&nbsp( 主观问答题 )&nbsp;&nbsp;` + exam.questions[index].title + `(` + exam.questions[index].score + `分)</label >
-          <div class="form-group"><textarea id="questionAnswer`+ index + `" class="form-control" rows="3" >` + answer.examination.questions[index].stuAnswer + `</textarea> 打分:&nbsp<input class="score" style=" margin-top:10px;margin-bottom:10px;">&nbsp&nbsp该题满分:` + exam.questions[index].score + `分<p>正确答案:&nbsp` + answer.examination.questions[index].answer + `</p><p style="margin-bottom:40px">解析:&nbsp` + answer.examination.questions[index].parse + `</p>
-          </div>`;
-        $('#question').append($selectOptionStr); index
-      } else if (exam.questions[index].type == 5) {
-        var $selectOptionStr = `<label style="margin-top:20px">第` + (index + 1) + `题.&nbsp&nbsp( 编程题 )&nbsp;&nbsp;` + exam.questions[index].title + `(` + exam.questions[index].score + `分)</label >
-          <div class="form-group"><textarea id="questionAnswer`+ index + `" class="form-control" rows="10">` + answer.examination.questions[index].stuAnswer + `</textarea> 打分:&nbsp<input class="score" style=" margin-top:10px;margin-bottom:10px;">&nbsp&nbsp该题满分:` + exam.questions[index].score + `分 <p >正确答案:&nbsp` + answer.examination.questions[index].answer + `</p><p style="margin-bottom:40px">解析:&nbsp` + answer.examination.questions[index].parse + `</p>
-          </div>`;
-        $('#question').append($selectOptionStr);
-      }
- */
-	  if (exam.questions[index].type == 3) {
-	     var $selectOptionStr = `<label style="margin-top:20px">第` + (index + 1) + `题.&nbsp&nbsp( 填空题 )&nbsp;&nbsp;` + exam.questions[index].title + `(` + exam.questions[index].score + `分)</label >
-	       <div class="grouped fields"><div class="article-body markdown-body editor-preview-active-side" style="margin-top:10px;"></div>
-	       <div class="form-group"><input id="questionAnswer`+ index + `" class="form-control" rows="3" value="` + answer.examination.questions[index].stuAnswer + `"> 打分:&nbsp<input class="score" style=" margin-top:10px; margin-bottom:10px;">&nbsp&nbsp该题满分:` + exam.questions[index].score + `分<p>正确答案:&nbsp` + answer.examination.questions[index].answer + `</p><p style="margin-bottom:40px">解析:&nbsp;` + answer.examination.questions[index].parse + `</p>
-	       </div>`;
-	     $('#question').append($selectOptionStr);
-	
-	   } else if (exam.questions[index].type == 4) {
-	     var $selectOptionStr = `<label style="margin-top:20px">第` + (index + 1) + `题.&nbsp&nbsp( 主观问答题 )&nbsp;&nbsp;` + exam.questions[index].title + `(` + exam.questions[index].score + `分)</label >
-	       <div class="form-group"><textarea id="questionAnswer`+ index + `" class="form-control" rows="3" >` + answer.examination.questions[index].stuAnswer + `</textarea> 打分:&nbsp<input class="score" style=" margin-top:10px;margin-bottom:10px;">&nbsp&nbsp该题满分:` + exam.questions[index].score + `分<p>正确答案:&nbsp` + answer.examination.questions[index].answer + `</p><p style="margin-bottom:40px">解析:&nbsp` + answer.examination.questions[index].parse + `</p>
-	       </div>`;
-	     $('#question').append($selectOptionStr); index
-	   } else if (exam.questions[index].type == 5) {
-	     var $selectOptionStr = `<label style="margin-top:20px">第` + (index + 1) + `题.&nbsp&nbsp( 编程题 )&nbsp;&nbsp;` + exam.questions[index].title + `(` + exam.questions[index].score + `分)</label >
-	       <div class="form-group"><textarea id="questionAnswer`+ index + `" class="form-control" rows="10">` + answer.examination.questions[index].stuAnswer + `</textarea> 打分:&nbsp<input class="score" style=" margin-top:10px;margin-bottom:10px;">&nbsp&nbsp该题满分:` + exam.questions[index].score + `分 <p >正确答案:&nbsp` + answer.examination.questions[index].answer + `</p><p style="margin-bottom:40px">解析:&nbsp` + answer.examination.questions[index].parse + `</p>
-	       </div>`;
-	     $('#question').append($selectOptionStr);
-	   }
+    	    } else if (answer.examination.questions[index].type == 4) {
+    	      var $selectOptionStr = `<div class="ui stacked segment" style="margin-bottom:50px;"><label style="margin-top:20px">第` + (index + 1) + `题.&nbsp&nbsp( 主观问答题 )&nbsp;&nbsp;` + answer.examination.questions[index].title + `(` + answer.examination.questions[index].score + `分)</label >
+    	          <div class="form-group"><textarea id="questionAnswer`+ index + `" class="form-control" rows="3" >` + answer.examination.questions[index].stuAnswer + `</textarea> 打分:&nbsp<input class="score"  style=" margin-top:10px;margin-bottom:10px;">&nbsp&nbsp该题满分:` + answer.examination.questions[index].score + `分<p>正确答案:&nbsp` + answer.examination.questions[index].answer + `</p><p>解析:&nbsp` + answer.examination.questions[index].parse + `</p>
+    	   
+    	          </div> </div>`;
+    	      $('#question').append($selectOptionStr); index
+
+    	    } else if (answer.examination.questions[index].type == 5) {
+    	      var $selectOptionStr = `<div class="ui stacked segment" style="margin-bottom:50px;"><label style="margin-top:20px">第` + (index + 1) + `题.&nbsp&nbsp( 编程题 )&nbsp;&nbsp;` + answer.examination.questions[index].title + `(` + answer.examination.questions[index].score + `分)</label >
+    	          <div class="form-group"><textarea id="questionAnswer`+ index + `" class="form-control" rows="10">` + answer.examination.questions[index].stuAnswer + `</textarea> 打分:&nbsp<input class="score"  style=" margin-top:10px;margin-bottom:10px;">&nbsp&nbsp该题满分:` + answer.examination.questions[index].score + `分 <p >正确答案:&nbsp` + answer.examination.questions[index].answer + `</p><p >解析:&nbsp` + answer.examination.questions[index].parse + `</p>
+
+    	            </div>`;
+
+    	      $('#question').append($selectOptionStr);
+    	    }
 
 
-      // console.log(exam.questions[0].score)
-      // console.log(val);
-      // switch (val.type) {
-      //   case 0: radio(val, index)
 
-      //     break;
-      //   case 1: checkbox(val, index)
+    	  })
+    	  var $selectOptionStr = `<button id='getscore' style="margin-left:35%;width:200px">确定</button>`
+    	  $('#question').append($selectOptionStr);
 
-      //     break;
-      //   case 2: text(val, index)
+    	  var getscore = document.querySelector('#getscore');
+    	  var allscore = 0;
+    	  var scores = document.querySelectorAll('.score');
 
-      //     break;
-      //   case 3: jianda(val, index)
+    	  var isClick = true;
+    	  getscore.addEventListener('click', function () {
 
-      //     break;
-      //   case 4: panduan(val, index)
+    	    allscore = 0;
+    	    for (var i = 0; i < scores.length; i++) {
+    	      if (scores[i].value == '') { scores[i].value = 0; }
+    	      allscore += parseInt(scores[i].value);
+    	    }
 
-      //     break;
 
-      //   default:
-      //     break;
-      // }
-      // let $question = `
-      //   <div>
-      //       <p>val.title</p>
-      //   </div>
-      // `
-    })
-    var $selectOptionStr = `<button id='getscore' style="margin-left:35%;width:200px">确定</button>`
-    $('#question').append($selectOptionStr);
 
-    var getscore = document.querySelector('#getscore');
-    var allscore = 0;
-    var scores = document.querySelectorAll('.score');
-    getscore.addEventListener('click', function () {
-      for (var i = 0; i < scores.length; i++) {
-        allscore += parseInt(scores[i].value);
-        console.log(allscore);
-      }
-        console.log(allscore);
+    	    if (isClick) {
+    	      isClick = false;
+    	      $.ajax({
+    	        url: "/grade/mark",
+    	        type: "POST",
+    	        dataType: "json",
+    	        contentType: "application/json;charset=UTF-8",
+    	        data: JSON.stringify({
+    	          id: answer.id,//xxxxxx(从后台来的grade.id),
+    	          manulResult: allscore, //xxxx(统计所有主观题的分数和，注意是主观题)
+    	        }),
+    	        success: function (data) {
+    	          layer.msg(data.msg, function () {//成功则返回
+    	            window.location.href = "/manage";
+    	          });
+    	        },
+    	        error: function (data) {//失败打印失败信息
+    	          layer.msg(data.msg)
+    	        }
+    	      });
+    	      //定时器
+    	      setTimeout(function () {
+    	        isClick = true;
+    	      }, 3000);//三秒内不能重复点击
+    	    }
 
-      $.ajax({
-        url : "/grade/mark",
-        type : "POST",
-		dataType : "json",
-		contentType : "application/json;charset=UTF-8",
-        data : JSON.stringify({
-			id: answer.id,
-			manulResult: allscore,
-		}),
-        success: function (data) {
-          layer.msg(data.msg, function () {//成功则返回考试列表
-            window.location.href = "/";
-          });
-        },
-        error: function (data) {//失败打印失败信息
-          layer.msg(data.msg)
-        }
-      });
-    })
 
-    // function radio(data, index) {
-    //   let $question = `<div>
-    //       <p>${index + 1} . ${data.title}</p>
-    //         <label><input type="radio" name="${data.classId}" value="A" />A.${data.optionA}</label>
-    //           <br />
-    //         <label><input type="radio" name="${data.classId}" value="B" />B.${data.optionB}</label>
-    //           <br />
-    //         <label><input type="radio" name="${data.classId}" value="C" />C.${data.optionC}</label>
-    //           <br />
-    //         <label><input type="radio" name="${data.classId}" value="D" />D.${data.optionD}</label>
-    //         <p>学生答案:${answer.examination.questions[index].stuAnswer}</p>
-    //       </div>`;
-    //   $('#currentQuestionAnswer').append($question);
-    // }
-    // function checkbox(data, index) {
-    //   let $question = `<div>
-    //       <p>${index + 1} . ${data.title}</p>
-    //         <label><input type="checkbox" name="${data.classId}" value="A" />A.${data.optionA}</label>
-    //           <br />
-    //         <label><input type="checkbox" name="${data.classId}" value="B" />B.${data.optionB}</label>
-    //           <br />
-    //         <label><input type="checkbox" name="${data.classId}" value="C" />C.${data.optionC}</label>
-    //           <br />
-    //         <label><input type="checkbox" name="${data.classId}" value="D" />D.${data.optionD}</label>
-    //         <p>学生答案:${answer.examination.questions[index].stuAnswer}</p>
-    //       </div>`;
-    //   $('#currentQuestionAnswer').append($question);
-    // }
-    // function text(data, index) {
-    //   let $question = `<div>
-    //       <p>${index + 1} . ${data.title}</p><input type='text' value=''/>
-    //       <p>学生答案:${answer.examination.questions[index].stuAnswer}</p>
-    //       </div>`;
-    //   $('#currentQuestionAnswer').append($question);
-    // }
-    // function panduan(data, index) {
-    //   let $question = `<div>
-    //       <p>${index + 1} . ${data.title}</p>
-    //         <label><input type="radio" name="${data.classId}" value="A" />A.${data.optionA}</label>
-    //           <br />
-    //         <label><input type="radio" name="${data.classId}" value="B" />B.${data.optionB}</label>
-    //         <p>学生答案:${answer.examination.questions[index].stuAnswer}</p>
-    //       </div>`;
-    //   $('#currentQuestionAnswer').append($question);
-    // }
-    // function jianda(data, index) {
-    //   let $question = `<div>
-    //       <p>${index + 1} . ${data.title}</p>
-    //         <p>学生答案:${answer.examination.questions[index].stuAnswer}</p>
-    //       </div>`;
-    //   $('#currentQuestionAnswer').append($question);
-    // }
-    // $(function () {
-    //   examDetailPage.init(exam);
-    //   var $title = `<li class="active" style="color: black;">${exam.title}</li>`;
-    //   $('#headerMain').append($title);
-    //   var $classId = `<span>${exam.classId}</span>`
-    //   $('td:eq(1)').append($classId);
-    //   var $name = `<span>${exam.author}</span>`
-    //   $('td:eq(3)').append($name);
-    //   var $score = `<span>${exam.totalScore}</span>`
-    //   $('td:eq(11)').append($score);
-    // });
+
+    	  })
+
+    	});
   </script>
 </body>
 

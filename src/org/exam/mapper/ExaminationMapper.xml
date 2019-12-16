@@ -16,6 +16,8 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
         <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="present_total" property="presentTotal" jdbcType="INTEGER" />
+        <result column="student_total" property="studentTotal" jdbcType="INTEGER" />
         <association property="faculty" javaType="org.exam.entity.Faculty" >
         	<result property="id" jdbcType="INTEGER" column="faculty_id"/>
 			<result property="name" jdbcType="VARCHAR" column="faculty_name"/>
@@ -68,6 +70,64 @@
         id,title,user_id,author,total_score,subject_id,start_time,end_time,create_time,update_time,status
     </sql>
     
+    
+    <insert id="insertAndReturnId" parameterType="org.exam.entity.Examination">
+    	INSERT INTO examination_inf( title,user_id,author,grade,status,total_score,class_id,subject_id,type,start_time,end_time,create_time,update_time ) 
+    	VALUES( #{title},#{userId},#{author},#{grade},#{status},#{totalScore},#{classId},#{subjectId},#{type},#{startTime},#{endTime},#{createTime},#{updateTime} ) 
+    	<selectKey resultType="java.lang.Integer" keyProperty="id" >
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+    
+    <select id="findByConditionOnly" parameterType="org.exam.vo.ExaminationConditionVo" resultMap="BaseResultMap">
+    	SELECT
+    	e.*,
+    	f.id AS faculty_id,
+    	f.name as faculty_name,
+    	f.description AS faculty_description,
+    	c.id AS class_id,
+    	c.name AS class_name,
+    	c.description AS class_description,
+    	s.id AS s_subject_id,
+    	s.`name` AS s_subject_name,
+    	s.description AS s_subject_description,
+    	count(g.id) as present_total,
+    	count(us.id) as student_total
+    	FROM
+    	examination_inf e
+    	INNER JOIN class_inf c ON e.class_id = c.id
+    	INNER JOIN faculty_inf f ON c.faculty_id = f.id
+    	INNER JOIN subject_inf s ON e.subject_id = s.id
+    	LEFT JOIN user_subject_inf us ON us.subject_id = s.id and e.subject_id = us.subject_id
+    	LEFT JOIN grade_inf g ON e.id = g.exam_id and g.user_id = us.user_id
+    	WHERE 1 = 1
+    	<if test="grade != null and grade != ''">
+			AND	e.grade = #{grade}
+		</if>
+		<if test="author != null and author != ''">
+			AND	e.author = #{author}
+		</if>
+    	<if test="facultyId !=null">
+            AND c.faculty = #{insId}
+        </if>
+        <if test="classId !=null">
+            AND e.class_id = #{classId}
+        </if>
+    	<if test="subjectId != null">
+    		AND e.subject_id = #{subjectId}
+    	</if>
+    	<if test="status != null">
+			AND	e.status = #{status}
+		</if>
+		<if test="keywords != null and keywords != '' ">
+			AND
+			e.title LIKE CONCAT('%',#{keywords , jdbcType=VARCHAR},'%')
+		</if>
+		group by e.id
+		order by e.id desc
+    </select>
+    
+    
     <select id="findByCondition" parameterType="org.exam.vo.ExaminationConditionVo" resultMap="BaseResultMap">
     	SELECT
     	e.*,
@@ -92,7 +152,7 @@
 		<if test="author != null and author != ''">
 			AND	e.author = #{author}
 		</if>
-    	<if test="insId !=null">
+    	<if test="facultyId !=null">
             AND c.faculty = #{insId}
         </if>
         <if test="classId !=null">

@@ -25,6 +25,7 @@
 <script src="/js/core.js"></script>
 <script src="/lib/layui/layui.js" charset="utf-8"></script>
 <script src="/js/attendance.js"></script>
+
 <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
 <!--[if lt IE 9]>
 	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -50,13 +51,6 @@
 						<c:forEach items="${subjects}" var="subject">
 						<option value="${subject.id}">${subject.name}</option>
 						</c:forEach>
-					</select>
-				</div>
-				<div class="layui-input-inline">
-					<select name="type">
-						<option value="">类型</option>
-						<option value="0">随机</option>
-						<option value="1">全体</option>
 					</select>
 				</div>
 				<div class="layui-input-inline">
@@ -93,12 +87,12 @@
 			<button class="layui-btn layui-btn-danger" onclick="delSelected()">
 				<i class="layui-icon"></i>批量删除
 			</button>
-			<button class="layui-btn" onclick="WeAdminShow('添加考试','/attendance/add')">
+			<button class="layui-btn" onclick="WeAdminShow('添加考试','/exam/add')">
 				<i class="layui-icon"></i>新建考试
 			</button>
 			<span class="fr" style="line-height: 40px">...</span>
 		</div>
-		<table class="layui-table" id="attendance_table">
+		<table class="layui-table" id="exam_table">
 			<thead>
 				<tr>
 					<th> 
@@ -107,13 +101,14 @@
 							<i class="layui-icon">&#xe605;</i>
 						</div>
 					</th>
-					<th>课程名称</th>
+					<th>考试title</th>
+					<th>考试科目</th>
 					<th>年份/学期</th>
 					<th>类型</th>
 					<th>开始时间</th>
 					<th>结束时间</th>
-					<th>目标数</th>
-					<th>出勤数</th>
+					<th>总学生数</th>
+					<th>考试人数</th>
 					<th>出勤率</th>
 					<th>状态</th>
 					<th>操作</th>
@@ -134,7 +129,7 @@
 					<td>2017-11-14 17:35</td>
 					<td>已结束</td>
 					<td class="td-manager"><a title="查看"
-						onclick="WeAdminShow('编辑','/attendance/publish')" href="javascript:;">
+						onclick="WeAdminShow('编辑','/exam/publish')" href="javascript:;">
 							<i class="layui-icon">&#xe63c;</i>
 					</a> <a title="删除" onclick="delAttend("+items.id+")"
 						href="javascript:;"> <i class="layui-icon">&#xe640;</i>
@@ -181,7 +176,7 @@
 		/*****合并json函数结束******/
 		var pageInfo = {"limit":10,"offset":offset};//查询明细时分页信息
 		form.on('submit(search)', function (data) {//合并表单内容和分页信息
-			$.post('/attendance/list', extend(data.field,pageInfo), function (result) {
+			$.post('/exam/record', extend(data.field,pageInfo), function (result) {
 				console.log(extend(data.field,pageInfo));
 				build_stus_table(result);//1考试表单
 	            build_page_info(result);//2页码控制
@@ -249,7 +244,7 @@
 		});
 
 		function requestPage(offset){
-			Core.postAjax("/attendance/list",{"limit":10,"offset":offset},function (result) {
+			Core.postAjax("/exam/record",{"limit":10,"offset":offset},function (result) {
 	            build_stus_table(result);//1考试表单
 	            build_page_info(result);//2页码控制
 	            build_page_nav(result);//3底部分页
@@ -275,41 +270,44 @@
 		  return fmt;   
 		}  
 		function build_stus_table(result){
-			var attendances = result.rows;
-			if(!attendances.length==0){
-				$("#attendance_table tbody").empty();
-				$.each(attendances, function(index, items){
+			var exams = result.rows;
+			if(!exams.length==0){
+				$("#exam_table tbody").empty();
+				$.each(exams, function(index, items){
 					var statusTd,operateBtn,typeTd;
 					if(items.status==0){//<span class="layui-btn layui-btn-normal layui-btn-xs">已启用</span>
 						statusTd = $("<td></td>").addClass("td-status").append($("<span>未开始</span>").addClass("layui-btn layui-btn-warm layui-btn-xs"));
-						operateBtn = $("<a title=\"明细\" onclick=\"WeAdminShow('详情','/attendance/publish?id="+items.id+"\')\" href=\"javascript:;\"><i class=\"layui-icon\">&#xe63c;</i></a>"
+						operateBtn = $("<a target=\"_blank\" title=\"明细\" href=\"/grade/list?id="+items.id+"\"><i class=\"layui-icon\">&#xe63c;</i></a>"
 								+"<a title=\"删除\" onclick=\"delAttend("+items.id+")\" href=\"javascript:;\"> <i class=\"layui-icon\">&#xe640;</i></a>");
 					}else if(items.status == 1){
 						statusTd = $("<td></td>").addClass("td-status").append($("<span>进行中</span>").addClass("layui-btn layui-btn-green layui-btn-xs"));
-						operateBtn = $("<a title=\"明细\" onclick=\"WeAdminShow('详情','/attendance/publish?id="+items.id+"\')\" href=\"javascript:;\"><i class=\"layui-icon\">&#xe63c;</i></a>"
+						operateBtn = $("<a target=\"_blank\" title=\"明细\" href=\"/grade/list?id="+items.id+"\"><i class=\"layui-icon\">&#xe63c;</i></a>"
 										+"<a title=\"删除\" onclick=\"delAttend("+items.id+")\" href=\"javascript:;\"> <i class=\"layui-icon\">&#xe640;</i></a>");
 					}else{
 						statusTd = $("<td></td>").addClass("td-status").append($("<span>已结束</span>").addClass("layui-btn layui-btn-danger layui-btn-xs"));
-						operateBtn =$("<a title=\"明细\" onclick=\"WeAdminShow('详情','/attendance/publish?id="+items.id+"\')\" href=\"javascript:;\"><i class=\"layui-icon\">&#xe63c;</i></a>"
+						operateBtn =$("<a target=\"_blank\" title=\"明细\" href=\"/grade/list?id="+items.id+"\"><i class=\"layui-icon\">&#xe63c;</i></a>"
 								+"<a title=\"删除\" onclick=\"delAttend("+items.id+")\" href=\"javascript:;\"> <i class=\"layui-icon\">&#xe640;</i></a>");
 					}
-					if(items.type==0){
-						typeTd = $("<td></td>").append("<span>随机</span>");
-					}else if(items.type==1){
-						typeTd = $("<td></td>").append("<span>全体</span>");
+					if(items.type == 0){
+						var typeTd = $("<td></td>").append("作业");
+					}else{
+						var typeTd = $("<td></td>").append("测试");
 					}
 					var headTd = $("<td></td>").append("<div class='layui-unselect layui-form-checkbox' lay-skin='primary' data-id='"+items.id+"'> <i class='layui-icon'>&#xe605;</i> </div>");
+					var titleTd = $("<td></td>").append(items.title);
 					var subjectTd = $("<td></td>").append(items.subject.name);
-					var yearAndTermTd = $("<td></td>").append(items.year+'~'+(++items.year)+'/'+items.term);
+					var yearAndTermTd = $("<td></td>").append("2019~2020/1");
+					//var yearAndTermTd = $("<td></td>").append(items.year+'~'+(++items.year)+'/'+items.term);
 					//var typeTd = $("<td></td>").append();
 					var startTimeTd = $("<td></td>").append(new Date(items.startTime).Format('yyyy-MM-dd hh:mm:ss'));
 					var endTimeTd = $("<td></td>").append(new Date(items.endTime).Format('yyyy-MM-dd hh:mm:ss'));
-					var studentNumsTd = $("<td></td>").append(items.courseTotal);
+					var studentNumsTd = $("<td></td>").append(items.studentTotal);
 					var presentTd = $("<td></td>").append(items.presentTotal);
-					var presentRateTd = $("<td></td>").append(((items.presentTotal*100)/items.courseTotal).toFixed(2)+"%");
+					var presentRateTd = $("<td></td>").append(((items.presentTotal*100)/items.studentTotal).toFixed(2)+"%");
 					//var statusTd = $("<td></td>").append(tableTail);
 					var operateTd = $("<td></td>").addClass("td-manager").append(operateBtn);
 					$("<tr></tr>").append(headTd)
+					 			  .append(titleTd)
 					 			  .append(subjectTd)
 								  .append(yearAndTermTd)
 								  .append(typeTd)
@@ -320,11 +318,11 @@
 								  .append(presentRateTd)
 								  .append(statusTd)
 								  .append(operateTd)
-								  .appendTo("#attendance_table tbody");
+								  .appendTo("#exam_table tbody");
 				})
 			}else{
-				$("#attendance_table tbody").empty();
-				$("<tr style='text-align:center'><td colspan='11'>当前没有记录</td></tr>").appendTo("#attendance_table tbody");
+				$("#exam_table tbody").empty();
+				$("<tr style='text-align:center'><td colspan='11'>当前没有记录</td></tr>").appendTo("#exam_table tbody");
 			}
 		}
 		
@@ -336,7 +334,7 @@
 			    btn: ['执意删除', '再考虑一下'],
 			    yes: function(index){
 					    layer.close(index);
-						Core.postAjax("/attendance/delete",{"id":id}, function(data){
+						Core.postAjax("/exam/delete",{"id":id}, function(data){
 							if(data.status==200){
 								layer.msg(data.msg, {
 									title: "系统提示",
@@ -379,7 +377,7 @@
 			    btn: ['执意删除', '再考虑一下'],
 			    yes: function(index){
 					    layer.close(index);
-						Core.postAjax("/attendance/batch/delete",{"idStr":idStr}, function(data){
+						Core.postAjax("/exam/batch/delete",{"idStr":idStr}, function(data){
 							if(data.status==200){
 								layer.msg(data.msg, {
 									title: "系统提示",

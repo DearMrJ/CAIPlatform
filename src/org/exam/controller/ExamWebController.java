@@ -350,14 +350,11 @@ public class ExamWebController {
 			User user = (User)SecurityUtils.getSubject().getPrincipal();
 			System.out.println(grade.getAnswerJson());
 			List<String> answerStr = Arrays.asList(grade.getAnswerJson().split("~_~"));
-			System.out.println(answerStr);
 			int autoResult = 0;
 			StringBuffer autoStr = new StringBuffer();
 			StringBuffer manulStr = new StringBuffer();
 			Examination examination = examService.queryByExamId(grade.getExamId());
-			System.err.println(examination);
 			List<Question> questions = examination.getQuestions();
-			System.err.println(questions);
 			for(int i = 0; i < questions.size(); i++) {
 				Question question = questions.get(i);
 				//分别拼接 客观题 和 主观题 的答案
@@ -379,7 +376,7 @@ public class ExamWebController {
 			grade.setAutoJson(autoJson);//学生客观题答案
 			grade.setManulJson(manulJson);//学生主观题答案
 			grade.setManulResult(0);
-			if (examination.getType()==0 || null==manulJson || manulJson.equals("")) {
+			if (examination.getType()==1 || null==manulJson || manulJson.equals("")) {
 				grade.setStatus(CoreConst.STATUS_VALID);//仅客观题 即时可以查看成绩
 			} else {
 				grade.setStatus(CoreConst.STATUS_INVALID);

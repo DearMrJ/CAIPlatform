@@ -1,6 +1,7 @@
 package org.exam.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -73,11 +74,33 @@ public class ExaminationController {
 				vo.setClassId(user.getClassId());//如果是其他，根据班级返回
 			}
 		}
-		PageHelper.startPage(PageUtil.getPageNo(limit, offset),limit);
+		PageHelper.startPage(PageUtil.getPageNo(limit, offset), limit);
 		List<Examination> examList = examService.findByCondition(vo);
 		PageInfo<Examination> pages = new PageInfo<>(examList);
 		return ResultUtil.table(examList, pages.getTotal(), pages);
 	}
+	
+	@PostMapping("record")
+	@ResponseBody
+	public PageResultVo loadRecord(ExaminationConditionVo vo,Integer limit, Integer offset) {
+		examService.updateExamToStart();
+		examService.updateExamToEnd();
+		User user = (User)SecurityUtils.getSubject().getPrincipal();
+		List<String> roleList = userService.selectRoleByUserId(user.getUserId());
+		if(!roleList.contains("administrator")) {//当前非管理员，管理员返回所有
+			if(roleList.contains("teacher")) {//当前是teacher，会根据昵称返回
+				vo.setAuthor(user.getNickname());
+				System.err.println(1111);
+			}else {
+				vo.setClassId(user.getClassId());//如果是其他，根据班级返回
+			}
+		}
+		PageHelper.startPage(PageUtil.getPageNo(limit, offset), limit);
+		List<Examination> examList = examService.findByConditionOnly(vo);
+		PageInfo<Examination> pages = new PageInfo<>(examList);
+		return ResultUtil.table(examList, pages.getTotal(), pages);
+	}
+	
 	
 	@GetMapping("/add")
 	public String addExam(Model model) {
@@ -94,17 +117,22 @@ public class ExaminationController {
 	}
 	
 	
-	@PostMapping("/add")
+	@PostMapping("add")
 	@ResponseBody
-	public ResponseVo add(Examination examination , Integer[] questions) {//指定测试/考试 类型
+	public ResponseVo add(Examination examination , Integer[] question) {//指定测试/考试 类型
 		try {
+			System.err.println(Arrays.toString(question));
+			if(null == question) {
+				return ResultUtil.error("试题集控，发布考试失败");
+			}
 			User user = (User)SecurityUtils.getSubject().getPrincipal();
 			examination.setUserId(user.getUserId());
 			examination.setAuthor(user.getNickname());
 			Examination exam = examService.insertExam(examination);
-			examQuestionService.insertList(exam.getId(),questions);
+			examQuestionService.insertList(exam.getId(),question);
 			return ResultUtil.success("发布考试成功");
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResultUtil.error("发布考试失败");
 		}
 	}
